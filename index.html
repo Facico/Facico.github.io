@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Facico的博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Facico的博客">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:locale" content="en">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Facico的博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Facico的博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-learn_git" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/26/learn_git/" class="article-date">
+  <time datetime="2019-10-26T06:22:31.748Z" itemprop="datePublished">2019-10-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/26/learn_git/">learn_git</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="git学习"><a href="#git学习" class="headerlink" title="git学习"></a>git学习</h2><h3 id="创建版本库-仓库，repository"><a href="#创建版本库-仓库，repository" class="headerlink" title="创建版本库(仓库，repository)"></a>创建版本库(仓库，repository)</h3><h4 id="初始设定"><a href="#初始设定" class="headerlink" title="初始设定"></a>初始设定</h4><p>创建一个文件之后</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ git init</span><br></pre></td></tr></table></figure>
+
+<p>就能把这个目录设置git可以管理的仓库</p>
+<h4 id="将文件加到暂存区"><a href="#将文件加到暂存区" class="headerlink" title="将文件加到暂存区"></a>将文件加到暂存区</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>将工作区的文件readme.txt添加到暂存区，这个文件必须存在</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt readme1.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以一次添加多个</p>
+<h4 id="将文件添加到版本库"><a href="#将文件添加到版本库" class="headerlink" title="将文件添加到版本库"></a>将文件添加到版本库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m<span class="string">"wrote a readme.txt"</span></span><br></pre></td></tr></table></figure>
+
+<p>双引号里面的东西是解释，方便别人或者自己后面看这个添加的简介</p>
+<h3 id="版本库中的操作"><a href="#版本库中的操作" class="headerlink" title="版本库中的操作"></a>版本库中的操作</h3><h4 id="掌握版本库动态"><a href="#掌握版本库动态" class="headerlink" title="掌握版本库动态"></a>掌握版本库动态</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ git status</span><br><span class="line">位于分支 master</span><br><span class="line">尚未暂存以备提交的变更：</span><br><span class="line">  （使用 <span class="string">"git add &lt;文件&gt;..."</span> 更新要提交的内容）</span><br><span class="line">  （使用 <span class="string">"git checkout -- &lt;文件&gt;..."</span> 丢弃工作区的改动）</span><br><span class="line"></span><br><span class="line">	修改：     readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以看到版本库是否做了改动</p>
+<h4 id="查看文件改动了什么地方"><a href="#查看文件改动了什么地方" class="headerlink" title="查看文件改动了什么地方"></a>查看文件改动了什么地方</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ git diff readme.txt</span><br><span class="line">diff --git a/readme.txt b/readme.txt</span><br><span class="line">index 46d49bf..9247db6 100644</span><br><span class="line">--- a/readme.txt</span><br><span class="line">+++ b/readme.txt</span><br><span class="line">@@ -1,2 +1,2 @@</span><br><span class="line">-Git is a version control system.</span><br><span class="line">+Git is a distributed version control system.</span><br><span class="line"> Git is free software.</span><br></pre></td></tr></table></figure>
+
+<p>diff能比较修改之前与现在的状态，并找出不同(-表示删掉了什么，+表示增加了什么)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git diff readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>这条语句能看版本库的最新版本与工作区里最新版本的区别</p>
+<h4 id="查看版本库修改时间线"><a href="#查看版本库修改时间线" class="headerlink" title="查看版本库修改时间线"></a>查看版本库修改时间线</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span></span><br><span class="line">commit 804602b56aa7a41f98d6ce286125b241c087d65e (HEAD -&gt; master)</span><br><span class="line">Author: Facico &lt;845161327@qq.com&gt;</span><br><span class="line">Date:   Fri Oct 25 18:13:39 2019 +0800</span><br><span class="line"></span><br><span class="line">    add distributed</span><br><span class="line"></span><br><span class="line">commit 8e57ed773b3907fa7ad7af8f2defb39065f84d59</span><br><span class="line">Author: Facico &lt;845161327@qq.com&gt;</span><br><span class="line">Date:   Fri Oct 25 17:57:32 2019 +0800</span><br><span class="line"></span><br><span class="line">    wrote a readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>git log命令显示从最近到最远的提交日志</p>
+<p>如果嫌得到的东西太多可以</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --pretty=oneline</span><br><span class="line">804602b56aa7a41f98d6ce286125b241c087d65e (HEAD -&gt; master) add distributed</span><br><span class="line">8e57ed773b3907fa7ad7af8f2defb39065f84d59 wrote a readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>这样就可以把很多行压成一行，这时每行前面得到的一大串东西就是commit id(版本号)，它不是用1,2,3这样的东西来标号的，因为如果很多人一起用这个东西就会产生冲突。</p>
+<h4 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard HEAD^</span><br><span class="line">HEAD 现在位于 8e57ed7 wrote a readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>HEAD表示当前的版本，因为知道了我的版本号和别人的版本号肯定不一样，所以直接用链表的形式往上跳，HEAD^表示上一个，HEAD^^表示上两个，HEAD～100表示上一百个</p>
+<p>执行上面的操作之后，就会发现readme.txt被还原了</p>
+<p>版本回退的速度很快，git内部是有一个指针可以快速指向(就相当于打了个可持久化的数据结构)</p>
+<h4 id="版本恢复-回退完之后想恢复"><a href="#版本恢复-回退完之后想恢复" class="headerlink" title="版本恢复(回退完之后想恢复)"></a>版本恢复(回退完之后想恢复)</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git reset --hard 80460</span><br><span class="line">HEAD 现在位于 804602b add distributed</span><br></pre></td></tr></table></figure>
+
+<p>80460是原来版本的版本号，找到这个版本号就能恢复了，版本号没有必要写完，能识别就行</p>
+<h4 id="查看历史命令"><a href="#查看历史命令" class="headerlink" title="查看历史命令"></a>查看历史命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git reflog</span><br><span class="line">804602b (HEAD -&gt; master) HEAD@&#123;0&#125;: reset: moving to 80460</span><br><span class="line">8e57ed7 HEAD@&#123;1&#125;: reset: moving to HEAD^</span><br><span class="line">804602b (HEAD -&gt; master) HEAD@&#123;2&#125;: commit: add distributed</span><br><span class="line">8e57ed7 HEAD@&#123;3&#125;: commit (initial): wrote a readme.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h4><h5 id="撤销工作区修稿"><a href="#撤销工作区修稿" class="headerlink" title="撤销工作区修稿"></a>撤销工作区修稿</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -- readme.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>可以撤销在工作区中的修改</strong></p>
+<p>（使用 “git add &lt;文件&gt;…” 更新要提交的内容）<br>  （使用 “git checkout – &lt;文件&gt;…” 丢弃工作区的改动）</p>
+<p>就是status的下面那句</p>
+<p><strong>这样的撤销有两种情况</strong>：</p>
+<hr>
+<ul>
+<li><p>1、文件修改前后还没有被放入暂存区—-&gt;那么就修改成和版本库一样:回到git add</p>
+</li>
+<li><p>2、文件已经添加到暂存区后又做了修改—–&gt;那么就修改和暂存区一样回到git commit</p>
+</li>
+</ul>
+<h5 id="撤销暂存区修改"><a href="#撤销暂存区修改" class="headerlink" title="撤销暂存区修改"></a><strong>撤销暂存区修改</strong></h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD  readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>可以撤销暂存区中的修改</p>
+<h5 id="撤销版本的修改"><a href="#撤销版本的修改" class="headerlink" title="撤销版本的修改"></a>撤销版本的修改</h5><p>直接回到历史版本</p>
+<h4 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ rm readme.txt</span><br></pre></td></tr></table></figure>
+
+<p>status一下，git就发现工作区和版本库不一致；</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git rm readme.txt</span><br><span class="line">rm <span class="string">'readme.txt'</span></span><br><span class="line">$ git commit -m<span class="string">"shandiaole"</span></span><br></pre></td></tr></table></figure>
+
+<p>remove在commit上传的是删除信息</p>
+<p>特别的：只在工作区删掉之后，可以直接git checkout可以直接还原文件</p>
+<h3 id="git的特点"><a href="#git的特点" class="headerlink" title="git的特点"></a>git的特点</h3><p><strong>1、</strong>git与其他版本控制系统不同的地方就是它有暂存区的概念</p>
+<ul>
+<li>工作区(working directory)：电脑上能看到的目录就是工作区，如learngit</li>
+<li>版本库(repository)：工作区有一个隐藏目录.git，这个不是工作区而是git的版本库<ul>
+<li>stage(或叫index)：在版本库里的暂存区</li>
+<li>master：我们自己创建的第一个分支</li>
+<li>HEAD：指向master的一个指针</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.liaoxuefeng.com/files/attachments/919020037470528/0" alt="git-repo"></p>
+<p>每次status的时候就有一个“位于分支master”</p>
+<p>工作原理就像上面说的一样，先add到stage，再commit到版本库，所以如果改了一次add了，又改了一次在commit，第二次的修改不会被交到版本库</p>
+<p><strong>2、</strong>git比其他设计的优秀的原因就是git跟踪管理的不是文件，而是修改</p>
+<p>如上：如果改了一次add了，又改了一次在commit，第二次的修改不会被交到版本库</p>
+<h3 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h3><p>“有了远程仓库，妈妈再也不用担心我的硬盘了。”——Git点读机</p>
+<p>把自己的仓库推送到github上</p>
+<p>需要设置SSH key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C <span class="string">"youremail@example.com"</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="将本题仓库推送到远程仓库"><a href="#将本题仓库推送到远程仓库" class="headerlink" title="将本题仓库推送到远程仓库"></a>将本题仓库推送到远程仓库</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git remote add origin https://github.com/Facico/learngit.git</span><br></pre></td></tr></table></figure>
+
+<p>origin是远程库的名字的默认叫法(也可以改成别的)</p>
+<h4 id="推送"><a href="#推送" class="headerlink" title="推送"></a>推送</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git push -u origin master</span><br></pre></td></tr></table></figure>
+
+<p>把当前分支master推送到远程</p>
+<p>由于远程库是空的，我们第一次推送master分支是，加上-u参数，git不但会把本地的master分支内容推送到远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后会的推送或者拉取是就可以简化命令</p>
+<h4 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Facico/Linux-skill</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/26/learn_git/" data-id="ck276sng00001p4uk2nh3ac9w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux命令" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2019-10-26T06:21:42.554Z" itemprop="datePublished">2019-10-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/">Linux命令</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h2><p>cd 进入文件/目录如：cd E/learngit</p>
+<p>​     cd.(跳到当前目录)   cd ..(进入上一层)    cd../..（进入上两层）cd ~跳到home    </p>
+<p>pwd 输出当前文件的目录</p>
+<p>mkdir xxx 在当前文件创建一个xxx文件夹</p>
+<p>touch   用于修改文件或目录的时间属性，包括存取时间和修改时间。若文件不存在，系统会建立一个新的文件</p>
+<p>git add xxxx将工作区的文件添加到暂存区，所以要先建立一个文件才能add</p>
+<p>git commit -m”wrote a readme file”(后面这个就是解释用于)可以将暂存区内容添加到版本库</p>
+<blockquote>
+<p>返回x file changed表示几个文件被改动</p>
+<p>返回x insertions表示插入了几行内容</p>
+</blockquote>
+<p>ls -l xxx可以显示档案的时间记录</p>
+<p>git init初始化一个git仓库</p>
+<p>git status让我们时刻掌握仓库当前的状态</p>
+<p>git diff xxx可以看到xxx上一次是怎么改过来的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/10/26/Linux%E5%91%BD%E4%BB%A4/" data-id="ck276snfu0000p4ukhw4f99ci" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/10/26/learn_git/">learn_git</a>
+          </li>
+        
+          <li>
+            <a href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/">Linux命令</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Facico<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
