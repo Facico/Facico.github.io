@@ -1,12 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  
-  <title>learn_git | Facico的博客</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
   <meta name="description" content="git学习创建版本库(仓库，repository)初始设定创建一个文件之后 1~$ git init  就能把这个目录设置git可以管理的仓库 将文件加到暂存区1$ git add readme.txt  将工作区的文件readme.txt添加到暂存区，这个文件必须存在 1$ git add readme.txt readme1.txt  可以一次添加多个 将文件添加到版本库1$ git comm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="learn_git">
@@ -18,73 +61,187 @@
 <meta property="og:updated_time" content="2019-10-25T13:04:32.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;files&#x2F;attachments&#x2F;919020037470528&#x2F;0">
+
+<link rel="canonical" href="http://yoursite.com/2019/10/26/learn_git/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>learn_git | Facico的博客</title>
   
-    <link rel="alternate" href="/atom.xml" title="Facico的博客" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Facico的博客</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-learn_git" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/10/26/learn_git/" class="article-date">
-  <time datetime="2019-10-26T06:22:31.748Z" itemprop="datePublished">2019-10-26</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      learn_git
-    </h1>
-  
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-      </header>
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
     
-    <div class="article-entry" itemprop="articleBody">
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/26/learn_git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          learn_git
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-10-26 14:22:31" itemprop="dateCreated datePublished" datetime="2019-10-26T14:22:31+08:00">2019-10-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-25 21:04:32" itemprop="dateModified" datetime="2019-10-25T21:04:32+08:00">2019-10-25</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h2 id="git学习"><a href="#git学习" class="headerlink" title="git学习"></a>git学习</h2><h3 id="创建版本库-仓库，repository"><a href="#创建版本库-仓库，repository" class="headerlink" title="创建版本库(仓库，repository)"></a>创建版本库(仓库，repository)</h3><h4 id="初始设定"><a href="#初始设定" class="headerlink" title="初始设定"></a>初始设定</h4><p>创建一个文件之后</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ git init</span><br></pre></td></tr></table></figure>
@@ -181,103 +338,197 @@
 <h4 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Facico/Linux-skill</span><br></pre></td></tr></table></figure>
 
 
-      
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/10/26/learn_git/" data-id="ck27ahzq000001dukha2y976z" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
+
     
-<nav id="article-nav">
-  
-  
-    <a href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Linux命令</div>
-    </a>
-  
-</nav>
+    
+    
 
-  
-</article>
+      <footer class="post-footer">
 
-</section>
         
-          <aside id="sidebar">
-  
-    
 
-  
-    
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/" rel="next" title="Linux命令">
+                  <i class="fa fa-chevron-left"></i> Linux命令
+                </a>
+            </div>
 
-  
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
     
+  </article>
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li></ul>
-    </div>
+  
+  
+
   </div>
 
 
+          </div>
+          
+
+        </div>
+          
   
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/10/26/learn_git/">learn_git</a>
-          </li>
-        
-          <li>
-            <a href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/">Linux命令</a>
-          </li>
-        
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
       </ul>
-    </div>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git学习"><span class="nav-number">1.</span> <span class="nav-text">git学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建版本库-仓库，repository"><span class="nav-number">1.1.</span> <span class="nav-text">创建版本库(仓库，repository)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始设定"><span class="nav-number">1.1.1.</span> <span class="nav-text">初始设定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将文件加到暂存区"><span class="nav-number">1.1.2.</span> <span class="nav-text">将文件加到暂存区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将文件添加到版本库"><span class="nav-number">1.1.3.</span> <span class="nav-text">将文件添加到版本库</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本库中的操作"><span class="nav-number">1.2.</span> <span class="nav-text">版本库中的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#掌握版本库动态"><span class="nav-number">1.2.1.</span> <span class="nav-text">掌握版本库动态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看文件改动了什么地方"><span class="nav-number">1.2.2.</span> <span class="nav-text">查看文件改动了什么地方</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看版本库修改时间线"><span class="nav-number">1.2.3.</span> <span class="nav-text">查看版本库修改时间线</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本回退"><span class="nav-number">1.2.4.</span> <span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#版本恢复-回退完之后想恢复"><span class="nav-number">1.2.5.</span> <span class="nav-text">版本恢复(回退完之后想恢复)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看历史命令"><span class="nav-number">1.2.6.</span> <span class="nav-text">查看历史命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#撤销修改"><span class="nav-number">1.2.7.</span> <span class="nav-text">撤销修改</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#撤销工作区修稿"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">撤销工作区修稿</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#撤销暂存区修改"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">撤销暂存区修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#撤销版本的修改"><span class="nav-number">1.2.7.3.</span> <span class="nav-text">撤销版本的修改</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除文件"><span class="nav-number">1.2.8.</span> <span class="nav-text">删除文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git的特点"><span class="nav-number">1.3.</span> <span class="nav-text">git的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#远程仓库"><span class="nav-number">1.4.</span> <span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#将本题仓库推送到远程仓库"><span class="nav-number">1.4.1.</span> <span class="nav-text">将本题仓库推送到远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推送"><span class="nav-number">1.4.2.</span> <span class="nav-text">推送</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#克隆"><span class="nav-number">1.4.3.</span> <span class="nav-text">克隆</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
   </div>
 
+
+
+      </div>
+
+
+    </div>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
   
-</aside>
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 Facico<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
+    </footer>
   </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
   
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
 </body>
 </html>
