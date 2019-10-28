@@ -58,7 +58,7 @@
 <meta property="og:site_name" content="Facico的博客">
 <meta property="og:description" content="Ubuntu折腾小记安装Ubuntu作为一个十几年的window用户，突然要让我换一个系统，有点不知所措。其实网上很多就教程都很好，只是不知道为什么我踩了很多的坑……方法一：下载一个虚拟机软件如virtualbox下载虚拟机软件之后，给虚拟机软件配置运行内存，然后安装镜像……然后，这是我想到我的电脑只有4G的内存，卡机的时候3G就已经被运行掉了，再怎么样也要至少配置个1G的内存给虚拟机吧。。。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-27T15:15:03.182Z">
+<meta property="og:updated_time" content="2019-10-28T06:54:23.729Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/10/27/Ubuntu%E6%8A%98%E8%85%BE%E5%B0%8F%E8%AE%B0/">
@@ -213,10 +213,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-27 22:42:07 / Modified: 23:15:03" itemprop="dateCreated datePublished" datetime="2019-10-27T22:42:07+08:00">2019-10-27</time>
+              <time title="Created: 2019-10-27 22:42:07" itemprop="dateCreated datePublished" datetime="2019-10-27T22:42:07+08:00">2019-10-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-28 14:54:23" itemprop="dateModified" datetime="2019-10-28T14:54:23+08:00">2019-10-28</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -255,6 +261,7 @@
 <h4 id="2、在电脑上分一些硬盘空间出来"><a href="#2、在电脑上分一些硬盘空间出来" class="headerlink" title="2、在电脑上分一些硬盘空间出来"></a>2、在电脑上分一些硬盘空间出来</h4><p>windows的磁盘管理界面—-&gt;删除盘—–&gt;得到的待分配空间就是用来给Linux的，我分了200G</p>
 <h4 id="3、下载iso镜像并写入U盘"><a href="#3、下载iso镜像并写入U盘" class="headerlink" title="3、下载iso镜像并写入U盘"></a>3、下载iso镜像并写入U盘</h4><p>到官网下载ubuntu的iso镜像，然后用上面的软件把镜像写入一个U盘，当然，<strong>U盘会被格式化</strong>，所以提前做好准备。</p>
 <h4 id="4、设置U盘为首选启动项"><a href="#4、设置U盘为首选启动项" class="headerlink" title="4、设置U盘为首选启动项"></a>4、设置U盘为首选启动项</h4><p>重启，进入BIOS界面，找到boot(我是华硕的)，设置U盘为首选启动项，保存。</p>
+<p>发现还有按esc快速启动的操作</p>
 <h4 id="5、然后就进入Ubuntu界面"><a href="#5、然后就进入Ubuntu界面" class="headerlink" title="5、然后就进入Ubuntu界面"></a>5、然后就进入Ubuntu界面</h4><p>成功了，然后安装就行了。</p>
 <p>安装的时候怎么分配空间网上讲的也很详细。</p>
 <h4 id="6、小插曲"><a href="#6、小插曲" class="headerlink" title="6、小插曲"></a>6、小插曲</h4><ul>
@@ -267,10 +274,73 @@
 <ul>
 <li>小插曲二</li>
 </ul>
-<p>我有一个同学，安装好了linux，然后用easybcd弄启动项，结果每次都要进入BIOS才能选择。</p>
-<p>然后他把Ubuntu卸了，想按照我的方式重装，结果把自己window的boot搞没了，然后就忙活了一个下午，最后找学长才搞好。</p>
+<p>我有一个同学，安装好了linux，装Ubuntu的时候自动分区。后来不知道为什么，每次都要进入BIOS才能选择，我是直接把Ubuntu的启动项调到win前面的，可能是她在用easybcd的时候没有弄好。</p>
+<p>然后她把Ubuntu卸了，想手动分区，结果把自己window的boot搞没了，然后就忙活了一个下午，最后找学长才搞好。</p>
 <p>综上所述：慎重操作，方式浪费时间</p>
-<h2 id="学习Utunbu包管理工具的使用"><a href="#学习Utunbu包管理工具的使用" class="headerlink" title="学习Utunbu包管理工具的使用"></a>学习Utunbu包管理工具的使用</h2><p>本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。</p>
+<h1 id="本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。"><a href="#本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。" class="headerlink" title="==本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。=="></a><strong>==本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。==</strong></h1><h2 id="搞各种初始的东西"><a href="#搞各种初始的东西" class="headerlink" title="搞各种初始的东西"></a>搞各种初始的东西</h2><h3 id="搞出鼠标右键"><a href="#搞出鼠标右键" class="headerlink" title="搞出鼠标右键"></a>搞出鼠标右键</h3><p>下载gnone-tweaks，直接apt install就行了。</p>
+<p>然后在里面就能搞</p>
+<h3 id="把任务栏搞到下面"><a href="#把任务栏搞到下面" class="headerlink" title="把任务栏搞到下面"></a>把任务栏搞到下面</h3><p>在ubuntu的设置就有</p>
+<h3 id="搞背景"><a href="#搞背景" class="headerlink" title="搞背景"></a>搞背景</h3><p>在gnome里面就能改，gnome下载完之后，它叫<strong>优化</strong></p>
+<h3 id="搜狗输入法"><a href="#搜狗输入法" class="headerlink" title="搜狗输入法"></a>搜狗输入法</h3><p>或说这个也搞了我好久，一开始下了之后一直运行不出来</p>
+<p>运行出来之后一直是繁体</p>
+<p>总之，这个好像要重启</p>
+<h3 id="熟悉linux的命令"><a href="#熟悉linux的命令" class="headerlink" title="熟悉linux的命令"></a>熟悉linux的命令</h3><p>把下面那些东西搞完，linux命令就熟悉的差不多了<code>^w^</code></p>
+<h3 id="点开文件，再点开其他界面"><a href="#点开文件，再点开其他界面" class="headerlink" title="点开文件，再点开其他界面"></a>点开文件，再点开其他界面</h3><p>你会发现ubuntu的主文件夹和window的文件夹，可以快速的把文件搬过来</p>
+<h2 id="学习Utunbu包管理工具的使用"><a href="#学习Utunbu包管理工具的使用" class="headerlink" title="学习Utunbu包管理工具的使用"></a>学习Utunbu包管理工具的使用</h2><h3 id="dpkg"><a href="#dpkg" class="headerlink" title="dpkg"></a>dpkg</h3><p>能安装deb后缀的二进制包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i xxx.deb</span><br></pre></td></tr></table></figure>
+
+<p>网上很多给linux的东西不是gz后缀的压缩文件，就是deb后缀的二进制包</p>
+<p>但是他比较的定向，就是只能处理一个文件，不能解决文件之间的依赖性问题。</p>
+<h3 id="apt"><a href="#apt" class="headerlink" title="apt"></a>apt</h3><p>apt就能解决文件之间的依赖性问题</p>
+<p>一般自带的软件，你先看看版本是什么，如果没有的话，他会提醒你，然后教你安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xxx -version</span><br><span class="line">sudo apt install xxx</span><br><span class="line">或</span><br><span class="line">sudo apt-get install xxx</span><br></pre></td></tr></table></figure>
+
+<p>其他的很多软件，我暂时还是看网上的教程装的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-add-repository ppa源</span><br></pre></td></tr></table></figure>
+
+<p>用这个也可以下很多的软件</p>
+<h3 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h3><p>也有很多用wget来从外部服务器或网站下载的，或者使用wget把网站上的key搞下来，然后apt add加上去</p>
+<p>虽然暂时不是很会用</p>
+<h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>一开始总是会有什么lock-fronted的东西，现在遇到的少了，反正到是用sudo是解决不了的，到网上去看什么kill进程，或rm掉锁，就是没有实验成功。</p>
+<p>然后我重启了，就没有遇到哪个问题了</p>
+<h2 id="兼容windows软件或运行exe"><a href="#兼容windows软件或运行exe" class="headerlink" title="兼容windows软件或运行exe"></a>兼容windows软件或运行exe</h2><h3 id="crossover"><a href="#crossover" class="headerlink" title="crossover"></a>crossover</h3><p>我没钱。。。找不到破解版</p>
+<h3 id="wine"><a href="#wine" class="headerlink" title="wine"></a>wine</h3><p>ubuntu上直接就有wine，但是我一开始，winehq，wine64，wine都按照之前说的-v一下然后安装，然后-v。。。怎么没有反应</p>
+<p>搞了好久</p>
+<p>然后到网上也找了好久的博客，最后要安装software-properties-common才成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget -qO- https://dl.winehq.org/wine-builds/winehq.key | sudo apt-key add -</span><br><span class="line">sudo apt install software-properties-common</span><br><span class="line">sudo apt-add-repository <span class="string">'deb http://dl.winehq.org/wine-builds/ubuntu/ bionic main'</span></span><br><span class="line">sudo apt-get install --install-recommends winehq-stable</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以了</p>
+<p>然后配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winecfg</span><br></pre></td></tr></table></figure>
+
+<p>把他要求安装的两个东西安装好就行了</p>
+<p>每次运行exe的时候就用wine来运行</p>
+<h3 id="winetricks"><a href="#winetricks" class="headerlink" title="winetricks"></a>winetricks</h3><p>ubuntu也是自带的，-v一下就能安装，然后就能把qq下了</p>
+<h3 id="科学上网"><a href="#科学上网" class="headerlink" title="科学上网"></a>科学上网</h3><p>我用wine运行了一下之前的赛风.exe，结果运行不出来</p>
+<p>然后我就找了别人用了别人的v2ray的梯子</p>
+<h2 id="配置Python的环境，下载pycharm"><a href="#配置Python的环境，下载pycharm" class="headerlink" title="配置Python的环境，下载pycharm"></a>配置Python的环境，下载pycharm</h2><h3 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a>anaconda</h3><p>这个python的环境自带各种库，虽然pycharm可以帮你下载，但是这个已经帮你搞好了</p>
+<h3 id="pycharm"><a href="#pycharm" class="headerlink" title="pycharm"></a>pycharm</h3><p>这个直接下，然后在setting那里加库的地方，改环境为pycharm就好了</p>
+<h3 id="配置桌面快捷键"><a href="#配置桌面快捷键" class="headerlink" title="配置桌面快捷键"></a>配置桌面快捷键</h3><p>在usr/share/applications里面建一个pycharm.desktop文件，然后把sh指向pycharm里的sh，icon指向pycharm的icon。</p>
+<p>虽然desktop里面的文字是网上的</p>
+<h2 id="安装学习git"><a href="#安装学习git" class="headerlink" title="安装学习git"></a>安装学习git</h2><p>ubuntu里面自带，直接下，然后看廖雪峰的网站，发现git用好了还挺好用的</p>
+<h2 id="编写markdown"><a href="#编写markdown" class="headerlink" title="编写markdown"></a>编写markdown</h2><h3 id="haroopad"><a href="#haroopad" class="headerlink" title="haroopad"></a>haroopad</h3><p>我搞了好久一直没有搞好，可能是版本不兼容</p>
+<h3 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h3><p>然后就用回了windows时的Typora，但是不知道为什么，这个软件在ubuntu上的加粗渲染失败了</p>
+<h2 id="用hexo自己搭建博客"><a href="#用hexo自己搭建博客" class="headerlink" title="用hexo自己搭建博客"></a>用hexo自己搭建博客</h2><h3 id="下载nodejs和npm"><a href="#下载nodejs和npm" class="headerlink" title="下载nodejs和npm"></a>下载nodejs和npm</h3><p>直接 apt  install就行</p>
+<h3 id="用npm下载hexo"><a href="#用npm下载hexo" class="headerlink" title="用npm下载hexo"></a>用npm下载hexo</h3><p>不知道为什么，网上的什么hexo-cli -g的命令一直没有用，会报错</p>
+<p>然后找了好久终于找到了一个能用的命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install --unsafe-perm --verbose -g hexo</span><br></pre></td></tr></table></figure>
+
+<p>然后就行了</p>
+<h3 id="下载hexo-deploy"><a href="#下载hexo-deploy" class="headerlink" title="下载hexo deploy"></a>下载hexo deploy</h3><p>又踩到坑了，不知道为什么，我一直安装报错，说什么没有json文件，到网上看怎么搞出个json文件后又继续报错。</p>
+<p>后来才发现我安装的位置不对，应该直接在hexo init的哪个地方安装deploy</p>
+<p>然后就行了</p>
+<h3 id="搞next主题"><a href="#搞next主题" class="headerlink" title="搞next主题"></a>搞next主题</h3><p>据说这是一个star最多的主题，看了一下，缺失很有csdn的风格，而且灵活性比较强—–&gt;就行你一进去什么都没有。</p>
+<h4 id="配置-config-yml文件"><a href="#配置-config-yml文件" class="headerlink" title="配置_config.yml文件"></a>配置_config.yml文件</h4><p>一开始的博客主文件夹有一个，next主题文件夹里面也有一个，点开一看，眼都花了。</p>
+<p>然后我就拿着翻译瞎改，结果最后一直报错，还在原来主题换回去之后也搞的报错，然后我放弃了。重新安装init</p>
+<p>之后找了个时间，直接照着网上的流程配置，就可以了。只是现在还不知道为什么我的外链网易云音乐运行不了。</p>
+<p>如果配置的时候报错了，直接把报错的东西复制粘贴，百度，百度会告诉你的。</p>
+<p><strong>有一个很奇怪的错误</strong>：你在配置时间的时候，不能用beijing，要用shanghai</p>
+<h2 id="用guake"><a href="#用guake" class="headerlink" title="用guake"></a>用guake</h2><p>看学长用guake好流利，不过我还是没有发现它的美妙</p>
 
     </div>
 
@@ -334,7 +404,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu折腾小记"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu折腾小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Ubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">安装Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：下载一个虚拟机软件如virtualbox"><span class="nav-number">1.1.1.</span> <span class="nav-text">方法一：下载一个虚拟机软件如virtualbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：制作一个U盘启动盘"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法二：制作一个U盘启动盘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、下载一个写U盘的软件"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1、下载一个写U盘的软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、在电脑上分一些硬盘空间出来"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2、在电脑上分一些硬盘空间出来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、下载iso镜像并写入U盘"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3、下载iso镜像并写入U盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、设置U盘为首选启动项"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">4、设置U盘为首选启动项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、然后就进入Ubuntu界面"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">5、然后就进入Ubuntu界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、小插曲"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">6、小插曲</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习Utunbu包管理工具的使用"><span class="nav-number">1.2.</span> <span class="nav-text">学习Utunbu包管理工具的使用</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Ubuntu折腾小记"><span class="nav-number">1.</span> <span class="nav-text">Ubuntu折腾小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Ubuntu"><span class="nav-number">1.1.</span> <span class="nav-text">安装Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方法一：下载一个虚拟机软件如virtualbox"><span class="nav-number">1.1.1.</span> <span class="nav-text">方法一：下载一个虚拟机软件如virtualbox</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法二：制作一个U盘启动盘"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法二：制作一个U盘启动盘</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、下载一个写U盘的软件"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1、下载一个写U盘的软件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、在电脑上分一些硬盘空间出来"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2、在电脑上分一些硬盘空间出来</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、下载iso镜像并写入U盘"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3、下载iso镜像并写入U盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、设置U盘为首选启动项"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">4、设置U盘为首选启动项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、然后就进入Ubuntu界面"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">5、然后就进入Ubuntu界面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6、小插曲"><span class="nav-number">1.1.2.6.</span> <span class="nav-text">6、小插曲</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。"><span class="nav-number">2.</span> <span class="nav-text">==本来以为安装完了就万事大吉，结果发现。我是一个重度window患者，短时间难以接受Linux的各种操作。==</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#搞各种初始的东西"><span class="nav-number">2.1.</span> <span class="nav-text">搞各种初始的东西</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搞出鼠标右键"><span class="nav-number">2.1.1.</span> <span class="nav-text">搞出鼠标右键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把任务栏搞到下面"><span class="nav-number">2.1.2.</span> <span class="nav-text">把任务栏搞到下面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搞背景"><span class="nav-number">2.1.3.</span> <span class="nav-text">搞背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜狗输入法"><span class="nav-number">2.1.4.</span> <span class="nav-text">搜狗输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#熟悉linux的命令"><span class="nav-number">2.1.5.</span> <span class="nav-text">熟悉linux的命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#点开文件，再点开其他界面"><span class="nav-number">2.1.6.</span> <span class="nav-text">点开文件，再点开其他界面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习Utunbu包管理工具的使用"><span class="nav-number">2.2.</span> <span class="nav-text">学习Utunbu包管理工具的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dpkg"><span class="nav-number">2.2.1.</span> <span class="nav-text">dpkg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apt"><span class="nav-number">2.2.2.</span> <span class="nav-text">apt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-number">2.2.3.</span> <span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题"><span class="nav-number">2.2.4.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#兼容windows软件或运行exe"><span class="nav-number">2.3.</span> <span class="nav-text">兼容windows软件或运行exe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#crossover"><span class="nav-number">2.3.1.</span> <span class="nav-text">crossover</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wine"><span class="nav-number">2.3.2.</span> <span class="nav-text">wine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#winetricks"><span class="nav-number">2.3.3.</span> <span class="nav-text">winetricks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#科学上网"><span class="nav-number">2.3.4.</span> <span class="nav-text">科学上网</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Python的环境，下载pycharm"><span class="nav-number">2.4.</span> <span class="nav-text">配置Python的环境，下载pycharm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#anaconda"><span class="nav-number">2.4.1.</span> <span class="nav-text">anaconda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pycharm"><span class="nav-number">2.4.2.</span> <span class="nav-text">pycharm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置桌面快捷键"><span class="nav-number">2.4.3.</span> <span class="nav-text">配置桌面快捷键</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装学习git"><span class="nav-number">2.5.</span> <span class="nav-text">安装学习git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写markdown"><span class="nav-number">2.6.</span> <span class="nav-text">编写markdown</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#haroopad"><span class="nav-number">2.6.1.</span> <span class="nav-text">haroopad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Typora"><span class="nav-number">2.6.2.</span> <span class="nav-text">Typora</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用hexo自己搭建博客"><span class="nav-number">2.7.</span> <span class="nav-text">用hexo自己搭建博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载nodejs和npm"><span class="nav-number">2.7.1.</span> <span class="nav-text">下载nodejs和npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用npm下载hexo"><span class="nav-number">2.7.2.</span> <span class="nav-text">用npm下载hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载hexo-deploy"><span class="nav-number">2.7.3.</span> <span class="nav-text">下载hexo deploy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搞next主题"><span class="nav-number">2.7.4.</span> <span class="nav-text">搞next主题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-config-yml文件"><span class="nav-number">2.7.4.1.</span> <span class="nav-text">配置_config.yml文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用guake"><span class="nav-number">2.8.</span> <span class="nav-text">用guake</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
