@@ -187,6 +187,144 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">缺失值的处理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-28 21:12:48 / Modified: 22:33:29" itemprop="dateCreated datePublished" datetime="2019-10-28T21:12:48+08:00">2019-10-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="缺失值的处理"><a href="#缺失值的处理" class="headerlink" title="缺失值的处理"></a>缺失值的处理</h1><p>缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大</p><h2 id="1、删除"><a href="#1、删除" class="headerlink" title="1、删除"></a>1、删除</h2><ul>
+<li>删除有缺失值的特征</li>
+<li>删除有缺失值数据</li>
+</ul><p>删除的时候可以设定一个阈值x</p><blockquote>
+<p>如果这一个数据缺失值&gt;x则丢弃</p>
+<p>如果这一个特征有缺失数据数&gt;x则丢弃</p>
+</blockquote><h2 id="2、数据补齐"><a href="#2、数据补齐" class="headerlink" title="2、数据补齐"></a>2、数据补齐</h2><h3 id="1、人工补齐"><a href="#1、人工补齐" class="headerlink" title="1、人工补齐"></a>1、人工补齐</h3><p>好，但费钱</p><h3 id="2、特殊值填充"><a href="#2、特殊值填充" class="headerlink" title="2、特殊值填充"></a>2、特殊值填充</h3><p>用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/%E5%BC%82%E5%B8%B8%E5%80%BC%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/28/%E5%BC%82%E5%B8%B8%E5%80%BC%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%A4%84%E7%90%86/" class="post-title-link" itemprop="url">异常值发现与处理</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-28 21:04:50 / Modified: 21:03:13" itemprop="dateCreated datePublished" datetime="2019-10-28T21:04:50+08:00">2019-10-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="异常值发现与处理异常值："><a href="#异常值发现与处理异常值：" class="headerlink" title="异常值发现与处理异常值："></a>异常值发现与处理异常值：</h1><p><strong>==异常值：故意、误差和错误==</strong></p><h2 id="异常值的发现"><a href="#异常值的发现" class="headerlink" title="异常值的发现"></a>异常值的发现</h2><h3 id="1、人工"><a href="#1、人工" class="headerlink" title="1、人工"></a>1、人工</h3><p>最有效，但是最费力</p><h3 id="2、简单的统计分析"><a href="#2、简单的统计分析" class="headerlink" title="2、简单的统计分析"></a>2、简单的统计分析</h3><p>对于一些错误(不可能)的数据或极小概率时间，如身高出现负数或陨石砸到我头上</p><p>有时也会有一些矛盾的、重复的数据，也是异常值</p><h3 id="3、3-delta-原则"><a href="#3、3-delta-原则" class="headerlink" title="3、3$\delta$原则"></a>3、3$\delta$原则</h3><p><strong>在数据服从正态分布的时候</strong>，$P(|x-\mu|&gt;3\delta)&lt;=0.003$，对于这种极小概率事件可以视为异常值</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/28/%E5%BC%82%E5%B8%B8%E5%80%BC%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%A4%84%E7%90%86/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/27/Ubuntu%E6%8A%98%E8%85%BE%E5%B0%8F%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -445,7 +583,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
