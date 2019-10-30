@@ -50,12 +50,12 @@
   };
 </script>
 
-  <meta name="description" content="缺失值的处理缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大1、删除 删除有缺失值的特征 删除有缺失值数据 删除的时候可以设定一个阈值x 如果这一个数据缺失值&amp;gt;x则丢弃 如果这一个特征有缺失数据数&amp;gt;x则丢弃 2、数据补齐1、人工补齐好，但费钱2、特殊值填充用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离">
+  <meta name="description" content="缺失值的处理缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大1、删除 删除有缺失值的特征 删除有缺失值数据">
 <meta property="og:type" content="article">
 <meta property="og:title" content="缺失值的处理">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;28&#x2F;%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86&#x2F;index.html">
 <meta property="og:site_name" content="Facico的博客">
-<meta property="og:description" content="缺失值的处理缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大1、删除 删除有缺失值的特征 删除有缺失值数据 删除的时候可以设定一个阈值x 如果这一个数据缺失值&amp;gt;x则丢弃 如果这一个特征有缺失数据数&amp;gt;x则丢弃 2、数据补齐1、人工补齐好，但费钱2、特殊值填充用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离">
+<meta property="og:description" content="缺失值的处理缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大1、删除 删除有缺失值的特征 删除有缺失值数据">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-10-28T14:33:29.773Z">
 <meta name="twitter:card" content="summary">
@@ -238,15 +238,15 @@
         <h1 id="缺失值的处理"><a href="#缺失值的处理" class="headerlink" title="缺失值的处理"></a>缺失值的处理</h1><p>缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大</p><h2 id="1、删除"><a href="#1、删除" class="headerlink" title="1、删除"></a>1、删除</h2><ul>
 <li>删除有缺失值的特征</li>
 <li>删除有缺失值数据</li>
-</ul><p>删除的时候可以设定一个阈值x</p><blockquote>
+</ul><a id="more"></a>
+
+<p>删除的时候可以设定一个阈值x</p>
+<blockquote>
 <p>如果这一个数据缺失值&gt;x则丢弃</p>
 <p>如果这一个特征有缺失数据数&gt;x则丢弃</p>
-</blockquote><h2 id="2、数据补齐"><a href="#2、数据补齐" class="headerlink" title="2、数据补齐"></a>2、数据补齐</h2><h3 id="1、人工补齐"><a href="#1、人工补齐" class="headerlink" title="1、人工补齐"></a>1、人工补齐</h3><p>好，但费钱</p><h3 id="2、特殊值填充"><a href="#2、特殊值填充" class="headerlink" title="2、特殊值填充"></a>2、特殊值填充</h3><p>用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离</p><a id="more"></a>
-
-
-
-
-
+</blockquote>
+<h2 id="2、数据补齐"><a href="#2、数据补齐" class="headerlink" title="2、数据补齐"></a>2、数据补齐</h2><h3 id="1、人工补齐"><a href="#1、人工补齐" class="headerlink" title="1、人工补齐"></a>1、人工补齐</h3><p>好，但费钱</p>
+<h3 id="2、特殊值填充"><a href="#2、特殊值填充" class="headerlink" title="2、特殊值填充"></a>2、特殊值填充</h3><p>用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离</p>
 <h3 id="3、均值-众数-填充"><a href="#3、均值-众数-填充" class="headerlink" title="3、均值(众数)填充"></a>3、均值(众数)填充</h3><p>连续型用均值，离散型用众数</p>
 <h3 id="4、热卡填充-就近补齐"><a href="#4、热卡填充-就近补齐" class="headerlink" title="4、热卡填充(就近补齐)"></a>4、热卡填充(就近补齐)</h3><p>相当于k邻近算的k等于1。</p>
 <p>就是在所有除了当前数据的缺失值其他都完整的数据中中找一个最像的来填充</p>
@@ -300,6 +300,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/" rel="prev" title="pandas复习">
+                  pandas复习 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -353,7 +356,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

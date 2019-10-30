@@ -187,6 +187,72 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/" class="post-title-link" itemprop="url">pandas复习</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-29 12:49:13 / Modified: 18:32:53" itemprop="dateCreated datePublished" datetime="2019-10-29T12:49:13+08:00">2019-10-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="pandas复习"><a href="#pandas复习" class="headerlink" title="pandas复习"></a>pandas复习</h1><h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><h3 id="对csv文件的读取"><a href="#对csv文件的读取" class="headerlink" title="对csv文件的读取"></a>对csv文件的读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fr=read_csv(filename,header=<span class="literal">None</span>,names=<span class="literal">None</span>);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -229,10 +295,7 @@
           <h1 id="缺失值的处理"><a href="#缺失值的处理" class="headerlink" title="缺失值的处理"></a>缺失值的处理</h1><p>缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大</p><h2 id="1、删除"><a href="#1、删除" class="headerlink" title="1、删除"></a>1、删除</h2><ul>
 <li>删除有缺失值的特征</li>
 <li>删除有缺失值数据</li>
-</ul><p>删除的时候可以设定一个阈值x</p><blockquote>
-<p>如果这一个数据缺失值&gt;x则丢弃</p>
-<p>如果这一个特征有缺失数据数&gt;x则丢弃</p>
-</blockquote><h2 id="2、数据补齐"><a href="#2、数据补齐" class="headerlink" title="2、数据补齐"></a>2、数据补齐</h2><h3 id="1、人工补齐"><a href="#1、人工补齐" class="headerlink" title="1、人工补齐"></a>1、人工补齐</h3><p>好，但费钱</p><h3 id="2、特殊值填充"><a href="#2、特殊值填充" class="headerlink" title="2、特殊值填充"></a>2、特殊值填充</h3><p>用一个特征的所有的空都用特殊值unknown来填充，形成另一种概念，但是很可能会导致严重的数据偏离</p>
+</ul>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/#more" rel="contents">
@@ -282,10 +345,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-28 21:04:50 / Modified: 21:03:13" itemprop="dateCreated datePublished" datetime="2019-10-28T21:04:50+08:00">2019-10-28</time>
+              <time title="Created: 2019-10-28 21:04:50" itemprop="dateCreated datePublished" datetime="2019-10-28T21:04:50+08:00">2019-10-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-30 13:04:28" itemprop="dateModified" datetime="2019-10-30T13:04:28+08:00">2019-10-30</time>
+              </span>
 
           
 
@@ -298,7 +367,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="异常值发现与处理异常值："><a href="#异常值发现与处理异常值：" class="headerlink" title="异常值发现与处理异常值："></a>异常值发现与处理异常值：</h1><p><strong>==异常值：故意、误差和错误==</strong></p><h2 id="异常值的发现"><a href="#异常值的发现" class="headerlink" title="异常值的发现"></a>异常值的发现</h2><h3 id="1、人工"><a href="#1、人工" class="headerlink" title="1、人工"></a>1、人工</h3><p>最有效，但是最费力</p><h3 id="2、简单的统计分析"><a href="#2、简单的统计分析" class="headerlink" title="2、简单的统计分析"></a>2、简单的统计分析</h3><p>对于一些错误(不可能)的数据或极小概率时间，如身高出现负数或陨石砸到我头上</p><p>有时也会有一些矛盾的、重复的数据，也是异常值</p><h3 id="3、3-delta-原则"><a href="#3、3-delta-原则" class="headerlink" title="3、3$\delta$原则"></a>3、3$\delta$原则</h3><p><strong>在数据服从正态分布的时候</strong>，$P(|x-\mu|&gt;3\delta)&lt;=0.003$，对于这种极小概率事件可以视为异常值</p>
+          <h1 id="异常值发现与处理异常值："><a href="#异常值发现与处理异常值：" class="headerlink" title="异常值发现与处理异常值："></a>异常值发现与处理异常值：</h1><p><strong>==异常值(Outlier)或利离群点：故意、误差和错误==</strong></p><h2 id="异常值的发现"><a href="#异常值的发现" class="headerlink" title="异常值的发现"></a>异常值的发现</h2><h3 id="1、人工"><a href="#1、人工" class="headerlink" title="1、人工"></a>1、人工</h3>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/28/%E5%BC%82%E5%B8%B8%E5%80%BC%E5%8F%91%E7%8E%B0%E4%B8%8E%E5%A4%84%E7%90%86/#more" rel="contents">
@@ -356,7 +425,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-28 14:54:23" itemprop="dateModified" datetime="2019-10-28T14:54:23+08:00">2019-10-28</time>
+                <time title="Modified: 2019-10-29 16:59:46" itemprop="dateModified" datetime="2019-10-29T16:59:46+08:00">2019-10-29</time>
               </span>
 
           
@@ -370,7 +439,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Ubuntu折腾小记"><a href="#Ubuntu折腾小记" class="headerlink" title="Ubuntu折腾小记"></a>Ubuntu折腾小记</h1><h2 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h2><p>作为一个十几年的window用户，突然要让我换一个系统，有点不知所措。</p><p>其实网上很多就教程都很好，只是不知道为什么我踩了很多的坑……</p><h3 id="方法一：下载一个虚拟机软件如virtualbox"><a href="#方法一：下载一个虚拟机软件如virtualbox" class="headerlink" title="方法一：下载一个虚拟机软件如virtualbox"></a>方法一：下载一个虚拟机软件如virtualbox</h3><p>下载虚拟机软件之后，给虚拟机软件配置运行内存，然后安装镜像……</p><p>然后，这是我想到我的电脑只有4G的内存，卡机的时候3G就已经被运行掉了，再怎么样也要至少配置个1G的内存给虚拟机吧。。。</p>
+          <h1 id="Ubuntu折腾小记"><a href="#Ubuntu折腾小记" class="headerlink" title="Ubuntu折腾小记"></a>Ubuntu折腾小记</h1><h2 id="安装Ubuntu"><a href="#安装Ubuntu" class="headerlink" title="安装Ubuntu"></a>安装Ubuntu</h2><p>作为一个十几年的window用户，突然要让我换一个系统，有点不知所措。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/27/Ubuntu%E6%8A%98%E8%85%BE%E5%B0%8F%E8%AE%B0/#more" rel="contents">
@@ -442,7 +511,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="git学习"><a href="#git学习" class="headerlink" title="git学习"></a>git学习</h2><h3 id="创建版本库-仓库，repository"><a href="#创建版本库-仓库，repository" class="headerlink" title="创建版本库(仓库，repository)"></a>创建版本库(仓库，repository)</h3><h4 id="初始设定"><a href="#初始设定" class="headerlink" title="初始设定"></a>初始设定</h4><p>创建一个文件之后</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ git init</span><br></pre></td></tr></table></figure><p>就能把这个目录设置git可以管理的仓库</p><h4 id="将文件加到暂存区"><a href="#将文件加到暂存区" class="headerlink" title="将文件加到暂存区"></a>将文件加到暂存区</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt</span><br></pre></td></tr></table></figure><p>将工作区的文件readme.txt添加到暂存区，这个文件必须存在</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git add readme.txt readme1.txt</span><br></pre></td></tr></table></figure>
+          <h2 id="git学习"><a href="#git学习" class="headerlink" title="git学习"></a>git学习</h2><h3 id="创建版本库-仓库，repository"><a href="#创建版本库-仓库，repository" class="headerlink" title="创建版本库(仓库，repository)"></a>创建版本库(仓库，repository)</h3><h4 id="初始设定"><a href="#初始设定" class="headerlink" title="初始设定"></a>初始设定</h4><p>创建一个文件之后</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~$ git init</span><br></pre></td></tr></table></figure><p>就能把这个目录设置git可以管理的仓库</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/26/learn_git/#more" rel="contents">
@@ -514,7 +583,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h2><p>cd 进入文件/目录如：cd E/learngit</p><p>​     cd.(跳到当前目录)   cd ..(进入上一层)    cd../..（进入上两层）cd ~跳到home    </p><p>pwd 输出当前文件的目录</p><p>mkdir xxx 在当前文件创建一个xxx文件夹</p><p>touch   用于修改文件或目录的时间属性，包括存取时间和修改时间。若文件不存在，系统会建立一个新的文件</p>
+          <h2 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h2><p>cd 进入文件/目录如：cd E/learngit</p><p>​     cd.(跳到当前目录)   cd ..(进入上一层)    cd../..（进入上两层）cd ~跳到home    </p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2019/10/26/Linux%E5%91%BD%E4%BB%A4/#more" rel="contents">
@@ -583,7 +652,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

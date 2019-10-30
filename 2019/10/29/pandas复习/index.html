@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="pandas复习读取文件对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pandas复习">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;pandas%E5%A4%8D%E4%B9%A0&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="pandas复习读取文件对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191029170653565.png">
+<meta property="og:updated_time" content="2019-10-29T10:32:53.013Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191029170653565.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>pandas复习 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/29/pandas%E5%A4%8D%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pandas复习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-10-29 12:49:13 / Modified: 18:32:53" itemprop="dateCreated datePublished" datetime="2019-10-29T12:49:13+08:00">2019-10-29</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="pandas复习"><a href="#pandas复习" class="headerlink" title="pandas复习"></a>pandas复习</h1><h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><h3 id="对csv文件的读取"><a href="#对csv文件的读取" class="headerlink" title="对csv文件的读取"></a>对csv文件的读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fr=read_csv(filename,header=<span class="literal">None</span>,names=<span class="literal">None</span>);</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+<p>names就是每一列的名字，定义为None就会没有给他初始名字，那么每一行列的初始值就是从0开始的数字。</p>
+<p>也可以初始化一个字符串列表，然后names=这个列表就可以有初始名字了</p>
+<p>如果不打后面那两个东西的话，那么检索值就是csv文件中的东西</p>
+<h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataSet.head()    <span class="comment">#返回前五行的东西</span></span><br><span class="line">dataSet.head(x)  <span class="comment">#返回前x行的东西</span></span><br><span class="line">dataSet.tail() 和dataSet.tail(x)  <span class="comment">#和上面类似</span></span><br><span class="line">dataSet[x:y]   <span class="comment">#返回第x行到用y-1行的东西</span></span><br><span class="line">dataSet.shape[<span class="number">0</span>]  <span class="comment">#返回行数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataSet[x]   <span class="comment">#返回第x列的东西</span></span><br><span class="line">dataSet[x][a:b]   <span class="comment">#后面可以跟切片，如前返回x列的a到b-1行的东西</span></span><br><span class="line">dataSet[x].str[:y]   <span class="comment">#返回第x列每行的前y个字符</span></span><br><span class="line">dataSet.shape[<span class="number">1</span>]   <span class="comment">#返回列数</span></span><br><span class="line">dataSet[列名]</span><br><span class="line">dataSet[[列名<span class="number">1</span>，列名<span class="number">2</span>]]</span><br></pre></td></tr></table></figure>
+
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="iloc"><a href="#iloc" class="headerlink" title="iloc"></a>iloc</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataSet.iloc[x]   <span class="comment">#返回第x行的数据，相当于dataSet[x:x+1]</span></span><br><span class="line">dataSet.iloc[x,:]   <span class="comment">#和上面相同</span></span><br><span class="line">dataSet.iloc[<span class="string">'index'</span>]   <span class="comment">#按照index索引选取数据</span></span><br><span class="line">dataSet.iloc[x,y]   <span class="comment">#选取(x,y)的数据</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="info"><a href="#info" class="headerlink" title="info"></a>info</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.info()    <span class="comment">#返回行数列数和内存信息</span></span><br></pre></td></tr></table></figure>
+<h4 id="describe"><a href="#describe" class="headerlink" title="describe"></a>describe</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet[<span class="number">0</span>:<span class="number">4</span>].describe()</span><br></pre></td></tr></table></figure>
+
+<p>.describe可以在上面“查看”的返回后加，可以统计count(总数),unique(类别),top(出现最多的类别),freq(出现最多的频率)</p>
+<p>不过describe只会竖着统计</p>
+<h4 id="count"><a href="#count" class="headerlink" title="count"></a>count</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataSet[x:y].count()   <span class="comment">#返回每列x到y-1行非空个数</span></span><br><span class="line">dataSet.count()   <span class="comment">#返回每列非空个数</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataSet.mean()：返回所有列的均值</span><br><span class="line">dataSet.corr()：返回列与列之间的相关系数</span><br><span class="line">dataSet.max()：返回每一列的最大值</span><br><span class="line">dataSet.min()：返回每一列的最小值</span><br><span class="line">dataSet.median()：返回每一列的中位数</span><br><span class="line">dataSet.std()：返回每一列的标准差</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="shift"><a href="#shift" class="headerlink" title="shift"></a>shift</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.shift(x)   <span class="comment">#把数据的0到x-1行清空，但是行的检索值保留</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="行列的合并"><a href="#行列的合并" class="headerlink" title="行列的合并"></a>行列的合并</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data=dataSet.append(testSet)   <span class="comment">#将testSet的行添加到dataSet的末尾</span></span><br><span class="line">data=concat([dataSet,testSet],axis=<span class="number">1</span>)   <span class="comment">#将testSet的列添加到dataSet的末尾</span></span><br><span class="line">dataSet.index=date_range(<span class="string">'2019/10/29'</span>,periods=dataSet.shape[<span class="number">0</span>])   <span class="comment">#把行索引改为从日期2019-10-29开始向后推</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="丢弃"><a href="#丢弃" class="headerlink" title="丢弃"></a>丢弃</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.drop(<span class="string">"index"</span>或序号,axis=<span class="number">0</span>或<span class="number">1</span>)   <span class="comment">#删除，0是行，1是列</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="改名"><a href="#改名" class="headerlink" title="改名"></a>改名</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.columns=[<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>]    <span class="comment">#改列名</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data=dataSet.sort_values(<span class="number">1</span>)   <span class="comment">#按第一列排序，默认升序</span></span><br><span class="line">data=dataSet.sort_values(<span class="number">1</span>,ascending=<span class="literal">False</span>)   <span class="comment">#按第一列排序，false表示降序</span></span><br><span class="line">data=dataSet.sort_values([<span class="number">1</span>,<span class="number">2</span>],ascending=[<span class="literal">True</span>,<span class="literal">False</span>])    <span class="comment">#以第一列升序未第一关键字，第二列降序未第二关键字排序</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="groupby"><a href="#groupby" class="headerlink" title="groupby"></a>groupby</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data=dataSet.groupby(<span class="number">1</span>)   <span class="comment">#返回以第一列为分组的groupby对象</span></span><br><span class="line">data=dataSet.groupby([<span class="number">1</span>,<span class="number">2</span>])   <span class="comment">#返回以第1,2列为分组的groupby对象</span></span><br></pre></td></tr></table></figure>
+
+<p>groupby对象能干什么</p>
+<p>可以求和，求最大值等等</p>
+<p><img src="/home/facico/.config/Typora/typora-user-images/image-20191029170653565.png" alt="image-20191029170653565"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/" rel="next" title="缺失值的处理">
+                  <i class="fa fa-chevron-left"></i> 缺失值的处理
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pandas复习"><span class="nav-number">1.</span> <span class="nav-text">pandas复习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取文件"><span class="nav-number">1.1.</span> <span class="nav-text">读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对csv文件的读取"><span class="nav-number">1.1.1.</span> <span class="nav-text">对csv文件的读取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看"><span class="nav-number">1.2.</span> <span class="nav-text">查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行"><span class="nav-number">1.2.1.</span> <span class="nav-text">行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列"><span class="nav-number">1.2.2.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.2.3.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iloc"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">iloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#info"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#describe"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">describe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#count"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">count</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算"><span class="nav-number">1.2.4.</span> <span class="nav-text">运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">1.3.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shift"><span class="nav-number">1.3.1.</span> <span class="nav-text">shift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行列的合并"><span class="nav-number">1.3.2.</span> <span class="nav-text">行列的合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#丢弃"><span class="nav-number">1.3.3.</span> <span class="nav-text">丢弃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改名"><span class="nav-number">1.3.4.</span> <span class="nav-text">改名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">1.3.5.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupby"><span class="nav-number">1.3.6.</span> <span class="nav-text">groupby</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
