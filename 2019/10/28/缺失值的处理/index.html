@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="Facico的博客">
 <meta property="og:description" content="缺失值的处理缺失值：信息(暂时)无法获取，丢失，冲突矛盾而不可用，获取代价大1、删除 删除有缺失值的特征 删除有缺失值数据">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-28T14:33:29.773Z">
+<meta property="og:updated_time" content="2019-10-30T08:21:52.851Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/10/28/%E7%BC%BA%E5%A4%B1%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86/">
@@ -212,10 +212,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-28 21:12:48 / Modified: 22:33:29" itemprop="dateCreated datePublished" datetime="2019-10-28T21:12:48+08:00">2019-10-28</time>
+              <time title="Created: 2019-10-28 21:12:48" itemprop="dateCreated datePublished" datetime="2019-10-28T21:12:48+08:00">2019-10-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-30 16:21:52" itemprop="dateModified" datetime="2019-10-30T16:21:52+08:00">2019-10-30</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -261,11 +267,12 @@
 <p>1、在缺失值未随机缺失的情况下，假设完整的数据样本是正确的。</p>
 <p>2、然后对这些数据的分布对缺失值做极大似然估计</p>
 </blockquote>
-<pre><code>&gt;&gt;1、E步：每次用上一次迭代得到的参数计算完整数据的对数似然函数和条件期望
-&gt;&gt;
-&gt;&gt;2、M步：用极大化对数似然函数以确定参数
-&gt;&gt;
-&gt;&gt;3、两次迭代之间的参数小于阈值则退出</code></pre><p>适用于大数据，但是可能会陷入局部极值，收敛不快，计算复杂</p>
+<blockquote>
+<blockquote>
+<p>1、E步：每次用上一次迭代得到的参数计算完整数据的对数似然函数和条件期望<br>2、M步：用极大化对数似然函数以确定参数<br>3、两次迭代之间的参数小于阈值则退出</p>
+</blockquote>
+</blockquote>
+<p>适用于大数据，但是可能会陷入局部极值，收敛不快，计算复杂</p>
 <h3 id="9、C4-5法-分类"><a href="#9、C4-5法-分类" class="headerlink" title="9、C4.5法(分类)"></a>9、C4.5法(分类)</h3><p>对离散值：通过寻找属性之间的关系来对缺失值填充。</p>
 <h2 id="3、不处理"><a href="#3、不处理" class="headerlink" title="3、不处理"></a>3、不处理</h2><p>据说是直接在数据集上进行挖掘，暂时不知道和特殊值填充有什么区别</p>
 <h2 id="4、方法之间的比较"><a href="#4、方法之间的比较" class="headerlink" title="4、方法之间的比较"></a>4、方法之间的比较</h2><p>不推荐人工和特殊值</p>
@@ -356,7 +363,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -50,15 +50,15 @@
   };
 </script>
 
-  <meta name="description" content="pandas复习读取文件对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
+  <meta name="description" content="pandas复习文件操作对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pandas复习">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;29&#x2F;pandas%E5%A4%8D%E4%B9%A0&#x2F;index.html">
 <meta property="og:site_name" content="Facico的博客">
-<meta property="og:description" content="pandas复习读取文件对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
+<meta property="og:description" content="pandas复习文件操作对csv文件的读取1fr=read_csv(filename,header=None,names=None);">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191029170653565.png">
-<meta property="og:updated_time" content="2019-10-29T10:32:53.013Z">
+<meta property="og:updated_time" content="2019-10-30T11:47:30.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191029170653565.png">
 
@@ -214,10 +214,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-10-29 12:49:13 / Modified: 18:32:53" itemprop="dateCreated datePublished" datetime="2019-10-29T12:49:13+08:00">2019-10-29</time>
+              <time title="Created: 2019-10-29 12:49:13" itemprop="dateCreated datePublished" datetime="2019-10-29T12:49:13+08:00">2019-10-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-30 19:47:30" itemprop="dateModified" datetime="2019-10-30T19:47:30+08:00">2019-10-30</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -237,29 +243,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="pandas复习"><a href="#pandas复习" class="headerlink" title="pandas复习"></a>pandas复习</h1><h2 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h2><h3 id="对csv文件的读取"><a href="#对csv文件的读取" class="headerlink" title="对csv文件的读取"></a>对csv文件的读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fr=read_csv(filename,header=<span class="literal">None</span>,names=<span class="literal">None</span>);</span><br></pre></td></tr></table></figure><a id="more"></a>
+        <h1 id="pandas复习"><a href="#pandas复习" class="headerlink" title="pandas复习"></a>pandas复习</h1><h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><h3 id="对csv文件的读取"><a href="#对csv文件的读取" class="headerlink" title="对csv文件的读取"></a>对csv文件的读取</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fr=read_csv(filename,header=<span class="literal">None</span>,names=<span class="literal">None</span>);</span><br></pre></td></tr></table></figure><a id="more"></a>
 
 <p>names就是每一列的名字，定义为None就会没有给他初始名字，那么每一行列的初始值就是从0开始的数字。</p>
 <p>也可以初始化一个字符串列表，然后names=这个列表就可以有初始名字了</p>
 <p>如果不打后面那两个东西的话，那么检索值就是csv文件中的东西</p>
+<h3 id="建立一个csv文件"><a href="#建立一个csv文件" class="headerlink" title="建立一个csv文件"></a>建立一个csv文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.to_csv(<span class="string">"xxx.csv"</span>,index=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<p>index表示要不要在行前面加1,2,3…</p>
 <h2 id="查看"><a href="#查看" class="headerlink" title="查看"></a>查看</h2><h3 id="行"><a href="#行" class="headerlink" title="行"></a>行</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataSet.head()    <span class="comment">#返回前五行的东西</span></span><br><span class="line">dataSet.head(x)  <span class="comment">#返回前x行的东西</span></span><br><span class="line">dataSet.tail() 和dataSet.tail(x)  <span class="comment">#和上面类似</span></span><br><span class="line">dataSet[x:y]   <span class="comment">#返回第x行到用y-1行的东西</span></span><br><span class="line">dataSet.shape[<span class="number">0</span>]  <span class="comment">#返回行数</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="列"><a href="#列" class="headerlink" title="列"></a>列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataSet[x]   <span class="comment">#返回第x列的东西</span></span><br><span class="line">dataSet[x][a:b]   <span class="comment">#后面可以跟切片，如前返回x列的a到b-1行的东西</span></span><br><span class="line">dataSet[x].str[:y]   <span class="comment">#返回第x列每行的前y个字符</span></span><br><span class="line">dataSet.shape[<span class="number">1</span>]   <span class="comment">#返回列数</span></span><br><span class="line">dataSet[列名]</span><br><span class="line">dataSet[[列名<span class="number">1</span>，列名<span class="number">2</span>]]</span><br></pre></td></tr></table></figure>
 
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="iloc"><a href="#iloc" class="headerlink" title="iloc"></a>iloc</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dataSet.iloc[x]   <span class="comment">#返回第x行的数据，相当于dataSet[x:x+1]</span></span><br><span class="line">dataSet.iloc[x,:]   <span class="comment">#和上面相同</span></span><br><span class="line">dataSet.iloc[<span class="string">'index'</span>]   <span class="comment">#按照index索引选取数据</span></span><br><span class="line">dataSet.iloc[x,y]   <span class="comment">#选取(x,y)的数据</span></span><br></pre></td></tr></table></figure>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><h4 id="iloc"><a href="#iloc" class="headerlink" title="iloc"></a>iloc</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dataSet.iloc[x]   <span class="comment">#返回第x行的数据，相当于dataSet[x:x+1]</span></span><br><span class="line">dataSet.iloc[x,:]   <span class="comment">#和上面相同</span></span><br><span class="line">dataSet.iloc[<span class="string">'index'</span>]   <span class="comment">#按照index索引选取数据</span></span><br><span class="line">dataSet.iloc[x,y]   <span class="comment">#选取(x,y)的数据，x,y只能是坐标</span></span><br><span class="line">str(dataSet.iloc[x,i])==<span class="string">'nan'</span>   <span class="comment">#判断这一位是不是缺失值，不知道为什么不能直接等于nan</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="info"><a href="#info" class="headerlink" title="info"></a>info</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.info()    <span class="comment">#返回行数列数和内存信息</span></span><br></pre></td></tr></table></figure>
+<h4 id="loc"><a href="#loc" class="headerlink" title="loc"></a>loc</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.loc[(dataSet[inx]&gt; Q3 + <span class="number">1.5</span> * IQR),inx]=<span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<p>loc和iloc类似，只是维度可以用检索值表示</p>
+<h4 id="at和ix"><a href="#at和ix" class="headerlink" title="at和ix"></a>at和ix</h4><p>和上面两个类似，不过at好像只能查询。</p>
+<p>而ix，如果在python里面用了ix，pycharm会报错说:强烈建议不要用ix</p>
+<h4 id="以上都可以用切片操作"><a href="#以上都可以用切片操作" class="headerlink" title="以上都可以用切片操作"></a>以上都可以用切片操作</h4><h4 id="info"><a href="#info" class="headerlink" title="info"></a>info</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.info()    <span class="comment">#返回行数列数和内存信息</span></span><br></pre></td></tr></table></figure>
 <h4 id="describe"><a href="#describe" class="headerlink" title="describe"></a>describe</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet[<span class="number">0</span>:<span class="number">4</span>].describe()</span><br></pre></td></tr></table></figure>
 
 <p>.describe可以在上面“查看”的返回后加，可以统计count(总数),unique(类别),top(出现最多的类别),freq(出现最多的频率)</p>
 <p>不过describe只会竖着统计</p>
 <h4 id="count"><a href="#count" class="headerlink" title="count"></a>count</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataSet[x:y].count()   <span class="comment">#返回每列x到y-1行非空个数</span></span><br><span class="line">dataSet.count()   <span class="comment">#返回每列非空个数</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="value-counts"><a href="#value-counts" class="headerlink" title="value_counts()"></a>value_counts()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dataSetO[&apos;Survived&apos;].value_counts(&apos;1.0&apos;)   #返回1.0出现的频率</span><br><span class="line">dataSetO[&apos;Survived&apos;].value_counts(&apos;1.0&apos;)   #返回1.0出现的次数</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="isnull-、notnull"><a href="#isnull-、notnull" class="headerlink" title="isnull()、notnull()"></a>isnull()、notnull()</h4><p>给每个位置判断是不是缺失值，如果是返回True</p>
+<h4 id="keys"><a href="#keys" class="headerlink" title="keys()"></a>keys()</h4><p>返回列的检索值</p>
 <h3 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dataSet.mean()：返回所有列的均值</span><br><span class="line">dataSet.corr()：返回列与列之间的相关系数</span><br><span class="line">dataSet.max()：返回每一列的最大值</span><br><span class="line">dataSet.min()：返回每一列的最小值</span><br><span class="line">dataSet.median()：返回每一列的中位数</span><br><span class="line">dataSet.std()：返回每一列的标准差</span><br></pre></td></tr></table></figure>
 
 
 
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="shift"><a href="#shift" class="headerlink" title="shift"></a>shift</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.shift(x)   <span class="comment">#把数据的0到x-1行清空，但是行的检索值保留</span></span><br></pre></td></tr></table></figure>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="to-frame"><a href="#to-frame" class="headerlink" title="to_frame()"></a>to_frame()</h3><p>将series变为frame</p>
+<h3 id="shift"><a href="#shift" class="headerlink" title="shift"></a>shift</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet.shift(x)   <span class="comment">#把数据的0到x-1行清空，但是行的检索值保留</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="行列的合并"><a href="#行列的合并" class="headerlink" title="行列的合并"></a>行列的合并</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data=dataSet.append(testSet)   <span class="comment">#将testSet的行添加到dataSet的末尾</span></span><br><span class="line">data=concat([dataSet,testSet],axis=<span class="number">1</span>)   <span class="comment">#将testSet的列添加到dataSet的末尾</span></span><br><span class="line">dataSet.index=date_range(<span class="string">'2019/10/29'</span>,periods=dataSet.shape[<span class="number">0</span>])   <span class="comment">#把行索引改为从日期2019-10-29开始向后推</span></span><br></pre></td></tr></table></figure>
 
@@ -297,6 +318,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/10/30/%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86/" rel="prev" title="数据划分">
+                  数据划分 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -335,7 +359,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pandas复习"><span class="nav-number">1.</span> <span class="nav-text">pandas复习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#读取文件"><span class="nav-number">1.1.</span> <span class="nav-text">读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对csv文件的读取"><span class="nav-number">1.1.1.</span> <span class="nav-text">对csv文件的读取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看"><span class="nav-number">1.2.</span> <span class="nav-text">查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行"><span class="nav-number">1.2.1.</span> <span class="nav-text">行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列"><span class="nav-number">1.2.2.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.2.3.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iloc"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">iloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#info"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#describe"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">describe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#count"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">count</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算"><span class="nav-number">1.2.4.</span> <span class="nav-text">运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">1.3.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shift"><span class="nav-number">1.3.1.</span> <span class="nav-text">shift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行列的合并"><span class="nav-number">1.3.2.</span> <span class="nav-text">行列的合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#丢弃"><span class="nav-number">1.3.3.</span> <span class="nav-text">丢弃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改名"><span class="nav-number">1.3.4.</span> <span class="nav-text">改名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">1.3.5.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupby"><span class="nav-number">1.3.6.</span> <span class="nav-text">groupby</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pandas复习"><span class="nav-number">1.</span> <span class="nav-text">pandas复习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#文件操作"><span class="nav-number">1.1.</span> <span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对csv文件的读取"><span class="nav-number">1.1.1.</span> <span class="nav-text">对csv文件的读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建立一个csv文件"><span class="nav-number">1.1.2.</span> <span class="nav-text">建立一个csv文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看"><span class="nav-number">1.2.</span> <span class="nav-text">查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行"><span class="nav-number">1.2.1.</span> <span class="nav-text">行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列"><span class="nav-number">1.2.2.</span> <span class="nav-text">列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">1.2.3.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iloc"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">iloc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#loc"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">loc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#at和ix"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">at和ix</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#以上都可以用切片操作"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">以上都可以用切片操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#info"><span class="nav-number">1.2.3.5.</span> <span class="nav-text">info</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#describe"><span class="nav-number">1.2.3.6.</span> <span class="nav-text">describe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#count"><span class="nav-number">1.2.3.7.</span> <span class="nav-text">count</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#value-counts"><span class="nav-number">1.2.3.8.</span> <span class="nav-text">value_counts()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isnull-、notnull"><span class="nav-number">1.2.3.9.</span> <span class="nav-text">isnull()、notnull()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#keys"><span class="nav-number">1.2.3.10.</span> <span class="nav-text">keys()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算"><span class="nav-number">1.2.4.</span> <span class="nav-text">运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">1.3.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#to-frame"><span class="nav-number">1.3.1.</span> <span class="nav-text">to_frame()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shift"><span class="nav-number">1.3.2.</span> <span class="nav-text">shift</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行列的合并"><span class="nav-number">1.3.3.</span> <span class="nav-text">行列的合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#丢弃"><span class="nav-number">1.3.4.</span> <span class="nav-text">丢弃</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改名"><span class="nav-number">1.3.5.</span> <span class="nav-text">改名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">1.3.6.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#groupby"><span class="nav-number">1.3.7.</span> <span class="nav-text">groupby</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -350,7 +374,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
