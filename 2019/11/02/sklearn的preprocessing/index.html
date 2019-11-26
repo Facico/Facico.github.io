@@ -50,17 +50,17 @@
   };
 </script>
 
-  <meta name="description" content="git命令cd 进入文件&#x2F;目录如：cd E&#x2F;learngit​     cd.(跳到当前目录)   cd ..(进入上一层)    cd..&#x2F;..（进入上两层）cd ~跳到home">
+  <meta name="description" content="sklearn的preprocessing缺失值的处理Imputer1impnum=Imputer(missing_values=nan,strategy=&amp;apos;mean&amp;apos;,axis=0,copy=False)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux命令">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;26&#x2F;Linux%E5%91%BD%E4%BB%A4&#x2F;index.html">
+<meta property="og:title" content="sklearn的preprocessing">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;02&#x2F;sklearn%E7%9A%84preprocessing&#x2F;index.html">
 <meta property="og:site_name" content="Facico的博客">
-<meta property="og:description" content="git命令cd 进入文件&#x2F;目录如：cd E&#x2F;learngit​     cd.(跳到当前目录)   cd ..(进入上一层)    cd..&#x2F;..（进入上两层）cd ~跳到home">
+<meta property="og:description" content="sklearn的preprocessing缺失值的处理Imputer1impnum=Imputer(missing_values=nan,strategy=&amp;apos;mean&amp;apos;,axis=0,copy=False)">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-10-21T11:58:02.946Z">
+<meta property="og:updated_time" content="2019-11-02T08:34:30.086Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/10/26/Linux%E5%91%BD%E4%BB%A4/">
+<link rel="canonical" href="http://yoursite.com/2019/11/02/sklearn%E7%9A%84preprocessing/">
 
 
 <script id="page-configurations">
@@ -74,7 +74,7 @@
   };
 </script>
 
-  <title>Linux命令 | Facico的博客</title>
+  <title>sklearn的preprocessing | Facico的博客</title>
   
 
 
@@ -190,7 +190,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/26/Linux%E5%91%BD%E4%BB%A4/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/02/sklearn%E7%9A%84preprocessing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/psu.jpg">
@@ -203,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linux命令
+          sklearn的preprocessing
         </h1>
 
         <div class="post-meta">
@@ -212,16 +212,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2019-10-26 14:21:42" itemprop="dateCreated datePublished" datetime="2019-10-26T14:21:42+08:00">2019-10-26</time>
+              <time title="Created: 2019-11-02 16:28:17 / Modified: 16:34:30" itemprop="dateCreated datePublished" datetime="2019-11-02T16:28:17+08:00">2019-11-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-21 19:58:02" itemprop="dateModified" datetime="2019-10-21T19:58:02+08:00">2019-10-21</time>
-              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -241,22 +235,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h2><p>cd 进入文件/目录如：cd E/learngit</p><p>​     cd.(跳到当前目录)   cd ..(进入上一层)    cd../..（进入上两层）cd ~跳到home    </p><a id="more"></a>
+        <h1 id="sklearn的preprocessing"><a href="#sklearn的preprocessing" class="headerlink" title="sklearn的preprocessing"></a>sklearn的preprocessing</h1><h2 id="缺失值的处理"><a href="#缺失值的处理" class="headerlink" title="缺失值的处理"></a>缺失值的处理</h2><h3 id="Imputer"><a href="#Imputer" class="headerlink" title="Imputer"></a>Imputer</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impnum=Imputer(missing_values=nan,strategy=<span class="string">'mean'</span>,axis=<span class="number">0</span>,copy=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure><a id="more"></a>
 
-<p>pwd 输出当前文件的目录</p>
-<p>mkdir xxx 在当前文件创建一个xxx文件夹</p>
-<p>touch   用于修改文件或目录的时间属性，包括存取时间和修改时间。若文件不存在，系统会建立一个新的文件</p>
-<p>git add xxxx将工作区的文件添加到暂存区，所以要先建立一个文件才能add</p>
-<p>git commit -m”wrote a readme file”(后面这个就是解释用于)可以将暂存区内容添加到版本库</p>
-<blockquote>
-<p>返回x file changed表示几个文件被改动</p>
-<p>返回x insertions表示插入了几行内容</p>
-</blockquote>
-<p>ls -l xxx可以显示档案的时间记录</p>
-<p>git init初始化一个git仓库</p>
-<p>git status让我们时刻掌握仓库当前的状态</p>
-<p>git diff xxx可以看到xxx上一次是怎么改过来的</p>
+<p>建立一个处理缺失值的模型</p>
+<ul>
+<li>impnum，missing_values定义什么是缺失值</li>
+<li>strategy定义用什么方式处理缺失值”mean”,”median”,”most_frequent”</li>
+<li>axis行或列</li>
+<li>copy是在原数据上进行操作还是copy一份</li>
+</ul>
+<h2 id="fit-transform-x"><a href="#fit-transform-x" class="headerlink" title="fit_transform(x)"></a>fit_transform(x)</h2><p>这个函数就是先fit，再transform</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dataSet=Imputer.fit_transform(dataSet)<span class="comment">#让impnum的缺失值处理模型先适应给dataSet再转化</span></span><br></pre></td></tr></table></figure>
 
+<p>几乎所有的模型运用在dataSet上都是这样</p>
+<h2 id="数据归一化"><a href="#数据归一化" class="headerlink" title="数据归一化"></a>数据归一化</h2><h3 id="StandardScaler"><a href="#StandardScaler" class="headerlink" title="StandardScaler()"></a>StandardScaler()</h3><p>数据标准化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scaler=StandardScaler()</span><br><span class="line">dataSet=scaler.fit_transform(dataSet)</span><br></pre></td></tr></table></figure>
+
+<h3 id="MinMaxScaler"><a href="#MinMaxScaler" class="headerlink" title="MinMaxScaler()"></a>MinMaxScaler()</h3><p>min_max处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scaler=MinMaxScaler()</span><br><span class="line">dataSet=scaler.fit_transform(dataSet)</span><br></pre></td></tr></table></figure>
+
+<h2 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h2>
     </div>
 
     
@@ -269,13 +267,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/31/%E6%95%B0%E6%8D%AE%E8%AF%84%E4%BC%B0/" rel="next" title="数据评估">
+                  <i class="fa fa-chevron-left"></i> 数据评估
+                </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/10/26/learn_git/" rel="prev" title="learn_git">
-                  learn_git <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/03/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92(Logistic%E5%9B%9E%E5%BD%92)/" rel="prev" title="逻辑回归(Logistic回归)">
+                  逻辑回归(Logistic回归) <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -315,7 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git命令"><span class="nav-number">1.</span> <span class="nav-text">git命令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sklearn的preprocessing"><span class="nav-number">1.</span> <span class="nav-text">sklearn的preprocessing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#缺失值的处理"><span class="nav-number">1.1.</span> <span class="nav-text">缺失值的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Imputer"><span class="nav-number">1.1.1.</span> <span class="nav-text">Imputer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fit-transform-x"><span class="nav-number">1.2.</span> <span class="nav-text">fit_transform(x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据归一化"><span class="nav-number">1.3.</span> <span class="nav-text">数据归一化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#StandardScaler"><span class="nav-number">1.3.1.</span> <span class="nav-text">StandardScaler()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MinMaxScaler"><span class="nav-number">1.3.2.</span> <span class="nav-text">MinMaxScaler()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正则化"><span class="nav-number">1.4.</span> <span class="nav-text">正则化</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

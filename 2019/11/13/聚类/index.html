@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="聚类定义把数据集分成若干个互不相交的簇(一坨数据集)，使簇间相似度尽量的小，簇内相似度尽量的大性能度量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聚类">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;13&#x2F;%E8%81%9A%E7%B1%BB&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="聚类定义把数据集分成若干个互不相交的簇(一坨数据集)，使簇间相似度尽量的小，簇内相似度尽量的大性能度量">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-15T08:33:16.658Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/13/%E8%81%9A%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>聚类 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/13/%E8%81%9A%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          聚类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-13 20:32:42" itemprop="dateCreated datePublished" datetime="2019-11-13T20:32:42+08:00">2019-11-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-15 16:33:16" itemprop="dateModified" datetime="2019-11-15T16:33:16+08:00">2019-11-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>把数据集分成若干个互不相交的簇(一坨数据集)，使簇间相似度尽量的小，簇内相似度尽量的大</p><h2 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h2><a id="more"></a>
+<h3 id="外部指标"><a href="#外部指标" class="headerlink" title="外部指标"></a>外部指标</h3><ul>
+<li>将聚类结果和某个参考模型进行比较</li>
+</ul>
+<h4 id="与外部模型的比较"><a href="#与外部模型的比较" class="headerlink" title="与外部模型的比较"></a>与外部模型的比较</h4><p>假设样本在聚类中是ai，在模型中是bi</p>
+<p>$a=|SS|，SS+{(i,j)|a_i=a_j,b_i=b_j,i&lt;j}$</p>
+<p>$b=|SD|，SS+{(i,j)|a_i=a_j,b_i!=b_j,i&lt;j}$</p>
+<p>$c=|DS|，SS+{(i,j)|a_i!=a_j,b_i=b_j,i&lt;j}$</p>
+<p>$d=|DD|，SS+{(i,j)|a_i!=a_j,b_i!=b_j,i&lt;j}$</p>
+<h4 id="指标"><a href="#指标" class="headerlink" title="指标"></a>指标</h4><h5 id="Jaccard系数"><a href="#Jaccard系数" class="headerlink" title="Jaccard系数"></a>Jaccard系数</h5><p>$JC=\frac{a}{a+b+c}$</p>
+<h5 id="FM指数"><a href="#FM指数" class="headerlink" title="FM指数"></a>FM指数</h5><p>$FMI=\sqrt{\frac{a}{a+b}\frac{a}{a+c}}$</p>
+<h5 id="Rand指数"><a href="#Rand指数" class="headerlink" title="Rand指数"></a>Rand指数</h5><p>$RI=\frac{2(a+d)}{m(m-1)}$</p>
+<h5 id="上述指标都是越大越好"><a href="#上述指标都是越大越好" class="headerlink" title="上述指标都是越大越好"></a>上述指标都是越大越好</h5><h3 id="内部指标"><a href="#内部指标" class="headerlink" title="内部指标"></a>内部指标</h3><ul>
+<li>不使用参考模型将聚类结果进行比较</li>
+</ul>
+<h4 id="内部比较"><a href="#内部比较" class="headerlink" title="内部比较"></a>内部比较</h4><p>$avg(C)=\frac{2}{|C|(|C|-1)}\sum_{1&lt;=i&lt;j&lt;=|C|}dist(i,j)$</p>
+<p>$diam(C)=max_{1&lt;=i&lt;j&lt;=|C|}dist(i,j)$</p>
+<p>$d_{min}(C_i,C_j)=min_{x\in C_i,y\in C_j}dist(i,j)$</p>
+<p>$d_{cen}(C_i,C_j)=dist(\mu_i,\mu_j)$</p>
+<p>$\mu$是簇的中心点</p>
+<h4 id="指数"><a href="#指数" class="headerlink" title="指数"></a>指数</h4><h5 id="DB指数，简称DBI"><a href="#DB指数，简称DBI" class="headerlink" title="DB指数，简称DBI"></a>DB指数，简称DBI</h5><p>$$DBI=\frac{1}{k}sum_{i=1}^kmax_{j!=i}(\frac{avg(C_i)+avg(C_j)}{d_{cen}(\mu_i,\mu_j)})$$</p>
+<h5 id="Dunn指数，简称DI"><a href="#Dunn指数，简称DI" class="headerlink" title="Dunn指数，简称DI"></a>Dunn指数，简称DI</h5><p>$DI=\min_{1&lt;=i&lt;=k}(min_{j!=i}(\frac{d_{min}(C_i,C_j)}{max_{1&lt;=l&lt;=k}diam(C_l)}))$</p>
+<h5 id="DBI越小越好，DI越大越好"><a href="#DBI越小越好，DI越大越好" class="headerlink" title="DBI越小越好，DI越大越好"></a>DBI越小越好，DI越大越好</h5><h2 id="距离度量"><a href="#距离度量" class="headerlink" title="距离度量"></a>距离度量</h2><h3 id="对于有序属性—连续值"><a href="#对于有序属性—连续值" class="headerlink" title="对于有序属性—连续值"></a>对于有序属性—连续值</h3><p>各种距离</p>
+<h3 id="对于无序属性—离散值"><a href="#对于无序属性—离散值" class="headerlink" title="对于无序属性—离散值"></a>对于无序属性—离散值</h3><h4 id="VDM-Value-Difference-Metric"><a href="#VDM-Value-Difference-Metric" class="headerlink" title="VDM(Value Difference Metric)"></a>VDM(Value Difference Metric)</h4><ul>
+<li>$m_{u,a}$表示在属性u上取值为a的样本数</li>
+<li>$m_{u,a,i}$表示在第i个样本簇中在属性u上取值为a 的样本数</li>
+<li>k为簇数</li>
+</ul>
+<p>则属性u上两个离散值a与b之间的VDM距离为</p>
+<p>$$VDM_{p(a,b)}=\sum_{i=1}^k|\frac{m_{u,a,i}}{m_{u,a}}-\frac{m_{u,b,i}}{m_{u,b}}|^p$$</p>
+<h3 id="上面的两者结合可以处理混合属性"><a href="#上面的两者结合可以处理混合属性" class="headerlink" title="上面的两者结合可以处理混合属性"></a>上面的两者结合可以处理混合属性</h3><h2 id="原型聚类"><a href="#原型聚类" class="headerlink" title="原型聚类"></a>原型聚类</h2><ul>
+<li>基于原型的聚类方法，假设聚类结构能通过一组原型进行刻画。</li>
+<li>算法先对原型进行初始化，然后不断的迭代更新……</li>
+</ul>
+<h3 id="k-均值聚类"><a href="#k-均值聚类" class="headerlink" title="k-均值聚类"></a>k-均值聚类</h3><ul>
+<li>目的是最小化平方误差</li>
+</ul>
+<p>$$<br>E=\sum_{i=1}^k\sum_{x\in C_i}|x-\mu_i|^2<br>$$</p>
+<p>$\mu_i$是簇i的均值向量</p>
+<p>由于这是一个NP难问题，所以我们用贪心的方式解决</p>
+<ul>
+<li>1、随机初始化均值向量<ul>
+<li>2、根据均值向量分类</li>
+<li>3、重新分配每个样本所属哪个簇</li>
+<li>4、更新均值向量</li>
+<li>5、重复上面的三个过程</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kMeansCluster</span><span class="params">(self)</span>:</span></span><br><span class="line">    dataSet = self.dataSet</span><br><span class="line">    K = self.K</span><br><span class="line">    bz = <span class="number">1</span>; n, m = dataSet.shape</span><br><span class="line">    self.dataBe = mat(zeros((n,<span class="number">1</span>)))</span><br><span class="line">    <span class="keyword">while</span> bz:</span><br><span class="line">        bz = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">            minn, minx = self.findMin(dataSet[i])</span><br><span class="line">            <span class="keyword">if</span> (minx != self.dataBe[i]): bz = <span class="number">1</span></span><br><span class="line">            self.dataBe[i] = minx</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">            datK = dataSet[nonzero(self.dataBe[:, <span class="number">0</span>] == i)[<span class="number">0</span>]]</span><br><span class="line">            <span class="keyword">if</span> (datK.shape[<span class="number">0</span>] == <span class="number">0</span>): <span class="keyword">continue</span></span><br><span class="line">            self.cen[i, :] = mean(datK, axis=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">        labK = []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</span><br><span class="line">            <span class="keyword">if</span> (self.dataBe[j, <span class="number">0</span>] == i): labK.append(self.labelSet[j])</span><br><span class="line">        self.cenbz.append(self.majority(labK))</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="学习向量量化-LVQ"><a href="#学习向量量化-LVQ" class="headerlink" title="学习向量量化(LVQ)"></a>学习向量量化(LVQ)</h3><ul>
+<li><p>与k-均值分类的原理类似，也是最小化平方误差，但是它是已知各个样本的标签的。</p>
+</li>
+<li><p>假设每个样本的特征是向量x，标记是y，$y \in Y$，簇的个数是q</p>
+</li>
+<li><p>目标：我们试图对每个簇搞出一个向量，向量的长度与特征数是一样的，同时也有一个簇标记t</p>
+</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
+<li>1、初始化每个向量的类别标记，$t_{1..q}$，和每个向量的值，还有学习率$\eta$</li>
+<li>2、直到满足条件则停止(收敛,更新到小于阈值)<ul>
+<li>1、从样本中<strong>随机选取</strong>一些样本</li>
+<li>2、计算这些样本与每个簇向量的距离</li>
+<li>3、找出对于每个样本x最近的簇向量i<ul>
+<li>a、假如样本x的标签和簇向量i的标签是一样的—–&gt;则我们希望他们更近</li>
+<li>b、假如样本x的标签和簇向量i的标签不一样—-&gt;则我们希望他们更远</li>
+<li>更远和更近:向量$p=p±\eta(x-p)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="高斯混合聚类"><a href="#高斯混合聚类" class="headerlink" title="高斯混合聚类"></a>高斯混合聚类</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>就是有很多个高斯分布搞在一起，然后要把他划分出来</p>
+<p>例：假如有一组升高数据，不知道性别，然后拿一个数据出来问你性别的概率</p>
+<p>答：假设是由两个高斯分布混合在一起的，高斯混合聚类可解</p>
+<h4 id="一维高斯分布到n维的高斯分布"><a href="#一维高斯分布到n维的高斯分布" class="headerlink" title="一维高斯分布到n维的高斯分布"></a>一维高斯分布到n维的高斯分布</h4><p>一维：<br>$$<br>一维f(x)=\frac{1}{\sqrt{2\pi}\delta}e^{-\frac{(x-\mu)^2}{2\delta^2}}=<br>$$</p>
+<p>$上面的x$~$N(\mu,\delta^2)$</p>
+<p>多维：</p>
+<p>$$<br>n维f(x)=\frac{1}{(2\pi)^{\frac{n}{2}}|\sum|^{1\over 2}}e^{-{1\over 2}(x-\mu)^{T}\sum^{-1}(x-\mu)}<br>$$</p>
+<p>$上面x$~$N(\mu,\sum)$，$\sum表示协方差矩阵,|\sum|表示行列式，\sum^{-1}表示逆矩阵，x是一个向量，上诉得到一个向量$</p>
+<p>$一维的\delta—-&gt;n维的\sum^{1\over 2}$</p>
+<ul>
+<li>高维就是把方差(一维相关性)转化成协方差矩阵(多维相关性)，所以我们只用考虑一维如何求解就能推到到多维</li>
+</ul>
+<p>显然，我们假设已经知道了一个概率模型，我们需要知道系数—–&gt;<strong>极大似然估计</strong></p>
+<ul>
+<li>不过问题是，我们在对数似然估计后的求导难以求出解，因为它会有一些不知道的变量——&gt;EM算法</li>
+</ul>
+<h4 id="EM算法"><a href="#EM算法" class="headerlink" title="EM算法"></a>EM算法</h4><h5 id="思想来源"><a href="#思想来源" class="headerlink" title="思想来源"></a><strong>思想来源</strong></h5><p>概率模型中有</p>
+<ul>
+<li>观测变量：就是已经知道的数据   //如果只有这种数据的时候，我们可以直接进行极大似然估计(求导、梯度下降、牛顿迭代……)或者直接套用贝叶斯分析模型</li>
+<li>隐变量或潜在变量：比如你自己建立了一个概率模型，然后会引入一下未知量。在聚类学习中就会引入，这个时候我们就不能直接用上面的方法了</li>
+<li>综上所述：EM算法就是在有隐变量的情况下做极大似然估计</li>
+</ul>
+<h5 id="一般流程"><a href="#一般流程" class="headerlink" title="一般流程"></a><strong>一般流程</strong></h5><ul>
+<li><p>(1) 得到数据：观测变量数据Y，隐变量数据Z，联合概率$P(Y,Z|\theta)$，条件概率$P(Y|Z,\theta)$</p>
+</li>
+<li><p>(2) 得到参数的初始值，模型$\theta^0$的各种值</p>
+</li>
+<li><p>(3) 开始迭代，对i+1时</p>
+<ul>
+<li>E步：根据第i步的各个参数，得到Q函数：$Q(\theta,\theta^i)$，Q函数就是对极大对数似然函数的期望期望最大化函数</li>
+</ul>
+<p>$$<br>Q(\theta,\theta^i)=E_z(logP(Y,Z|\theta)|Y,\theta^i)<br>$$</p>
+<p>$$<br>=\sum_Z(logP(Y,Z|\theta)P(Z|Y,\theta^i))<br>$$</p>
+<ul>
+<li>M步：极大化Q函数</li>
+</ul>
+<p>$$<br>\theta^{i+1}=argmax_{\theta}(Q(\theta,\theta^i))<br>$$</p>
+<ul>
+<li>重复上两步直到收敛，判断收敛条件$|Q(\theta^{i+1},\theta^i)-Q(\theta^i,\theta^i)|&lt;\varepsilon$</li>
+</ul>
+<p>所以，每次迭代的目的相当于不断的极值化Q函数</p>
+</li>
+</ul>
+<h5 id="EM算法的导出"><a href="#EM算法的导出" class="headerlink" title="EM算法的导出"></a><strong>EM算法的导出</strong></h5><p>$$<br>L(\theta)=log(\sum_{Z}P(Y|Z,\theta)P(Z|\theta))<br>$$</p>
+<ul>
+<li>我们注意到求这个极大化的困难就是数据中有隐变量并有包含和(积分)的对数</li>
+</ul>
+<p>实际上，我们的EM算法是通过迭代逐步近似极大化的$L(\theta)$，所以每次迭代的时候我们希望$L(\theta)&gt;L(\theta^i)$</p>
+<p>我们考虑对他做差<br>$$<br>L(\theta)-L(\theta^i)=log(\sum_ZP(Y|Z,\theta^i)\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)})-logP(Y|\theta^i)<br>$$</p>
+<p>$$<br>=log(\sum_ZP(Y|Z,\theta^i)\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
+<p>根据Jensen不等式$log(\sum ai<em>bi)&gt;=\sum ai</em>log(bi)，其中ai&gt;=0且\sum ai =1$</p>
+<p>因为$\sum_Z P(Y|Z,\theta^i)=1$</p>
+<p>所以<br>$$<br>=\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
+<p>$$<br>设B(\theta,\theta^i)近似于L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
+<p>我们并不用求确切的差值，只用满足$L(\theta)≥B(\theta,\theta^i)$，找到这个下界即可</p>
+<p>有上式可知$L(\theta^i)=B(\theta^i,\theta^i)$</p>
+<p>因此，任何能使B函数增大的$\theta$都能使$L(\theta)$增大，所以我们要求<br>$$<br>\theta^{i+1}=argmax_{\theta}B(\theta,\theta^i)<br>$$</p>
+<p>$$<br>= argmax_{\theta}(L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)}))<br>$$</p>
+<p>由于$\theta^i$是常量，我们可以省去一部分常量<br>$$<br>= argmax_{\theta}(\sum_ZP(Y|Z,\theta^i)log(P(Y|Z,\theta)P(Z|\theta))<br>$$</p>
+<p>$$<br>= argmax_{\theta}(\sum_ZP(Y|Z,\theta^i)log(P(Y,Z|\theta)<br>$$</p>
+<p>$$<br>= argmax_{\theta}Q(\theta,\theta^i)<br>$$</p>
+<ul>
+<li>上面几行的推导最后又饶了回来，目的是证明，我们极大化Q函数的方法是不断的求解<strong>下界</strong>来逼近的，并<strong>保证每次迭代的时候是单调增长的</strong>(假如没有隐函数，我们直接通过求导在函数上逼近，而现在我们不断确定下界逼近)</li>
+</ul>
+<h5 id="EM算法在非监督学习上的应用"><a href="#EM算法在非监督学习上的应用" class="headerlink" title="EM算法在非监督学习上的应用"></a>EM算法在非监督学习上的应用</h5><ul>
+<li>监督学习对每个样本X是有分类的Y，而非监督学习是没有分类的</li>
+<li>然而虽然非监督学习没有分类，但是模型还是联合概率$P(X,Y)$</li>
+<li>X是观测数据，Y是未观测数据(隐变量)</li>
+</ul>
+<h4 id="EM算法在高斯混合模型上的应用"><a href="#EM算法在高斯混合模型上的应用" class="headerlink" title="EM算法在高斯混合模型上的应用"></a>EM算法在高斯混合模型上的应用</h4><p>一维的高斯混合分模型如下<br>$$<br>P(x|\theta)=\sum_{k=1}^K\alpha_k\phi(x|\theta_k)<br>$$</p>
+<p>$$<br>\phi(x|\theta_k)=\frac{1}{\sqrt{2\pi}\delta_k}e^{-\frac{(x-\mu_k)^2}{2\delta_k^2}}<br>$$</p>
+<p>K是簇的个数,$\phi_k$是第k个簇的高斯分布模型，$\alpha_k$(≥0)是第k个簇的系数满足$\sum \alpha=1$，就是划分系数</p>
+<h5 id="一、明确隐变量，写出完全数据的对数似然函数"><a href="#一、明确隐变量，写出完全数据的对数似然函数" class="headerlink" title="一、明确隐变量，写出完全数据的对数似然函数"></a>一、<strong>明确隐变量，写出完全数据的对数似然函数</strong></h5><p>我们现在有k个簇，那么就有k个标签了</p>
+<p>由于我们不知道每个样本属于哪个标签，所以我们定义$g_{ik}表示第i个样本属于第k个簇的概率$，g不是0就是1，且$\sum_{k=1}^Kg_{ik}=1$</p>
+<p>那么现在的概率模型为,一下的$g_{ik}$的定义为是0还是1，这样就能作为次幂乘起来<br>$$<br>P(X,g|\theta)=\prod_{i=1}^nP(g_{i1},g_{i2},…,g_{iK}|\theta)<br>$$</p>
+<p>$$<br>=\prod_{i=1}^n\prod_{k=1}^K[\alpha_k\phi(x_i|\theta_k)]^{g_{ik}}<br>$$</p>
+<p>$$<br>=\prod_{k=1}^K\alpha_k^{n_k}\prod_{i=1}^n[\frac{1}{\sqrt{2\pi}\delta_k}e^{-\frac{(x_i-\mu_k)^2}{2\delta_k^2}}]<br>$$</p>
+<p>所以完全数的对数似然函数为<br>$$<br>log(X,g|\theta)=\sum_{k=1}^Kn_klog\alpha_k+\sum_{i=1}^ng_{ik}[log(\frac{1}{\sqrt{2\pi}})-log\delta_k-\frac{(x_i-\mu_k)^2}{2\delta_k^2}]<br>$$</p>
+<p>$$<br>n_k=\sum_{i=1}^ng_{ik}，\sum_{k=1}^Kn_k=N(这里就是每个样本只有一个地方是1)<br>$$</p>
+<h5 id="二、EM算法的E步：确实Q函数"><a href="#二、EM算法的E步：确实Q函数" class="headerlink" title="二、EM算法的E步：确实Q函数"></a>二、EM算法的E步：确实Q函数</h5><p>$$<br>Q(\theta,\theta^i)=E(logP(X,G|\theta)|X,\theta^i)<br>$$</p>
+<p>把期望函数带入和隐函数相关的变量中<br>$$<br>log(X,g|\theta)=\sum_{k=1}^K(\sum_{i=1}^n(Eg_{ik})log\alpha_k+\sum_{i=1}^n(Eg_{ik})[log(\frac{1}{\sqrt{2\pi}})-log\delta_k-\frac{(x_i-\mu_k)^2}{2\delta_k^2}])<br>$$<br>由于现在g的值还没有确定，所以我们要确定了g的值才能确定g函数</p>
+<ul>
+<li>由上式g的函数被转化成g的期望</li>
+</ul>
+<p>$$<br>\hat g_{ik}=E(g_{ik}|X,\theta)=P(g_{ik}=1|X,\theta)<br>$$</p>
+<p>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)}<br>$$</p>
+<p>上下同时乘$P(g_{ik}=1|\theta)$，转化乘联合概率$P(X,g|\theta)$（完全数据的概率）<br>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)P(g_{ik}=1|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)P(g_{ik}=1|\theta)}<br>$$</p>
+<p>$$<br>=\frac{\alpha_k\phi(x_i|\theta_k)}{\sum_{k=1}^K\alpha_k\phi(x_i|\theta_k)}<br>$$</p>
+<p>我们通过对g的期望计算g，然后确定出Q函数</p>
+<ul>
+<li>EM算法在确定Q函数的时候大致如此，用隐函数的最大期望来得到</li>
+</ul>
+<h5 id="三、EM算法的M步：极大化Q函数"><a href="#三、EM算法的M步：极大化Q函数" class="headerlink" title="三、EM算法的M步：极大化Q函数"></a>三、EM算法的M步：极大化Q函数</h5><p>我们在确定出Q函数的时候，就能求极值了，如果不能直接求极值可以用梯度下降或牛顿迭代来求</p>
+<p>对于每个变量偏导使其等于0</p>
+<p>高斯分布一维的情况<br>$$<br>\mu_knew=\frac{\sum_{i=1}^n\hat g_{ik}x_i}{\sum_{i=1}^n\hat g_{ik}}<br>$$</p>
+<p>$$<br>\delta^2_knew=\frac{\sum_{i=1}^n\hat g_{jk}(x_i-\mu_k new)^2}{\sum_{i=1}^n\hat g_{ik}}<br>$$</p>
+<p>$\alpha$是用拉格朗日乘数法推出来的，我还不会</p>
+<p>$$<br>\alpha_k new=\frac{n_k}{n}=\frac{\sum_{i=1}^ng_{ik}}{n}<br>$$</p>
+<h5 id="重复以上步骤直到收敛"><a href="#重复以上步骤直到收敛" class="headerlink" title="重复以上步骤直到收敛"></a>重复以上步骤直到收敛</h5><p>收敛条件，由于Q的值与$\alpha$有关系，当$\alpha$的变化小于阈值时，则收敛</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/08/%E5%86%B3%E7%AD%96%E6%A0%91/" rel="next" title="决策树">
+                  <i class="fa fa-chevron-left"></i> 决策树
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#聚类"><span class="nav-number">1.</span> <span class="nav-text">聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能度量"><span class="nav-number">1.2.</span> <span class="nav-text">性能度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部指标"><span class="nav-number">1.2.1.</span> <span class="nav-text">外部指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#与外部模型的比较"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">与外部模型的比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指标"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">指标</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Jaccard系数"><span class="nav-number">1.2.1.2.1.</span> <span class="nav-text">Jaccard系数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#FM指数"><span class="nav-number">1.2.1.2.2.</span> <span class="nav-text">FM指数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Rand指数"><span class="nav-number">1.2.1.2.3.</span> <span class="nav-text">Rand指数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#上述指标都是越大越好"><span class="nav-number">1.2.1.2.4.</span> <span class="nav-text">上述指标都是越大越好</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部指标"><span class="nav-number">1.2.2.</span> <span class="nav-text">内部指标</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#内部比较"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">内部比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#指数"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">指数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DB指数，简称DBI"><span class="nav-number">1.2.2.2.1.</span> <span class="nav-text">DB指数，简称DBI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Dunn指数，简称DI"><span class="nav-number">1.2.2.2.2.</span> <span class="nav-text">Dunn指数，简称DI</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#DBI越小越好，DI越大越好"><span class="nav-number">1.2.2.2.3.</span> <span class="nav-text">DBI越小越好，DI越大越好</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#距离度量"><span class="nav-number">1.3.</span> <span class="nav-text">距离度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对于有序属性—连续值"><span class="nav-number">1.3.1.</span> <span class="nav-text">对于有序属性—连续值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对于无序属性—离散值"><span class="nav-number">1.3.2.</span> <span class="nav-text">对于无序属性—离散值</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VDM-Value-Difference-Metric"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">VDM(Value Difference Metric)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上面的两者结合可以处理混合属性"><span class="nav-number">1.3.3.</span> <span class="nav-text">上面的两者结合可以处理混合属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型聚类"><span class="nav-number">1.4.</span> <span class="nav-text">原型聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#k-均值聚类"><span class="nav-number">1.4.1.</span> <span class="nav-text">k-均值聚类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习向量量化-LVQ"><span class="nav-number">1.4.2.</span> <span class="nav-text">学习向量量化(LVQ)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯混合聚类"><span class="nav-number">1.4.3.</span> <span class="nav-text">高斯混合聚类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义-1"><span class="nav-number">1.4.3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一维高斯分布到n维的高斯分布"><span class="nav-number">1.4.3.2.</span> <span class="nav-text">一维高斯分布到n维的高斯分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EM算法"><span class="nav-number">1.4.3.3.</span> <span class="nav-text">EM算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#思想来源"><span class="nav-number">1.4.3.3.1.</span> <span class="nav-text">思想来源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#一般流程"><span class="nav-number">1.4.3.3.2.</span> <span class="nav-text">一般流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#EM算法的导出"><span class="nav-number">1.4.3.3.3.</span> <span class="nav-text">EM算法的导出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#EM算法在非监督学习上的应用"><span class="nav-number">1.4.3.3.4.</span> <span class="nav-text">EM算法在非监督学习上的应用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EM算法在高斯混合模型上的应用"><span class="nav-number">1.4.3.4.</span> <span class="nav-text">EM算法在高斯混合模型上的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#一、明确隐变量，写出完全数据的对数似然函数"><span class="nav-number">1.4.3.4.1.</span> <span class="nav-text">一、明确隐变量，写出完全数据的对数似然函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二、EM算法的E步：确实Q函数"><span class="nav-number">1.4.3.4.2.</span> <span class="nav-text">二、EM算法的E步：确实Q函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三、EM算法的M步：极大化Q函数"><span class="nav-number">1.4.3.4.3.</span> <span class="nav-text">三、EM算法的M步：极大化Q函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重复以上步骤直到收敛"><span class="nav-number">1.4.3.4.4.</span> <span class="nav-text">重复以上步骤直到收敛</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="逻辑回归(Logistic回归)优缺点 优点：计算代价不高，易于理解和实现 缺点：容易欠拟合，分类精度可能不高 使用数据类型：数值型和标称型数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逻辑回归(Logistic回归)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92(Logistic%E5%9B%9E%E5%BD%92)&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="逻辑回归(Logistic回归)优缺点 优点：计算代价不高，易于理解和实现 缺点：容易欠拟合，分类精度可能不高 使用数据类型：数值型和标称型数据">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180315163847781?watermark&#x2F;2&#x2F;text&#x2F;Ly9ibG9nLmNzZG4ubmV0L2ppYW95YW5nd20=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20170528002827749">
+<meta property="og:updated_time" content="2019-11-26T06:28:04.754Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180315163847781?watermark&#x2F;2&#x2F;text&#x2F;Ly9ibG9nLmNzZG4ubmV0L2ppYW95YW5nd20=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/03/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92(Logistic%E5%9B%9E%E5%BD%92)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>逻辑回归(Logistic回归) | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/03/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92(Logistic%E5%9B%9E%E5%BD%92)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          逻辑回归(Logistic回归)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-03 15:47:16" itemprop="dateCreated datePublished" datetime="2019-11-03T15:47:16+08:00">2019-11-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-26 14:28:04" itemprop="dateModified" datetime="2019-11-26T14:28:04+08:00">2019-11-26</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="逻辑回归-Logistic回归"><a href="#逻辑回归-Logistic回归" class="headerlink" title="逻辑回归(Logistic回归)"></a>逻辑回归(Logistic回归)</h2><h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ul>
+<li>优点：计算代价不高，易于理解和实现</li>
+<li>缺点：容易欠拟合，分类精度可能不高</li>
+<li>使用数据类型：数值型和标称型数据</li>
+</ul><a id="more"></a>
+<h3 id="一般过程"><a href="#一般过程" class="headerlink" title="一般过程"></a>一般过程</h3><ul>
+<li>1、收集数据：任意方法</li>
+<li>2、准备数据：由于需要进行距离运算，所以数据需要是数值型。另外，结构化数据格式最佳</li>
+<li>3、分析数据：任意方法</li>
+<li>4、训练算法：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数</li>
+<li>5、测试算法：训练完成后，此步骤很快</li>
+<li>6、使用算法：首先，我们需要输入一些数据，并将其转化成对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定他们属于哪个类别；在这之后，我们就可以在输出的类别上做一些其他的分析工作</li>
+</ul>
+<h3 id="各种前要知识"><a href="#各种前要知识" class="headerlink" title="各种前要知识"></a>各种前要知识</h3><h4 id="Sigmoid函数-逻辑斯蒂函数，S性函数"><a href="#Sigmoid函数-逻辑斯蒂函数，S性函数" class="headerlink" title="Sigmoid函数(逻辑斯蒂函数，S性函数)"></a>Sigmoid函数(逻辑斯蒂函数，S性函数)</h4><p>//下面先考虑两类问题，且考虑的是判别式函数（判断你是哪一类）<br>$$<br>\sigma (z)={1\over{1+e^{-z}}}={e^z\over{1+e^z}}<br>$$</p>
+<p><img src="https://img-blog.csdn.net/20180315163847781?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2ppYW95YW5nd20=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>随着z的值增大，Sigmoid将逼近1；随着z的值减小,Sigmoid将逼近0</p>
+<h5 id="贝叶斯规则"><a href="#贝叶斯规则" class="headerlink" title="贝叶斯规则"></a>贝叶斯规则</h5><p>$$<br>P(A|a)={P(A)P(a|A)\over P(a)}<br>$$</p>
+<p>P(A|a)是后验概率，即a发生了，a属于A的概率。P(A)和P(a)是先验概率，是A，a发生的概率。</p>
+<p>P(a|A)是类似然或类条件概率，即在A中a发生的概率。</p>
+<p>知道了后验概率就能对某一样本进行分类，后验概率越大，属于这个样本的概率就越大</p>
+<h5 id="来源-下面会讲具体来源"><a href="#来源-下面会讲具体来源" class="headerlink" title="来源(下面会讲具体来源)"></a>来源(下面会讲具体来源)</h5><p>根据一大波公式计算得到$ln({{P(C1|x)}\over{P(C2|x)}})=w^Tx+w_0$ </p>
+<p>$w和w_0$都是些奇怪的东西，因为P(C1|x)=1-P(C2|x)（在两类问题中），然后就能得到</p>
+<p>$P(C1|x)=sigmoid(w^Tx+w_0)={1\over 1+e^{-(w^Tx+w_0)}}$ </p>
+<h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><ul>
+<li><p>1、$\lim_{z-&gt;+∞}=1 $ 相反等于0</p>
+</li>
+<li><p>2、$\delta(z)’=\delta(z)[1-\delta(z)]$</p>
+</li>
+<li><p>3、假定二分类训练集{x,y}，x是m维的样本特征向量，y是0或者1</p>
+<p>$P(y=1|x)=p(x)={1\over{1+e^{-w^Tx+w0}}}；P(y=0|x)=1-p(x)={1\over{e^{w^Tx+w0}}}$(w定义往下看)</p>
+</li>
+<li><p>条件的发生概率与不发生概率之比:${p(x)\over{1-p(x)}}={e^{w^Tx+w0}}$</p>
+</li>
+<li><p>上式两边同时取对数：$logit(x)=w^Tx+w0$ </p>
+</li>
+</ul>
+<h5 id="如何实现Logistic回归分类器"><a href="#如何实现Logistic回归分类器" class="headerlink" title="如何实现Logistic回归分类器"></a>如何实现Logistic回归分类器</h5><p>在每个特征上都乘以一个回归系数，然后将所有的结果值相加，将这个总和带入sigmoid函数中，进而得到一个范围在0~1中的数值，任何大于0.5的数据被分入1类，小于0.5的被分入0类，所以Logistic回归也可以被看成一种概率估计。</p>
+<p><strong>分类器的函数形式确定后，问题转化成最佳回归系数是多少？</strong></p>
+<p>就是，概率分布形式已有(模型已有)</p>
+<h4 id="极大似然估计"><a href="#极大似然估计" class="headerlink" title="极大似然估计"></a>极大似然估计</h4><h5 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h5><p><img src="https://img-blog.csdn.net/20170528002827749" alt="img"></p>
+<h5 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h5><p>目的：利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值。</p>
+<p>常用策略是<strong>先假定具有某种确定的概率分布形式，再基于训练样本对概率分布的参数进行估计</strong></p>
+<h5 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h5><p>类别c的类条件概率为$P(x|c)$,假设$P(x|c)$有确定的形式且被参数向量$\theta_c$唯一确定，则我们用训练集D估计参数$\theta_c$,为明确我们记$P(x|c)=P(x|\theta_c)$</p>
+<p>令$D_c$是训练集D的第c类样本组成的集合，假设这些样本是独立同分布的，则参数值$θ<em>c$对于数据集$D_c$的似然就是<br>$$<br>P(D_c|θ_c)=\prod</em>{x∈D_c}P(x|θ<em>c)<br>$$<br>为了防止连乘造成下溢(精度误差)，则用对数的形式<br>$$<br>LL(θ_c)=\sum</em>{x∈D_c}ln(P(x|θ_c))<br>$$</p>
+<p>对$\theta_c$进行极大似然估计，就是去寻找最大化似然$P(D_c|θ_c)$的值的参数${\hat\theta}$ 。<strong>直观上看，最大似然估计在众多参数中试图找一个参数，是的D的出现概率最大，就是找个参数使得D最像是抽取出的</strong></p>
+<p>$$<br>{\hat\theta}=argmaxLL(\theta)<br>$$</p>
+<p>argmax返回最大值的时候的参数</p>
+<p>这个方法得到的是参数，这个参数是使得从数据中抽取一个集合D，它的概率是<strong>最像的</strong>，<strong>样本趋近于无限多的时候，它会趋近于真实值</strong></p>
+<h6 id="例："><a href="#例：" class="headerlink" title="例："></a>例：</h6><ul>
+<li><strong>伯努利密度(两类问题)</strong></li>
+</ul>
+<p>概率值为p，事件要么发生要么不发生。</p>
+<p>内容：若事件发生，x=1；若事件不发生，x=0<br>$$<br>P(x)=p^x(1-p)^{1-x}<br>$$<br>P(x)就是上面的内容的数学式子</p>
+从数据集中取出样本D，D中有N个元素，每个元素对应的x值为$x^t属于{0,1}$
+$$
+LL(p|D)=ln\prod_{t=1}^Np^{(x^t)}(1-p)^{(1-x^t)}=\sum_tx^tlnp+(N-\sum_tx^t)ln(1-p)
+$$
+通过对上面的式子求导，使导数=0求得$\hat p$ 
+$$
+LL(p|D)'={{\sum x^t}\over p}-{N-\sum x^t\over{1-p}}={{\sum x^t-pN}\over p(1-p)}
+$$
+ 
+
+<p>使上式等于0求得$\hat p={\sum x^t\over N}$ ，$\hat p$是事件发生次数和试验次数的比值</p>
+<p>式子只有唯一的参数p，这个参数p的估计值(我们用极大似然估计求到的)就是$\hat p$  ，$\hat p$是事件发生次数和试验次数的比值。<strong>从实际的角度来看这的确是p的估计值。</strong></p>
+<p>注意，这个估计是样本的函数，也是一个随机变量。抽出不同的Di，可以讨论$\hat p_i$的分布</p>
+<ul>
+<li><strong>多项式密度(伯努利分布的推广)</strong></li>
+</ul>
+<p>随机事件的结果不是两种状态，而是K中互斥，满足$\sum_{i=1}^Kp_i=1$</p>
+<p>内容：设$x_i$为指示变量，输出为状态i是$x_i=1$，否则为0<br>$$<br>P(x_1,x_2,…,x_K)=\prod_{i=1}^Kp_i^{x_i}<br>$$<br>假定我们做N此这样的独立实验，结果为$D={x^t}(t=1–&gt;N)$，其中$x_i^t=1(如果实验t选择状态i)；0(否则)$</p>
+<p>其中$\sum_i x_i^t=1$，$p_i$的极大似然估计是$\hat p_i={\sum_t x_i^t\over N}$ </p>
+<p><strong>从实际的角度来看这的确是</strong>  $p_i$<strong>的估计值。</strong> </p>
+<ul>
+<li><strong>高斯(正态)密度</strong></li>
+</ul>
+<p>$$<br>p(x)={1\over {\sqrt {2π}\sigma}}ln[-{(x-\mu)^2\over{2\sigma^2}}],x∈(-∞,+∞)<br>$$</p>
+<p>从中选取样本D，其中$x^t~N(\mu,\sigma^2)$，高斯样本的对数似然为<br>$$<br>LL(\mu,\sigma|D)=-{N\over 2}ln(2π)-Nln(\sigma)-{\sum (x^t-\mu)^2\over {2\sigma^2}}<br>$$<br>通过求该函数的偏导数并使它们等于0，得<br>$$<br>\hat\mu={\sum x^t\over N}<br>，\hat\sigma^2={\sum(x^t-\hat\mu)^2\over N}<br>$$<br>通过这个例子能更好的理解极大似然估计</p>
+<h4 id="逻辑回归两类问题的极大似然"><a href="#逻辑回归两类问题的极大似然" class="headerlink" title="逻辑回归两类问题的极大似然"></a>逻辑回归两类问题的极大似然</h4><p>假定对数似然比是线性的$z=w_0^o+w1x1+w2x2….wnxn=w^Tx+w_0^o=ln({p(x|C1)\over {p(x|C2)}})$</p>
+<p>特别的求出了系数w后，使z=0，则可以画出<strong>分割线</strong>，因为在线上p(x|C1)=p(x|C2)</p>
+<p>但是我们要估计的是$P(C1|x)$</p>
+<p>根据贝利叶规则<br>$$<br>ln({P(C1|x)\over {P(C2|x)}})=ln({P(C1|x)\over {1-P(C2|x)}})=ln({p(x|C1)\over {p(x|C2)}})+ln({P(C1)\over {P(C2)}})=w^Tx+w_0(上下两个不是同一个w)<br>$$<br>整理后就有上面Sigmoid的东西</p>
+<p>$w^T$与p的关系$ln({p(x_i)\over {1-p(x_i)}})=w^Tx_i+w0$</p>
+<p><strong>下面把每个(x,y)样本前面多加一个1变成(1,x,y)，把w0归入w</strong></p>
+<p>有n个独立的训练样本{(x1,y1),…,(xn,yn)},y={0,1}，那么</p>
+<p>如果yi=0,P(yi=0|xi)=1-P(yi=1|xi)<br>$$<br>l(w)=\prod P(y_i=1|x_i)^{y_i}[1-P(y_i=1|x_i)]^{1-y_i}<br>$$<br>它的对数似然：<br>$$<br>LL(w)=\sum_{i=1}^n[y_iln(p(x_i))+(1-y_i)ln(1-p(x_i))]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^n[y_i[ln(p(x_i))-ln(1-p(x_i))]+ln(1-p(x_i))]<br>$$</p>
+<p>$$<br>=\sum_{i=1}^n[y_iln({p(x_i)\over {1-p(x_i)}})-ln(1+{p(x_i)\over 1-p(x_i)})]<br>$$</p>
+<p>$ln({p(x_i)\over {1-p(x_i)}})=w^Tx_i$，然后解得$p(x_i)=\sigma(w^Tx_i)={1\over{1+e^{-w^Tx_i}}}$ </p>
+<p>$$<br>=\sum_{i=1}^ny_iw^Tx_i-\sum_{i=1}^nln(1+e^{w^tx_i})<br>$$</p>
+<p>p(小p)和P(大P)的关系上面sigmoid有讲，现在就是要求参数向量w了，求导(把x看成整体，而不是函数)<br>$$<br>LL(w)’=\sum_{i=1}^n x_iy_i-\sum_{i=1}^n{e^{w^Tx_i}\over{1+e^{w^Tx_i}}}x_i<br>$$</p>
+<p>$$<br>=\sum_{i=1}^n(y_i-{1\over{1+e^{-w^Tx_i}}})x_i<br>$$</p>
+<p>$$<br>=\sum_{i=1}^n[y_i-\sigma(w^Tx_i)]x_i<br>$$</p>
+<p>使导数等于0，发现无法得到解析解。但因为$y_i-\sigma(w^Tx_i)$是线性分类器的误差函数，可以通过梯度下降迭代求解式子的近似结果</p>
+<h4 id="梯度下降法"><a href="#梯度下降法" class="headerlink" title="梯度下降法"></a>梯度下降法</h4><p>梯度下降法又称最速下降法(最优化领域的最简单的算法)</p>
+<ul>
+<li>流程：梯度法利用一阶梯度信息，逐步找到函数的最优解。梯度下降法是一种迭代算法，选取最优的初值$x^{(0)}$，反复迭代，不断的更新x的值，进行函数目标的及消化，直至收敛</li>
+</ul>
+<p>由于梯度方向是函数增长最快的方向，因此负梯度的方向是函数作为极小化的下降方向，所以每一步用负梯度方向来更新x的值(简单的来说就是爬山算法，普通的梯度下降法只能找到极小值，不能找到最小值)</p>
+<p>…..//不想书上那么多废话了</p>
+<p>设置一个步长$\lambda_k$即学习率，负梯度方向$p^k$，每次更新为$x^{(k+1)}=x^{(k)}+\lambda_kp_k$，直至导数为0（一个很显然的算法）</p>
+<p><strong>综上所述</strong></p>
+<p>$\alpha$定义为步长(学习率)</p>
+<p>极大似然估计是求最大值，所以梯度下降要改成剃度上升(就是符号变了一下)<br>$$<br>w^{(t+1)}=w^{(t)}+\alpha LL(w)’=w^{(t)}+\alpha\sum_{i=1}^n[y_i-\sigma(w^Tx_i)]x_i<br>$$</p>
+<h4 id="逻辑回归步骤"><a href="#逻辑回归步骤" class="headerlink" title="逻辑回归步骤"></a>逻辑回归步骤</h4><ul>
+<li>(1)初始化各种参数,w={1,1，……}，步长为$\alpha$</li>
+<li>(2)重复计算下列步骤N次<ul>
+<li>1、计算样本集的梯度$LL(w)’$</li>
+<li>2、更新w，$w=w-\alpha LL(w)’$</li>
+</ul>
+</li>
+</ul>
+<h4 id="随机梯度下降法"><a href="#随机梯度下降法" class="headerlink" title="随机梯度下降法"></a>随机梯度下降法</h4><p>梯度下降法是每次用所有数据来迭代更新，这样虽精确但效率低</p>
+<p>随机梯度下降飞：每次只用一个数据来迭代更新，搞完这个数据把所有的系数还原，再来一次。显然这样很快，但是精确度不高。</p>
+<p>改进版：每次迭代的时候调整一下步长，防止收敛的过快</p>
+<h4 id="牛顿法-牛顿迭代"><a href="#牛顿法-牛顿迭代" class="headerlink" title="牛顿法(牛顿迭代)"></a>牛顿法(牛顿迭代)</h4><p>在x=x0处一阶泰勒展开$f(x)=f(x0)+f’(x0)(x-x0)$（近似相等）</p>
+<p>求解方程，当f(x)=0时$x=x1=x0-\frac{f(x0)}{f’(x0)}$利用近似相等可以是x1离根更近，通过迭代必然会在f(xn)的时候收敛</p>
+<p>于是迭代公式$x_{n+1}=x_n-\frac{f(x_n)}{f’(x_n)}$</p>
+<p>然后套用上面的东西就行了</p>
+<h3 id="Python实现-并输出分割线"><a href="#Python实现-并输出分割线" class="headerlink" title="Python实现(并输出分割线)"></a>Python实现(并输出分割线)</h3><p>由于下面weights矩阵是(n*1)的，所以下面是否转置的地方和上面的公式不一样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></span><br><span class="line">    dataMat=[]</span><br><span class="line">    labelMat=[]</span><br><span class="line">    fr=open(<span class="string">'testSet.txt'</span>)</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fr.readlines():</span><br><span class="line">        lineArr=line.strip().split()</span><br><span class="line">        dataMat.append([<span class="number">1.0</span>,float(lineArr[<span class="number">0</span>]),float(lineArr[<span class="number">1</span>])])</span><br><span class="line">        labelMat.append(int(lineArr[<span class="number">2</span>]))</span><br><span class="line">    fr.close()</span><br><span class="line">    <span class="keyword">return</span> dataMat,labelMat</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(inX)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1</span>+np.exp(-inX))</span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">如下：梯度上升算法,就是求最大值，与梯度下降相反</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradAscent</span><span class="params">(dataMatln,classLabels)</span>:</span></span><br><span class="line">    dataMatrix=np.mat(dataMatln)</span><br><span class="line">    labelMat=np.mat(classLabels).transpose()</span><br><span class="line">    m,n=np.shape(dataMatrix)</span><br><span class="line">    alpha=<span class="number">0.001</span></span><br><span class="line">    maxCycles=<span class="number">500</span></span><br><span class="line">    weights=np.ones((n,<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(maxCycles):</span><br><span class="line">        h=sigmoid(dataMatrix*weights)</span><br><span class="line">        error=labelMat-h</span><br><span class="line">        weights=weights+alpha*dataMatrix.transpose()*error</span><br><span class="line">    <span class="keyword">return</span> weights.getA()</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotBestFit</span><span class="params">(weights)</span>:</span></span><br><span class="line">    dataMat,labelMat=loadDataSet()</span><br><span class="line">    dataArr=np.array(dataMat)</span><br><span class="line">    n=np.shape(dataMat)[<span class="number">0</span>]</span><br><span class="line">    xcord1=[];ycord1=[]</span><br><span class="line">    xcord2=[];ycord2=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">if</span> int(labelMat[i])==<span class="number">1</span>:</span><br><span class="line">            xcord1.append(dataArr[i,<span class="number">1</span>])</span><br><span class="line">            ycord1.append(dataArr[i,<span class="number">2</span>])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            xcord2.append(dataArr[i,<span class="number">1</span>])</span><br><span class="line">            ycord2.append(dataArr[i,<span class="number">2</span>])</span><br><span class="line">    fig=plt.figure()</span><br><span class="line">    ax=fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">    ax.scatter(xcord1,ycord1,s=<span class="number">20</span>,c=<span class="string">'red'</span>,marker=<span class="string">'s'</span>,alpha=<span class="number">.5</span>)</span><br><span class="line">    ax.scatter(xcord2,ycord2,s=<span class="number">20</span>,c=<span class="string">'green'</span>,alpha=<span class="number">.5</span>)</span><br><span class="line">    x=np.arange(<span class="number">-3.0</span>,<span class="number">3.0</span>,<span class="number">0.1</span>)</span><br><span class="line">    y=(-weights[<span class="number">0</span>]-weights[<span class="number">1</span>]*x)/weights[<span class="number">2</span>]</span><br><span class="line">    ax.plot(x,y)</span><br><span class="line">    plt.title(<span class="string">'DataSet'</span>)</span><br><span class="line">    plt.xlabel(<span class="string">'x'</span>)</span><br><span class="line">    plt.ylabel(<span class="string">'y'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">'__main__'</span>:</span><br><span class="line">    dataMat,labelMat=loadDataSet()</span><br><span class="line">    weights=gradAscent(dataMat,labelMat)</span><br><span class="line">    print(weights)</span><br><span class="line">    plotBestFit(weights)</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/02/sklearn%E7%9A%84preprocessing/" rel="next" title="sklearn的preprocessing">
+                  <i class="fa fa-chevron-left"></i> sklearn的preprocessing
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/08/%E5%86%B3%E7%AD%96%E6%A0%91/" rel="prev" title="决策树">
+                  决策树 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑回归-Logistic回归"><span class="nav-number">1.</span> <span class="nav-text">逻辑回归(Logistic回归)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优缺点"><span class="nav-number">1.1.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一般过程"><span class="nav-number">1.2.</span> <span class="nav-text">一般过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种前要知识"><span class="nav-number">1.3.</span> <span class="nav-text">各种前要知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sigmoid函数-逻辑斯蒂函数，S性函数"><span class="nav-number">1.3.1.</span> <span class="nav-text">Sigmoid函数(逻辑斯蒂函数，S性函数)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#贝叶斯规则"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">贝叶斯规则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#来源-下面会讲具体来源"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">来源(下面会讲具体来源)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#性质"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如何实现Logistic回归分类器"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">如何实现Logistic回归分类器</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#极大似然估计"><span class="nav-number">1.3.2.</span> <span class="nav-text">极大似然估计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#来源"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">来源</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#目的"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">目的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#流程"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#例："><span class="nav-number">1.3.2.3.1.</span> <span class="nav-text">例：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑回归两类问题的极大似然"><span class="nav-number">1.3.3.</span> <span class="nav-text">逻辑回归两类问题的极大似然</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度下降法"><span class="nav-number">1.3.4.</span> <span class="nav-text">梯度下降法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑回归步骤"><span class="nav-number">1.3.5.</span> <span class="nav-text">逻辑回归步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降法"><span class="nav-number">1.3.6.</span> <span class="nav-text">随机梯度下降法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#牛顿法-牛顿迭代"><span class="nav-number">1.3.7.</span> <span class="nav-text">牛顿法(牛顿迭代)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python实现-并输出分割线"><span class="nav-number">1.4.</span> <span class="nav-text">Python实现(并输出分割线)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
