@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="神经网络思想来源神经网络的思想来源于模拟人脑的神经系统的运作，即”神经网络是有具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;26&#x2F;%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="神经网络思想来源神经网络的思想来源于模拟人脑的神经系统的运作，即”神经网络是有具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应”">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;ss0.bdstatic.com&#x2F;70cFuHSh_Q1YnxGkpoWK1HF6hhy&#x2F;it&#x2F;u=2956569879,4024414811&amp;fm=27&amp;gp=0.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;images2015.cnblogs.com&#x2F;blog&#x2F;673793&#x2F;201512&#x2F;673793-20151230204223917-579926148.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180123140254140">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;%E6%A1%8C%E9%9D%A2&#x2F;93E4B7E6CB979E7C410025F5384E84A5.jpg">
+<meta property="og:updated_time" content="2019-11-26T11:53:29.240Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;ss0.bdstatic.com&#x2F;70cFuHSh_Q1YnxGkpoWK1HF6hhy&#x2F;it&#x2F;u=2956569879,4024414811&amp;fm=27&amp;gp=0.jpg">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/26/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>神经网络 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/26/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          神经网络
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-26 14:32:24 / Modified: 19:53:29" itemprop="dateCreated datePublished" datetime="2019-11-26T14:32:24+08:00">2019-11-26</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h1><h2 id="思想来源"><a href="#思想来源" class="headerlink" title="思想来源"></a>思想来源</h2><p>神经网络的思想来源于模拟人脑的神经系统的运作，即”神经网络是有具有适应性的简单单元组成的广泛并行互连的网络，它的组织能够模拟生物神经系统对真实世界物体所作出的交互反应”</p><a id="more"></a>
+<h2 id="神经元"><a href="#神经元" class="headerlink" title="神经元"></a>神经元</h2><p>总所周知，神经系统的组成单位是神经元。那么要模拟出神经网络，肯定是要有神经元成分的。</p>
+<h3 id="M-P神经元模型"><a href="#M-P神经元模型" class="headerlink" title="M-P神经元模型"></a>M-P神经元模型</h3><p><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2956569879,4024414811&fm=27&gp=0.jpg" alt="神经元模型示意图"></p>
+<p>这个模型中，一个神经元被其他n个神经元连接，并传递信号$x_i$过来，且每条信息通道上都有权值$w_i$，当前这个神经元也有阈值$b$。</p>
+<p>所有的数据在当前这个神经元上通过求和与激活函数$f$整合，输出$y$<br>$$<br>y=f(b+\sum_{i=1}^nw_ix_i)<br>$$<br>激活函数与阈值的作用类似神经元的兴奋和抑制的关系：当求和大于$-b$时，激活函数则激活；否则不激活</p>
+<p>通过许多个这样的神经元连接在一起</p>
+<h4 id="典型的激活函数"><a href="#典型的激活函数" class="headerlink" title="典型的激活函数"></a>典型的激活函数</h4><h5 id="阶跃函数"><a href="#阶跃函数" class="headerlink" title="阶跃函数"></a>阶跃函数</h5><p>$$<br>f(x)=<br>\begin{cases}<br>1&amp; \text{x≥0}\<br>0&amp; \text{x&lt;0}<br>\end{cases}<br>$$</p>
+<h5 id="Sigmoid函数"><a href="#Sigmoid函数" class="headerlink" title="Sigmoid函数"></a>Sigmoid函数</h5><p>$$<br>f(x)=\frac{1}{1+e^{-x}}<br>$$</p>
+<p>我们可以发现上面的这个东西其实就是一个线性分类器</p>
+<h2 id="单层神经网络（感知机）"><a href="#单层神经网络（感知机）" class="headerlink" title="单层神经网络（感知机）"></a>单层神经网络（感知机）</h2><h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><p>感知机中有两个层次：输入层和输出层</p>
+<ul>
+<li>输入层：处理输入数据和传递，不做任何计算</li>
+<li>输出层：负责整合各个输入层来的数据</li>
+</ul>
+<p><img src="https://images2015.cnblogs.com/blog/673793/201512/673793-20151230204223917-579926148.jpg" alt="img"></p>
+<p>如上，输入层有三个元素，输出层有两个元素：意味着有三个数据，需要预测两个信息（比如预测一个二维的向量）</p>
+<p>因为预测一个和预测两个原理是一样的，所以==<strong>下面假设值预测一个信息</strong>==</p>
+<h3 id="学习策略"><a href="#学习策略" class="headerlink" title="学习策略"></a>学习策略</h3><p>感知机是SVM的鼻祖，其思想与SVM前面的一小段部分差不多。</p>
+<ul>
+<li><strong>首先，假设数据是线性可分的</strong></li>
+<li>我们试图找到一个超平面$wx+b=0$可以分割两类数据点</li>
+<li>我们只用分割就行了，不用像SMV那样要求距离和最小</li>
+</ul>
+<h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><p>假设$y_i\in$ {$0,1$}</p>
+<p>对于所有误分类数据来说<br>$$<br>y_i(wx_i+b)&lt;0<br>$$<br>因此误分类点集合M的所有点到超平面的距离为<br>$$<br>\sum_{x_i\in M}-\frac{1}{||w||}y_i(wx_i+b)<br>$$<br><strong>我们的目的当然是使这个距离尽量的小</strong></p>
+<p>由于几何间隔和代数间隔的关系，上面的问题可以转化成<br>$$<br>\sum_{x_i\in M}-y_i(\hat wx_i+\hat b)<br>$$<br>(可以理解为把1/||w||当做系数乘了进去)</p>
+<h3 id="感知机的原始形式"><a href="#感知机的原始形式" class="headerlink" title="感知机的原始形式"></a>感知机的原始形式</h3><p>$$<br>min_{w,b}L(w,b)=\sum_{x_i\in M}-y_i(\hat wx_i+\hat b)<br>$$<br>感知机学习方法是误分类驱动的，所以可以采用梯度下降的方法极小化误分类函数。</p>
+<p><strong>因为误分类函数只和被误分类的点有关，所以我们不能采用批量梯度下降，我们针对于某个被误分类的点进行随机梯度下降。</strong><br>$$<br>\nabla w=-\sum_{x_i\in M}y_ix_i\<br>\nabla b=-\sum_{x_i\in M}y_i<br>$$<br>所以我们每次<strong>随机</strong>选取一个被误分类的点进行梯度下降<br>$$<br>w &lt;—w+\eta y_ix_i \<br>b  &lt;—b+\eta y_i<br>$$<br>$\eta$是学习率(0,1)</p>
+<h3 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h3><ul>
+<li>由大量的推导可知，感知机在线性可分的时候是可以收敛的且误分类的次数是有上界的(在指定的时间内能收敛完)。</li>
+<li>但是在线性不可分的时候是不收敛的，迭代结果会发生震荡（像xor这样的简单的非线性分类任务都无法解决）</li>
+</ul>
+<p>而感知机的算法是存在很多解的，所以有时候我们会对超平面增加很多限制，且数据很可能存在线性不可分的情况—-&gt;这时候SVM就出场了。</p>
+<h3 id="感知机的对偶形式"><a href="#感知机的对偶形式" class="headerlink" title="感知机的对偶形式"></a>感知机的对偶形式</h3><p>我们观察一下w和b的梯度下降公式，可以发现w是与xiyi(1&lt;=i&lt;=n)有关的，而b是与y_i(1&lt;=i&lt;=n)有关的。</p>
+<p>所以我们设<br>$$<br>w=\sum_{i=1}^n \alpha_iy_ix_i\<br>b=\sum_{i=1}^n \alpha_iy_i<br>$$<br>然后我们关于样本i的误分类条件变为<br>$$<br>y_i(\sum_{j=1}^n\alpha_jy_jx_j*x_i+b)&lt;=0<br>$$<br>其次，我们的参数更新转化为对误分类样本的系数$\alpha$更新<br>$$<br>\alpha_i &lt;—-\alpha + \eta\<br>b &lt;—-b+\eta<br>$$</p>
+<h2 id="多层前馈神经网络"><a href="#多层前馈神经网络" class="headerlink" title="多层前馈神经网络"></a>多层前馈神经网络</h2><p><img src="https://img-blog.csdn.net/20180123140254140" alt="图1 多层前馈神经网络"></p>
+<h3 id="简单介绍-1"><a href="#简单介绍-1" class="headerlink" title="简单介绍"></a>简单介绍</h3><ul>
+<li>多层前馈神经网络由一个输入层，一个或多个隐藏层和一个输出层</li>
+</ul>
+<p>组成</p>
+<ul>
+<li><p>“前馈”：不是指网络中信号不能后传，而是指网络的拓扑结构上不存在环或回路（每层神经元与下一层神经元全互连，神经元之间不存在同层连接，也不存在跨层连接）</p>
+</li>
+<li><p>神经网络学习过程，就是分局训练数据来调整神经元之间的“连接权”以及每个功能神经元的阈值，即神经网络学习到的东西，蕴含（<strong>隐藏</strong>）在连接权和阈值中</p>
+</li>
+</ul>
+<h3 id="误差逆传播算法（BP算法）"><a href="#误差逆传播算法（BP算法）" class="headerlink" title="误差逆传播算法（BP算法）"></a>误差逆传播算法（BP算法）</h3><ul>
+<li>通常所说的“BP网络”时，一般是指用BP算法训练的多层前馈神经网络</li>
+</ul>
+<p><img src="/home/facico/%E6%A1%8C%E9%9D%A2/93E4B7E6CB979E7C410025F5384E84A5.jpg" alt></p>
+<h3 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h3><ul>
+<li><p>有d个输入神经元，l个输出神经元，q个隐层神经元(只有一个隐层)</p>
+</li>
+<li><p>输出层第j个神经元的阈值$\theta_j$，隐层第h个神经元的阈值$\gamma_h$</p>
+</li>
+<li><p>第h个神经元的输出为$b_h$</p>
+</li>
+<li><p>输入层第i个神经元与隐层第h个神经元之间的连接权$v_{ih}$</p>
+</li>
+<li><p>隐层第h个神经元和输出层第j个神经元之间的连接权$w_{hj}$</p>
+</li>
+<li><p>隐层第h个神经元接收到的输入为$a_h=\sum_{i=1}^dv_{ih}x_i$</p>
+</li>
+<li><p>输出层第j个神经元接收到的输入为$\beta_j=\sum_{h=1}^qw_{hj}b_h$</p>
+</li>
+<li><p>假设所有的激活函数f都是sigmoid函数</p>
+</li>
+<li><p>对训练样本$(x_k,y_k)$输出：</p>
+<ul>
+<li>$\hat y_k=(\hat y_1^k….y_l^k)$输出是一个l维的向量</li>
+<li>均方误差$E_k=\frac{1}{2}\sum_{j=1}^l(\hat y_j^k-y_j^k)^2$(前面的0.5是为了后面求导的方便)</li>
+</ul>
+</li>
+</ul>
+<h3 id="学习策略-1"><a href="#学习策略-1" class="headerlink" title="学习策略"></a>学习策略</h3><p>BP是一个迭代学习算法，在每一轮的迭代中采用广义感知机的规则对参数进行估计（就是对与误差分类有关的参数都梯度下降）</p>
+<p>任意参数$v$的更新估计为$v&lt;—v+\Delta v$</p>
+<p>如，对于参数$w_{hj}$<br>$$<br>\Delta w_{hj}=-\eta \frac{\vartheta E_k}{\vartheta w_{hj}}=\-\eta \frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}*<br>\frac{\vartheta  \beta_{j}}{\vartheta  w_{hj}}<br>$$</p>
+<p>$$<br>设g_j=-\frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}<br>$$</p>
+<p>因为sigmoid的性质<br>$$<br>f’(x)=f(x)(1-f(x))<br>$$</p>
+<p>$$<br>所以g_j=-\frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}\=<br>-(\hat y_j^k-y_j^k)f’(\beta_j-\theta_j)\=<br>-(\hat y_j^k-y_j^k)\hat y_j^k(1-\hat y_j^k)<br>$$</p>
+<p>又因为$\frac{\vartheta  \beta_{j}}{\vartheta  w_{hj}}=b_h$<br>$$<br>\Delta w_{hj}=\eta g_jb_h<br>$$</p>
+<p>类似的有<br>$$<br>\Delta \theta_j=-\eta g_j\<br>\Delta v_{ih}=\eta e_hx_i\<br>\Delta \gamma_h=-\eta e_h\<br>e_h = b_h(1-b_h)\sum_{j=1}^lw_{hj}g_j<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/13/%E8%81%9A%E7%B1%BB/" rel="next" title="聚类">
+                  <i class="fa fa-chevron-left"></i> 聚类
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想来源"><span class="nav-number">1.1.</span> <span class="nav-text">思想来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经元"><span class="nav-number">1.2.</span> <span class="nav-text">神经元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#M-P神经元模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">M-P神经元模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#典型的激活函数"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">典型的激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阶跃函数"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">阶跃函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sigmoid函数"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">Sigmoid函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单层神经网络（感知机）"><span class="nav-number">1.3.</span> <span class="nav-text">单层神经网络（感知机）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">学习策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的原始形式"><span class="nav-number">1.3.4.</span> <span class="nav-text">感知机的原始形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收敛性"><span class="nav-number">1.3.5.</span> <span class="nav-text">收敛性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的对偶形式"><span class="nav-number">1.3.6.</span> <span class="nav-text">感知机的对偶形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多层前馈神经网络"><span class="nav-number">1.4.</span> <span class="nav-text">多层前馈神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#误差逆传播算法（BP算法）"><span class="nav-number">1.4.2.</span> <span class="nav-text">误差逆传播算法（BP算法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量定义"><span class="nav-number">1.4.3.</span> <span class="nav-text">变量定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习策略-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">学习策略</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
