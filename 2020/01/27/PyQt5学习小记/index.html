@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="PyQt5学习小记创建一个小窗口12345678910111213from PyQt5.QtWidgets import QApplication, QWidgetimport sysif __name__ == &amp;apos;__main__&amp;apos;:    app = QApplication(sys.argv)    w = QWidget()    w.resize(250, 150)    w.move(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyQt5学习小记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;27&#x2F;PyQt5%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="PyQt5学习小记创建一个小窗口12345678910111213from PyQt5.QtWidgets import QApplication, QWidgetimport sysif __name__ == &amp;apos;__main__&amp;apos;:    app = QApplication(sys.argv)    w = QWidget()    w.resize(250, 150)    w.move(">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-29T11:37:09.778Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/27/PyQt5%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>PyQt5学习小记 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/27/PyQt5%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PyQt5学习小记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-27 20:41:49" itemprop="dateCreated datePublished" datetime="2020-01-27T20:41:49+08:00">2020-01-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-29 19:37:09" itemprop="dateModified" datetime="2020-01-29T19:37:09+08:00">2020-01-29</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="PyQt5学习小记"><a href="#PyQt5学习小记" class="headerlink" title="PyQt5学习小记"></a>PyQt5学习小记</h1><h2 id="创建一个小窗口"><a href="#创建一个小窗口" class="headerlink" title="创建一个小窗口"></a>创建一个小窗口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QApplication, QWidget</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = QWidget()</span><br><span class="line">    w.resize(<span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">    w.move(<span class="number">100</span>, <span class="number">100</span>)</span><br><span class="line">    w.setWindowTitle(<span class="string">'Simple'</span>)</span><br><span class="line">    w.show()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure><a id="more"></a>
+
+<p><code>PyQt5.QWidge</code>模块包含了很多基本组件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app = QApplication(sys.argv)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>每个<code>PyQt5</code>应用都必须创建一个应用对象。</p>
+</li>
+<li><p>python可以在shell里运行，这个参数提供了对脚本控制的基本功能</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">w = QWidget()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>QWidge控件是一个用户界面的基本控件，它提供了基本的应用构造器</li>
+<li>默认情况下，构造器是没有父级的，没有父级的构造器被称为窗口(window)</li>
+</ul>
+<p><code>resize，move，setWindowTitle，show</code>这些函数的作用都很显然</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<p>最后，我们进入了应用的主循环中，事件处理器这个时候开始工作。</p>
+<ul>
+<li>主循环从窗口上接受事件，并把时间传入到派发的应用控件里。</li>
+<li>当调用exit()或直接销毁主控件的时候，主循环就会结束；但是exit能确保主循环安全退出</li>
+</ul>
+<h2 id="Gui-用户图形交互界面"><a href="#Gui-用户图形交互界面" class="headerlink" title="Gui(用户图形交互界面)"></a>Gui(用户图形交互界面)</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QApplication, QWidget</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'Icon'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<p>==QWidget==是个类，可以继承</p>
+<ul>
+<li><code>setGeometry</code>有两个作用：<ul>
+<li>1、把窗口放到屏幕上并设置窗口大小</li>
+<li>2、参数分别代表屏幕坐标的x、y和窗口大小的宽和高。也就是说这个方法是<code>resize()</code>和<code>move()</code>的合体</li>
+</ul>
+</li>
+<li><code>setWindowIcon</code>是添加图标，不过要先创建一个QIcon对象，不过要先接受一个路径作为参数显示图标。</li>
+</ul>
+<h2 id="创建一个提示框"><a href="#创建一个提示框" class="headerlink" title="创建一个提示框"></a>创建一个提示框</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip)</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon, QFont</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        QToolTip.setFont(QFont(<span class="string">'SansSerif'</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        self.setToolTip(<span class="string">'This is a &lt;b&gt;QWidget&lt;/b&gt; widget'</span>)</span><br><span class="line"></span><br><span class="line">        btn = QPushButton(<span class="string">'Button'</span>, self)</span><br><span class="line">        btn.setToolTip(<span class="string">'This is a &lt;b&gt;QuPushButton&lt;/b&gt; widget'</span>)</span><br><span class="line">        btn.resize(btn.sizeHint())</span><br><span class="line">        btn.move(<span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'Tooltips'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>QToolTip.setFont(QFont(&#39;SansSerif&#39;, 10))</code>这个方法可以可以静态方法是指了提示框的字体，我们使用了10px的SansSerif字体</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.setToolTip(<span class="string">'This is a &lt;b&gt;QWidget&lt;/b&gt; widget'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>调用<code>setTooltip()</code>创建提示框可以使用富文本格式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">btn = QPushButton(<span class="string">'Button'</span>, self)</span><br><span class="line">btn.setToolTip(<span class="string">'This is a &lt;b&gt;QuPushButton&lt;/b&gt; widget'</span>)</span><br><span class="line">btn.resize(btn.sizeHint())</span><br><span class="line">btn.move(<span class="number">50</span>, <span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>创建一个按钮，并且为按钮添加一个提示框。按钮QPushButton的第一个参数是按钮的文本，第二个参数是按钮的父级组件</p>
+</li>
+<li><p><code>sizeHint()</code>方法提供了一个默认的按钮大小</p>
+</li>
+</ul>
+<h2 id="退出窗口"><a href="#退出窗口" class="headerlink" title="退出窗口"></a>退出窗口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip)</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon, QFont</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> QCoreApplication</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        QToolTip.setFont(QFont(<span class="string">'SansSerif'</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        self.setToolTip(<span class="string">'This is a &lt;b&gt;QWidget&lt;/b&gt; widget'</span>)</span><br><span class="line"></span><br><span class="line">        btn = QPushButton(<span class="string">'Button'</span>, self)</span><br><span class="line">        btn.setToolTip(<span class="string">'This is a &lt;b&gt;QuPushButton&lt;/b&gt; widget'</span>)</span><br><span class="line">        btn.resize(btn.sizeHint())</span><br><span class="line">        btn.move(<span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">        qbtn = QPushButton(<span class="string">'Quit'</span>, self)</span><br><span class="line">        qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br><span class="line">        qbtn.resize(qbtn.sizeHint())</span><br><span class="line">        qbtn.move(<span class="number">100</span>, <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'Tooltips'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建一个退出的按钮</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>事件传递系统在PyQt5内建的single和slot机制里面。<ul>
+<li>点击按钮之后，信号会被捕捉并给出既定的反应。</li>
+<li><code>QCoreApplication</code>包含了事件的主循环，它能删除和添加所有的事件，<code>instance()</code>创建了一个它的实例。</li>
+<li><code>QCoreApplication</code>是在<code>QApplication</code>里面创建的。</li>
+<li>点击事件和能终止进程并退出应用的quit函数绑定在一起。在发送者和接受者之间建立通讯，发送者就是按钮，接受者就是应用对象。</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建一个消息框"><a href="#创建一个消息框" class="headerlink" title="创建一个消息框"></a>创建一个消息框</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip, QMessageBox)</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon, QFont</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> QCoreApplication</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        QToolTip.setFont(QFont(<span class="string">'SansSerif'</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        self.setToolTip(<span class="string">'This is a &lt;b&gt;QWidget&lt;/b&gt; widget'</span>)</span><br><span class="line"></span><br><span class="line">        btn = QPushButton(<span class="string">'Button'</span>, self)</span><br><span class="line">        btn.setToolTip(<span class="string">'This is a &lt;b&gt;QuPushButton&lt;/b&gt; widget'</span>)</span><br><span class="line">        btn.resize(btn.sizeHint())</span><br><span class="line">        btn.move(<span class="number">50</span>, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">        qbtn = QPushButton(<span class="string">'Quit'</span>, self)</span><br><span class="line">        qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br><span class="line">        qbtn.resize(qbtn.sizeHint())</span><br><span class="line">        qbtn.move(<span class="number">100</span>, <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'Tooltips'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">closeEvent</span><span class="params">(self, event)</span>:</span></span><br><span class="line"></span><br><span class="line">        reply = QMessageBox.question(self, <span class="string">'Message'</span>,</span><br><span class="line">            <span class="string">"Are you sure to quit?"</span>, QMessageBox.Yes | QMessageBox.No, QMessageBox.No)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (reply == QMessageBox.Yes):</span><br><span class="line">            event.accept()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            event.ignore()</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>QWidget</code>的<code>closeEvent()</code>默认是关闭，可以自己改变。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">reply = QMessageBox.question(self, <span class="string">'Message'</span>,</span><br><span class="line">           <span class="string">"Are you sure to quit?"</span>, QMessageBox.Yes | QMessageBox.No, QMessageBox.No)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>我们创建了一个消息框，上面有两个按钮：Yes和No。第一个字符串显示在消息框的标题栏，第二个字符串显示在对话框，第三个参数是消息框的两个按钮，最后一个参数是默认选中的按钮。</li>
+<li>然后下面的<code>reply</code>和’ignore’的意思就很显然了</li>
+</ul>
+<h2 id="使窗口居中"><a href="#使窗口居中" class="headerlink" title="使窗口居中"></a>使窗口居中</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">center</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">    qr = self.frameGeometry()</span><br><span class="line">    cp = QDesktopWidget().availableGeometry().center()</span><br><span class="line">    qr.moveCenter(cp)</span><br><span class="line">    self.move(qr.topLeft())</span><br></pre></td></tr></table></figure>
+
+<p><code>QtWidgets.QDesktopWidget</code>提供了用户的桌面信息，包括屏幕的大小</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qr = self.frameGeometry()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>得到主窗口的大小</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp = QDesktopWidget().availableGeometry().center()</span><br><span class="line"> qr.moveCenter(cp)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>获取显示器的分辨率，然后得到中间点的位置</li>
+<li>然后把自己窗口的中心点移动到qr的中心点</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.move(qr.topLeft())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后把窗口的左上角的坐标设置为qr的矩形左上角的坐标，这样就把窗口居中了</li>
+</ul>
+<h2 id="绝对定位"><a href="#绝对定位" class="headerlink" title="绝对定位"></a>绝对定位</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lb1 = QLabel(<span class="string">'ZetCode'</span>, self)</span><br><span class="line">        lb1.move(<span class="number">15</span>, <span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+
+<p><code>QtWidgets.QLabel</code>，继承父类的窗口，在父类的窗口中绝对位置</p>
+<h2 id="框布局-Boxlayout"><a href="#框布局-Boxlayout" class="headerlink" title="框布局 Boxlayout"></a>框布局 Boxlayout</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip, QMessageBox, QDesktopWidget, QLabel,</span><br><span class="line">    QHBoxLayout, QVBoxLayout)</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon, QFont</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> QCoreApplication</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        QToolTip.setFont(QFont(<span class="string">'SansSerif'</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        OK = QPushButton(<span class="string">"OK"</span>)</span><br><span class="line">        Cancel = QPushButton(<span class="string">"CANCEL"</span>)</span><br><span class="line"></span><br><span class="line">        hbox = QHBoxLayout()</span><br><span class="line">        hbox.addStretch(<span class="number">1</span>)</span><br><span class="line">        hbox.addWidget(OK)</span><br><span class="line">        hbox.addWidget(Cancel)</span><br><span class="line"></span><br><span class="line">        vbox = QVBoxLayout()</span><br><span class="line">        vbox.addStretch(<span class="number">1</span>)</span><br><span class="line">        vbox.addLayout(hbox)</span><br><span class="line"></span><br><span class="line">        self.setLayout(vbox)</span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.center()</span><br><span class="line">        self.setWindowTitle(<span class="string">'Tooltips'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        qbtn = QPushButton(<span class="string">'Quit'</span>, self)</span><br><span class="line">        qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br><span class="line">        qbtn.resize(qbtn.sizeHint())</span><br><span class="line">        qbtn.move(<span class="number">100</span>, <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">center</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        qr = self.frameGeometry()</span><br><span class="line">        cp = QDesktopWidget().availableGeometry().center()</span><br><span class="line">        qr.moveCenter(cp)</span><br><span class="line">        self.move(qr.topLeft())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<p>我们使用<code>HBoxLayout</code>和<code>QVBoxLayout</code>并添加伸展因子。在窗口的右下角显示两个按钮</p>
+<ul>
+<li><pre><code class="python">OK = QPushButton(<span class="string">"OK"</span>)
+        Cancel = QPushButton(<span class="string">"CANCEL"</span>)
+
+        hbox = QHBoxLayout()
+        hbox.addStretch(<span class="number">1</span>)
+        hbox.addWidget(OK)
+        hbox.addWidget(Cancel)
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  - 我们创建一个水平布局并添加一个伸展因子和两个按钮</span><br><span class="line">  - 我们在两个按钮之前增加一个可伸展的空间，这将推动按钮靠右显示；相反，如果这个伸展是在按钮之后添加的将靠左显示</span><br><span class="line">  - 之后的程序同理</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 表格布局</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">from PyQt5.QtWidgets import (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip, QMessageBox, QDesktopWidget, QLabel,</span><br><span class="line">    QHBoxLayout, QVBoxLayout, QGridLayout)</span><br><span class="line">import sys</span><br><span class="line">from PyQt5.QtGui import QIcon, QFont</span><br><span class="line">from PyQt5.QtCore import QCoreApplication</span><br><span class="line">class window(QWidget):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    def initUI(self):</span><br><span class="line">        QToolTip.setFont(QFont(&apos;SansSerif&apos;, 10))</span><br><span class="line">        grid = QGridLayout()</span><br><span class="line">        self.setLayout(grid)</span><br><span class="line">        names = [&apos;Cls&apos;, &apos;Bck&apos;, &apos;&apos;, &apos;Close&apos;,</span><br><span class="line">                 &apos;7&apos;, &apos;8&apos;, &apos;9&apos;, &apos;/&apos;,</span><br><span class="line">                &apos;4&apos;, &apos;5&apos;, &apos;6&apos;, &apos;*&apos;,</span><br><span class="line">                 &apos;1&apos;, &apos;2&apos;, &apos;3&apos;, &apos;-&apos;,</span><br><span class="line">                &apos;0&apos;, &apos;.&apos;, &apos;=&apos;, &apos;+&apos;]</span><br><span class="line">        positions = [(i, j) for i in range(5) for j in range(4)]</span><br><span class="line">        for position, name in zip(positions, names):</span><br><span class="line">            if name == &apos;&apos;:</span><br><span class="line">                continue</span><br><span class="line">            button = QPushButton(name)</span><br><span class="line">            grid.addWidget(button, *position)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(300, 300, 300, 300)</span><br><span class="line">        self.center()</span><br><span class="line">        self.setWindowTitle(&apos;Tooltips&apos;)</span><br><span class="line">        self.setWindowIcon(QIcon(&apos;123N.png&apos;))</span><br><span class="line"></span><br><span class="line">        qbtn = QPushButton(&apos;Quit&apos;, self)</span><br><span class="line">        qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br><span class="line">        qbtn.resize(qbtn.sizeHint())</span><br><span class="line">        qbtn.move(100, 100)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line">    def center(self):</span><br><span class="line"></span><br><span class="line">        qr = self.frameGeometry()</span><br><span class="line">        cp = QDesktopWidget().availableGeometry().center()</span><br><span class="line">        qr.moveCenter(cp)</span><br><span class="line">        self.move(qr.topLeft())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+
+</code></pre>
+</li>
+</ul>
+<p>我们要创建一个网络的按钮</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grid = QGridLayout()</span><br><span class="line">       self.setLayout(grid)</span><br></pre></td></tr></table></figure>
+
+<p><code>QGridLayout</code>的实例被创建并设置应用程序窗口的布局</p>
+<ul>
+<li>然后我们创建按钮标签和网格位置列表</li>
+<li>zip是打包成元组，<code>*position</code>是把元组解开</li>
+</ul>
+<h2 id="建立文本输入区"><a href="#建立文本输入区" class="headerlink" title="建立文本输入区"></a>建立文本输入区</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QApplication, QWidget,</span><br><span class="line">    QPushButton, QToolTip, QMessageBox, QDesktopWidget, QLabel,</span><br><span class="line">    QHBoxLayout, QVBoxLayout, QGridLayout,</span><br><span class="line">    QTextEdit, QLineEdit)</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon, QFont</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> QCoreApplication</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        QToolTip.setFont(QFont(<span class="string">'SansSerif'</span>, <span class="number">10</span>))</span><br><span class="line"></span><br><span class="line">        title = QLabel(<span class="string">'Title'</span>)</span><br><span class="line">        author = QLabel(<span class="string">'Author'</span>)</span><br><span class="line">        review = QLabel(<span class="string">'Review'</span>)</span><br><span class="line"></span><br><span class="line">        titleEdit = QLineEdit()</span><br><span class="line">        authorEdit = QLineEdit()</span><br><span class="line">        reviewEdit = QTextEdit()</span><br><span class="line"></span><br><span class="line">        grid = QGridLayout()</span><br><span class="line">        grid.setSpacing(<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        grid.addWidget(title, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">        grid.addWidget(titleEdit, <span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        grid.addWidget(author, <span class="number">2</span>, <span class="number">0</span>)</span><br><span class="line">        grid.addWidget(authorEdit, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        grid.addWidget(review, <span class="number">3</span>, <span class="number">0</span>)</span><br><span class="line">        grid.addWidget(reviewEdit, <span class="number">3</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        self.setLayout(grid)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>, <span class="number">300</span>)</span><br><span class="line">        self.center()</span><br><span class="line">        self.setWindowTitle(<span class="string">'Tooltips'</span>)</span><br><span class="line">        self.setWindowIcon(QIcon(<span class="string">'123N.png'</span>))</span><br><span class="line"></span><br><span class="line">        qbtn = QPushButton(<span class="string">'Quit'</span>, self)</span><br><span class="line">        qbtn.clicked.connect(QCoreApplication.instance().quit)</span><br><span class="line">        qbtn.resize(qbtn.sizeHint())</span><br><span class="line">        qbtn.move(<span class="number">100</span>, <span class="number">100</span>)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">center</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        qr = self.frameGeometry()</span><br><span class="line">        cp = QDesktopWidget().availableGeometry().center()</span><br><span class="line">        qr.moveCenter(cp)</span><br><span class="line">        self.move(qr.topLeft())</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line"></span><br><span class="line">    w = window()</span><br><span class="line"></span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+
+
+<p>只要在<code>addWidget</code>的时候把文本区加进去就行了</p>
+<h2 id="创建状态栏小窗口"><a href="#创建状态栏小窗口" class="headerlink" title="创建状态栏小窗口"></a>创建状态栏小窗口</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QMainWindow, QApplication)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QMainWindow)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.statusBar().showMessage(<span class="string">'Ready'</span>)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'haha'</span>)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    win = window()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<p>==主窗口QMainWindow==：这类提供了一个主要的应用程序窗口。可以用它添加应用程序的状态栏，工具栏，菜单栏</p>
+<ul>
+<li>用<code>QMainWindow</code>类的<code>statusBar()</code>来创建一个状态栏，后续调用返回的状态栏对象。</li>
+<li><code>showMessage()</code>状态栏上显示信息</li>
+</ul>
+<h2 id="创造菜单栏"><a href="#创造菜单栏" class="headerlink" title="创造菜单栏"></a>创造菜单栏</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QMainWindow, QApplication, QAction, qApp)</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QMainWindow)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        exitAction = QAction(QIcon(<span class="string">'qq.jpg'</span>), <span class="string">'&amp;Exit'</span>, self)</span><br><span class="line">        exitAction.setShortcut(<span class="string">'Ctrl+Q'</span>)</span><br><span class="line">        exitAction.setStatusTip(<span class="string">'Exit application'</span>)</span><br><span class="line">        exitAction.triggered.connect(qApp.quit)</span><br><span class="line"></span><br><span class="line">        self.statusBar()</span><br><span class="line"></span><br><span class="line">        menubar = self.menuBar()</span><br><span class="line"></span><br><span class="line">        fileMenu = menubar.addMenu(<span class="string">'&amp;File'</span>)</span><br><span class="line"></span><br><span class="line">        fileMenu.addAction(exitAction)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'haha'</span>)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    win = window()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<p>我们要创建一个菜单和菜单栏，这个菜单将终止应用程序，并创建快捷方式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">exitAction = QAction(QIcon(<span class="string">'qq.jpg'</span>), <span class="string">'&amp;Exit'</span>, self)</span><br><span class="line">        exitAction.setShortcut(<span class="string">'Ctrl+Q'</span>)</span><br><span class="line">        exitAction.setStatusTip(<span class="string">'Exit application'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>QAction</code>可以操作菜单栏，工具栏或自定义键盘快捷键</p>
+</li>
+<li><p><code>setStatusTip</code>创建一个当鼠标悬停在该菜单栏项是的提示。提示显示在状态栏上</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exitAction.triggered.connect(qApp.quit)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>当我们点击菜单的时候，调用<code>qApp.quit</code>终止应用程序</li>
+</ul>
+<h2 id="创造工具栏"><a href="#创造工具栏" class="headerlink" title="创造工具栏"></a>创造工具栏</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QMainWindow, QApplication, QAction, qApp)</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QIcon</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QMainWindow)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        exitAction = QAction(QIcon(<span class="string">'qq.jpg'</span>), <span class="string">'&amp;Exit'</span>, self)</span><br><span class="line">        exitAction.setShortcut(<span class="string">'Ctrl+Q'</span>)</span><br><span class="line">        exitAction.setStatusTip(<span class="string">'Exit application'</span>)</span><br><span class="line">        exitAction.triggered.connect(qApp.quit)</span><br><span class="line"></span><br><span class="line">        self.toolbar = self.addToolBar(<span class="string">'Exit'</span>)</span><br><span class="line">        self.toolbar.addAction(exitAction)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'haha'</span>)</span><br><span class="line"></span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    win = window()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>addToolBar</code>加入一个工具栏，这个工具栏的作用是退出程序<ul>
+<li>所以我们像之前菜单栏加入<code>action</code>一样，把action加进去就好了</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建信号槽"><a href="#创建信号槽" class="headerlink" title="创建信号槽"></a>创建信号槽</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QWidget, QLCDNumber, QSlider,</span><br><span class="line">            QVBoxLayout, QApplication)</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> Qt</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window</span><span class="params">(QWidget)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        lcd = QLCDNumber(self)</span><br><span class="line">        sld = QSlider(Qt.Horizontal, self)</span><br><span class="line"></span><br><span class="line">        vbox = QVBoxLayout()</span><br><span class="line">        vbox.addWidget(lcd)</span><br><span class="line">        vbox.addWidget(sld)</span><br><span class="line"></span><br><span class="line">        self.setLayout(vbox)</span><br><span class="line">        sld.valueChanged.connect(lcd.display)</span><br><span class="line"></span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'hahaa'</span>)</span><br><span class="line">        self.show()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    win = window()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>QLCDNumber</code>是显示数字的模块</li>
+<li><code>QSlider</code>是滑动模块</li>
+<li><code>Qt.Horizontal</code>是水平布局，否则默认是竖直布局</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sld.valueChanged.connect(lcd.display)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>这里，我们将滚动条的valueChanged信号连接到lcd的display插槽<ul>
+<li>sender是发出信号的对象，receiver是接受信号的对象，slot(插槽)是对信号做出反应的方法</li>
+</ul>
+</li>
+</ul>
+<h2 id="重写事件发生器之键盘"><a href="#重写事件发生器之键盘" class="headerlink" title="重写事件发生器之键盘"></a>重写事件发生器之键盘</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">keyPressEvent</span><span class="params">(self, e)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> e.key() == Qt.Key_Escape:</span><br><span class="line">        self.close()</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="判断事件发送者"><a href="#判断事件发送者" class="headerlink" title="判断事件发送者"></a>判断事件发送者</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> (QWidget, QLCDNumber, QSlider,</span><br><span class="line">            QVBoxLayout, QApplication, QMainWindow, QPushButton)</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> Qt</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">window1</span><span class="params">(QMainWindow)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(window1, self).__init__()</span><br><span class="line">        self.initUI()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initUI</span><span class="params">(self)</span>:</span></span><br><span class="line">        btn1 = QPushButton(<span class="string">"Button 1"</span>, self)</span><br><span class="line">        btn1.move(<span class="number">30</span>, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">        btn2 = QPushButton(<span class="string">"Button 2"</span>, self)</span><br><span class="line">        btn2.move(<span class="number">150</span>, <span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">        btn1.clicked.connect(self.buttonClicked)</span><br><span class="line">        btn2.clicked.connect(self.buttonClicked)</span><br><span class="line"></span><br><span class="line">        self.statusBar()</span><br><span class="line">        self.setGeometry(<span class="number">300</span>, <span class="number">300</span>, <span class="number">250</span>, <span class="number">150</span>)</span><br><span class="line">        self.setWindowTitle(<span class="string">'hahaa'</span>)</span><br><span class="line">        self.show()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">buttonClicked</span><span class="params">(self)</span>:</span></span><br><span class="line">        sender = self.sender()</span><br><span class="line">        self.statusBar().showMessage(sender.text() + <span class="string">' was pressed'</span>)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    win = window1()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">btn1.clicked.connect(self.buttonClicked)            </span><br><span class="line">btn2.clicked.connect(self.buttonClicked)</span><br></pre></td></tr></table></figure>
+
+<p>将两个按钮链接到同一个插槽</p>
+<ul>
+<li><p>然后实现这个插槽</p>
+</li>
+<li><pre><code class="python">sender = self.sender()
+   self.statusBar().showMessage(sender.text() + <span class="string">' was pressed'</span>)</code></pre>
+<ul>
+<li>用sender的方法来判断信号来源</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/01/09/Perceptual%20Losses%20for%20Real-Time%20Style%20Transferand%20Super-Resolution/" rel="next" title="Perceptual Losses for Real-Time Style Transferand Super-Resolution">
+                  <i class="fa fa-chevron-left"></i> Perceptual Losses for Real-Time Style Transferand Super-Resolution
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/02/06/LSTM%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/" rel="prev" title="LSTM学习小记">
+                  LSTM学习小记 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PyQt5学习小记"><span class="nav-number">1.</span> <span class="nav-text">PyQt5学习小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个小窗口"><span class="nav-number">1.1.</span> <span class="nav-text">创建一个小窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gui-用户图形交互界面"><span class="nav-number">1.2.</span> <span class="nav-text">Gui(用户图形交互界面)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个提示框"><span class="nav-number">1.3.</span> <span class="nav-text">创建一个提示框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#退出窗口"><span class="nav-number">1.4.</span> <span class="nav-text">退出窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个消息框"><span class="nav-number">1.5.</span> <span class="nav-text">创建一个消息框</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使窗口居中"><span class="nav-number">1.6.</span> <span class="nav-text">使窗口居中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绝对定位"><span class="nav-number">1.7.</span> <span class="nav-text">绝对定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框布局-Boxlayout"><span class="nav-number">1.8.</span> <span class="nav-text">框布局 Boxlayout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立文本输入区"><span class="nav-number">1.9.</span> <span class="nav-text">建立文本输入区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建状态栏小窗口"><span class="nav-number">1.10.</span> <span class="nav-text">创建状态栏小窗口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创造菜单栏"><span class="nav-number">1.11.</span> <span class="nav-text">创造菜单栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创造工具栏"><span class="nav-number">1.12.</span> <span class="nav-text">创造工具栏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建信号槽"><span class="nav-number">1.13.</span> <span class="nav-text">创建信号槽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重写事件发生器之键盘"><span class="nav-number">1.14.</span> <span class="nav-text">重写事件发生器之键盘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#判断事件发送者"><span class="nav-number">1.15.</span> <span class="nav-text">判断事件发送者</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

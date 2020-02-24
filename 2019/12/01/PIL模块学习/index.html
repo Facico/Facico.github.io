@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="PIL模块学习Image模块open,show,save,format,size,mode,getbands,info">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PIL模块学习">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;01&#x2F;PIL%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="PIL模块学习Image模块open,show,save,format,size,mode,getbands,info">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-01T13:59:53.481Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/01/PIL%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>PIL模块学习 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/PIL%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PIL模块学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-01 14:52:49 / Modified: 21:59:53" itemprop="dateCreated datePublished" datetime="2019-12-01T14:52:49+08:00">2019-12-01</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="PIL模块学习"><a href="#PIL模块学习" class="headerlink" title="PIL模块学习"></a>PIL模块学习</h1><h2 id="Image模块"><a href="#Image模块" class="headerlink" title="Image模块"></a>Image模块</h2><h3 id="open-show-save-format-size-mode-getbands-info"><a href="#open-show-save-format-size-mode-getbands-info" class="headerlink" title="open,show,save,format,size,mode,getbands,info"></a>open,show,save,format,size,mode,getbands,info</h3><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">im = Image.open(<span class="string">'BG.png'</span>)</span><br><span class="line">im.show()</span><br><span class="line">print(im.format, im.size, im.mode,im.getbands(),im.info)   <span class="comment">#输出格式，分辨率，图像模式,输出模式的元组，图像相关数据字典</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="mode"><a href="#mode" class="headerlink" title="mode"></a>mode</h3><table>
+<thead>
+<tr>
+<th>mode</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>1位像素，黑和白，存成8位的像素</td>
+</tr>
+<tr>
+<td>L</td>
+<td>8位像素，黑和白</td>
+</tr>
+<tr>
+<td>P</td>
+<td>8位像素，使用调色板映射到任何其他模式</td>
+</tr>
+<tr>
+<td>RGB</td>
+<td>3*8位像素，真彩</td>
+</tr>
+<tr>
+<td>RGBA</td>
+<td>4*8位像素，真彩+透明通道</td>
+</tr>
+<tr>
+<td>CMYK</td>
+<td>4*8位像素，颜色隔离</td>
+</tr>
+<tr>
+<td>YCbCr</td>
+<td>3*8位像素，颜色视屏格式</td>
+</tr>
+<tr>
+<td>I</td>
+<td>32位整型像素</td>
+</tr>
+<tr>
+<td>F</td>
+<td>32位浮点型像素</td>
+</tr>
+</tbody></table>
+<h3 id="convert"><a href="#convert" class="headerlink" title="convert"></a>convert</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newim = im.convert(<span class="string">'1'</span>)   <span class="comment">#将图像转化为1模式</span></span><br></pre></td></tr></table></figure>
+
+<p>如果是把彩图变成黑白图，会遵循如下公式：<br>$$<br>L = R * 299/1000 + G * 587/1000 + B * 114/1000<br>$$</p>
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n_im = Image.new(<span class="string">"RGB"</span>,(<span class="number">128</span>,<span class="number">128</span>),<span class="string">"#FF00FF"</span>)</span><br><span class="line">n_im.show()</span><br></pre></td></tr></table></figure>
+
+<h3 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im_copy = im.copy()</span><br></pre></td></tr></table></figure>
+
+<h3 id="crop"><a href="#crop" class="headerlink" title="crop"></a>crop</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">im.crop((<span class="number">100</span>,<span class="number">100</span>,<span class="number">500</span>,<span class="number">500</span>)).show()</span><br></pre></td></tr></table></figure>
+
+<p>返回(x,y)到(x1,y1)的图片</p>
+<h3 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">im.paste(newim,(<span class="number">200</span>,<span class="number">200</span>))</span><br><span class="line">im.show()</span><br></pre></td></tr></table></figure>
+
+<p>把一张图粘贴到另一张图的(x,y)处(如果没写默认(0,0))</p>
+<h3 id="Fliter"><a href="#Fliter" class="headerlink" title="Fliter"></a>Fliter</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = im.filter(ImageFilter.BLUR)</span><br><span class="line">b = im.filter(ImageFilter.CONTOUR)</span><br><span class="line">c = im.filter(ImageFilter.FIND_EDGES)</span><br><span class="line">a.show()</span><br><span class="line">b.show()</span><br><span class="line">c.show()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>预定义滤波器包括：<strong>BLUR、CONTOUR、DETAIL、EDGE_ENHANCE、EDGE_ENHANCE_MORE、EMBOSS、FIND_EDGES、SMOOTH、SMOOTH_MORE、SHARPEN</strong>。其中BLUR就是均值滤波，CONTOUR找轮廓，FIND_EDGES边缘检测</li>
+</ul>
+<h3 id="Blend"><a href="#Blend" class="headerlink" title="Blend"></a>Blend</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d = Image.blend(a, b, <span class="number">0.2</span>)</span><br><span class="line">d.show()</span><br></pre></td></tr></table></figure>
+
+<p>设定alpha(透明度)的值，然后混合两张图<br>$$<br>合成公式为：out = image1 (1.0 - alpha) + image2 alpha<br>$$</p>
+<h3 id="split"><a href="#split" class="headerlink" title="split"></a>split</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e,f,g,h = im.split()</span><br><span class="line">e.show()</span><br></pre></td></tr></table></figure>
+
+<p>返回当前图像各个通道组成一个元组，如上RBGA图像返回(‘R’,’B’,’G’,’A’)的四个图像</p>
+<h3 id="composite"><a href="#composite" class="headerlink" title="composite"></a>composite</h3><p>使用给定的两张图像及mask图像作为透明度，插值出一张新的图像</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r,g,b = im1.split()             <span class="comment">##分离出r，g，b</span></span><br><span class="line">im = Image.composite(im1,im2,b)</span><br></pre></td></tr></table></figure>
+
+<h3 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">e = Image.eval(im, <span class="keyword">lambda</span> x: x*<span class="number">0.9</span>)</span><br><span class="line">e.show()</span><br></pre></td></tr></table></figure>
+
+<p>使用函数对图像的每一个像素点处理一次，如果图像有多个通道，那么函数就作用与每一个通道。<strong>注意：</strong>函数会对每一个像素处理一次，所以不能用随机组件或其他生成器</p>
+<ul>
+<li>图像的通道：如在RBG色彩模式下就是值那单独的红绿蓝部分，一个完整的图像由红绿蓝三个通道组成，共同产生完整的图像</li>
+</ul>
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f = im.split()</span><br><span class="line">neww = [f[<span class="number">0</span>],f[<span class="number">1</span>],f[<span class="number">1</span>]]</span><br><span class="line">h = Image.merge(<span class="string">"RGB"</span>,neww)</span><br><span class="line">h.show()</span><br></pre></td></tr></table></figure>
+
+<p>合并各个单通道</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/26/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="next" title="神经网络">
+                  <i class="fa fa-chevron-left"></i> 神经网络
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/03/NLP%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="prev" title="NLP基础知识">
+                  NLP基础知识 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PIL模块学习"><span class="nav-number">1.</span> <span class="nav-text">PIL模块学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Image模块"><span class="nav-number">1.1.</span> <span class="nav-text">Image模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#open-show-save-format-size-mode-getbands-info"><span class="nav-number">1.1.1.</span> <span class="nav-text">open,show,save,format,size,mode,getbands,info</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mode"><span class="nav-number">1.1.2.</span> <span class="nav-text">mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#convert"><span class="nav-number">1.1.3.</span> <span class="nav-text">convert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new"><span class="nav-number">1.1.4.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#copy"><span class="nav-number">1.1.5.</span> <span class="nav-text">copy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#crop"><span class="nav-number">1.1.6.</span> <span class="nav-text">crop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paste"><span class="nav-number">1.1.7.</span> <span class="nav-text">paste</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fliter"><span class="nav-number">1.1.8.</span> <span class="nav-text">Fliter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Blend"><span class="nav-number">1.1.9.</span> <span class="nav-text">Blend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#split"><span class="nav-number">1.1.10.</span> <span class="nav-text">split</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#composite"><span class="nav-number">1.1.11.</span> <span class="nav-text">composite</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eval"><span class="nav-number">1.1.12.</span> <span class="nav-text">eval</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">1.1.13.</span> <span class="nav-text">merge</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

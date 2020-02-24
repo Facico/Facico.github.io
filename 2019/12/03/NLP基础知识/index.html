@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="NLP基础知识自带库 NLTK：英文的库 jieba：中文的库 文本处理流程分词英文用NLTK，中文用jieba，比较难处理的时候可能要借助正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP基础知识">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;03&#x2F;NLP%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="NLP基础知识自带库 NLTK：英文的库 jieba：中文的库 文本处理流程分词英文用NLTK，中文用jieba，比较难处理的时候可能要借助正则表达式">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180524154621373?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhbzUzMzUxNTY=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:updated_time" content="2019-12-04T02:06:48.919Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180524154621373?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhbzUzMzUxNTY=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/03/NLP%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>NLP基础知识 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/NLP%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NLP基础知识
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-03 17:01:35" itemprop="dateCreated datePublished" datetime="2019-12-03T17:01:35+08:00">2019-12-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-04 10:06:48" itemprop="dateModified" datetime="2019-12-04T10:06:48+08:00">2019-12-04</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="NLP基础知识"><a href="#NLP基础知识" class="headerlink" title="NLP基础知识"></a>NLP基础知识</h1><h2 id="自带库"><a href="#自带库" class="headerlink" title="自带库"></a>自带库</h2><ul>
+<li>NLTK：英文的库</li>
+<li>jieba：中文的库</li>
+</ul><h2 id="文本处理流程"><a href="#文本处理流程" class="headerlink" title="文本处理流程"></a>文本处理流程</h2><p><img src="https://img-blog.csdn.net/20180524154621373?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hhbzUzMzUxNTY=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="文本处理流程"></p><h2 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h2><p>英文用NLTK，中文用jieba，比较难处理的时候可能要借助正则表达式</p><a id="more"></a>
+
+
+<h2 id="复杂的词形"><a href="#复杂的词形" class="headerlink" title="复杂的词形"></a>复杂的词形</h2><ul>
+<li>1、<strong>inflection</strong>变化：不影响词性<ul>
+<li>walk-&gt;walking-&gt;walked</li>
+</ul>
+</li>
+<li>2、derivation引申：影响词性<ul>
+<li>nation(n)-&gt;national(adj)-&gt;nationalize(v)</li>
+</ul>
+</li>
+</ul>
+<h2 id="词形归一化"><a href="#词形归一化" class="headerlink" title="词形归一化"></a>词形归一化</h2><h3 id="1、Stemming词干提取：把不影响词性的后缀去掉"><a href="#1、Stemming词干提取：把不影响词性的后缀去掉" class="headerlink" title="1、Stemming词干提取：把不影响词性的后缀去掉"></a>1、Stemming词干提取：把不影响词性的后缀去掉</h3><p>walking-&gt;walk</p>
+<p>walked-&gt;walk</p>
+<h3 id="2、Lemmatization词形归一：把各类型的词变性，归一"><a href="#2、Lemmatization词形归一：把各类型的词变性，归一" class="headerlink" title="2、Lemmatization词形归一：把各类型的词变性，归一"></a>2、Lemmatization词形归一：把各类型的词变性，归一</h3><p>went归一成go</p>
+<p>are归一成be</p>
+<h3 id="3、Lemmatization出现的问题-借助词性标注完成"><a href="#3、Lemmatization出现的问题-借助词性标注完成" class="headerlink" title="3、Lemmatization出现的问题(借助词性标注完成)"></a>3、Lemmatization出现的问题(借助词性标注完成)</h3><p>比如原本是are–&gt;are,is–&gt;is</p>
+<p>标注后are(v)–&gt;be,is(v)–&gt;be</p>
+<h2 id="去除停用词"><a href="#去除停用词" class="headerlink" title="去除停用词"></a>去除停用词</h2><p>比如中文的：的，地，得</p>
+<p>比如英文的：the,this</p>
+<h2 id="NLP实例"><a href="#NLP实例" class="headerlink" title="NLP实例"></a>NLP实例</h2><h3 id="情感分析"><a href="#情感分析" class="headerlink" title="情感分析"></a>情感分析</h3><h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h4><p>s1=’this is a good book’<br> s2=’this is a awesome book’<br> s3=’this is a bad book’<br> s4=’this is a terrible book’ </p>
+<h4 id="把数据变成向量"><a href="#把数据变成向量" class="headerlink" title="把数据变成向量"></a>把数据变成向量</h4><p>统计上文出现过的所有单词：this、is 、a 、good 、awesome、 bad、 terrible、 book，然后每个样本的词向量就是这个单词是否出现过</p>
+<p>如：s1=[1 1 1 1 0 0 0 1]</p>
+<h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p>然后再用ML方法训练</p>
+<h3 id="文本相似度"><a href="#文本相似度" class="headerlink" title="文本相似度"></a>文本相似度</h3><table>
+<thead>
+<tr>
+<th>we</th>
+<th>you</th>
+<th>he</th>
+<th>work</th>
+<th>happy</th>
+<th>are</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>这里一共表示了三个样本，然后我们提取出对应的词向量，然后用一些求两个向量的相似度的方法来计算文本的相似度，比如余弦相似度</p>
+<h3 id="文本分类"><a href="#文本分类" class="headerlink" title="文本分类"></a>文本分类</h3><h4 id="TF-IDF概念"><a href="#TF-IDF概念" class="headerlink" title="TF-IDF概念"></a>TF-IDF概念</h4><ul>
+<li>TF：Term Frequency，用来衡量一个term在文档中出现得有多频繁</li>
+<li>$TF(t)={t出现在文档中的次数\over 文档中的term总数}$</li>
+<li>IDF：Inverse Document Frequency，衡量一个term有多重要</li>
+<li>$IDF(t)=ln(\frac{文档总数}{含有t的文档总数})$</li>
+<li>$TF-IDF=TF*IDF$(注意这个是杠“-”)</li>
+</ul>
+<h4 id="TF-IDF实例"><a href="#TF-IDF实例" class="headerlink" title="TF-IDF实例"></a>TF-IDF实例</h4><p>⼀个⽂档有100个单词，其中单词baby出现了3次；且一共有10M的⽂档， baby出现在其中的1000个⽂档中。<br>$$<br>TF(baby)={3\over 100}=0.03\<br>IDF(baby)=ln({10000000\over 1000})=4\<br>TF-IDF(baby)=TF(baby)<em>IDF(baby)=0.03</em>4=0.12<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/01/PIL%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0/" rel="next" title="PIL模块学习">
+                  <i class="fa fa-chevron-left"></i> PIL模块学习
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/04/NLP/" rel="prev" title="NLP">
+                  NLP <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NLP基础知识"><span class="nav-number">1.</span> <span class="nav-text">NLP基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自带库"><span class="nav-number">1.1.</span> <span class="nav-text">自带库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本处理流程"><span class="nav-number">1.2.</span> <span class="nav-text">文本处理流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分词"><span class="nav-number">1.3.</span> <span class="nav-text">分词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复杂的词形"><span class="nav-number">1.4.</span> <span class="nav-text">复杂的词形</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#词形归一化"><span class="nav-number">1.5.</span> <span class="nav-text">词形归一化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Stemming词干提取：把不影响词性的后缀去掉"><span class="nav-number">1.5.1.</span> <span class="nav-text">1、Stemming词干提取：把不影响词性的后缀去掉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、Lemmatization词形归一：把各类型的词变性，归一"><span class="nav-number">1.5.2.</span> <span class="nav-text">2、Lemmatization词形归一：把各类型的词变性，归一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Lemmatization出现的问题-借助词性标注完成"><span class="nav-number">1.5.3.</span> <span class="nav-text">3、Lemmatization出现的问题(借助词性标注完成)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#去除停用词"><span class="nav-number">1.6.</span> <span class="nav-text">去除停用词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NLP实例"><span class="nav-number">1.7.</span> <span class="nav-text">NLP实例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#情感分析"><span class="nav-number">1.7.1.</span> <span class="nav-text">情感分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据"><span class="nav-number">1.7.1.1.</span> <span class="nav-text">数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#把数据变成向量"><span class="nav-number">1.7.1.2.</span> <span class="nav-text">把数据变成向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#训练"><span class="nav-number">1.7.1.3.</span> <span class="nav-text">训练</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本相似度"><span class="nav-number">1.7.2.</span> <span class="nav-text">文本相似度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文本分类"><span class="nav-number">1.7.3.</span> <span class="nav-text">文本分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TF-IDF概念"><span class="nav-number">1.7.3.1.</span> <span class="nav-text">TF-IDF概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TF-IDF实例"><span class="nav-number">1.7.3.2.</span> <span class="nav-text">TF-IDF实例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

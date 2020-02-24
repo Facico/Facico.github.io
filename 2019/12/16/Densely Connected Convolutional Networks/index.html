@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Densely Connected Convolutional Networks 如果在接近输入层和接近输出层之间有更短的连接(如1-&amp;gt;n)，则卷积神经网络会更深入，更准确，更有效。 稠密卷及神经网络：每一层之间都有连接($\frac{L(L-1)}{2}$，由此密集的连接方式而得名)，连接都以前馈的方式连接（对于每一层，前面所有层的特征图作为输入，它自己的特征图作为后面所有层的输入） 优点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Densely Connected Convolutional Networks">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;16&#x2F;Densely%20Connected%20Convolutional%20Networks&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="Densely Connected Convolutional Networks 如果在接近输入层和接近输出层之间有更短的连接(如1-&amp;gt;n)，则卷积神经网络会更深入，更准确，更有效。 稠密卷及神经网络：每一层之间都有连接($\frac{L(L-1)}{2}$，由此密集的连接方式而得名)，连接都以前馈的方式连接（对于每一层，前面所有层的特征图作为输入，它自己的特征图作为后面所有层的输入） 优点">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191216210011017.png">
+<meta property="og:updated_time" content="2020-01-01T14:22:14.733Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191216210011017.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/16/Densely%20Connected%20Convolutional%20Networks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Densely Connected Convolutional Networks | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/16/Densely%20Connected%20Convolutional%20Networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Densely Connected Convolutional Networks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-16 20:48:15" itemprop="dateCreated datePublished" datetime="2019-12-16T20:48:15+08:00">2019-12-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-01 22:22:14" itemprop="dateModified" datetime="2020-01-01T22:22:14+08:00">2020-01-01</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Densely-Connected-Convolutional-Networks"><a href="#Densely-Connected-Convolutional-Networks" class="headerlink" title="Densely Connected Convolutional Networks"></a>Densely Connected Convolutional Networks</h1><ul>
+<li>如果在接近输入层和接近输出层之间有更短的连接(如1-&gt;n)，则卷积神经网络会更深入，更准确，更有效。</li>
+<li>稠密卷及神经网络：每一层之间都有连接($\frac{L(L-1)}{2}$，由此密集的连接方式而得名)，连接都以前馈的方式连接（对于每一层，前面所有层的特征图作为输入，它自己的特征图作为后面所有层的输入）</li>
+<li>优点：<ul>
+<li>缓解了梯度消失</li>
+<li>增强了特征的传播</li>
+<li>鼓励特征的重利用</li>
+<li>大大的减少了参数量</li>
+<li>在网络中不断改进信息和梯度流，这使得他们更容易训练</li>
+<li>每一层都能直接从损失函数和原始输入信号中获得梯度，这有助于更深层次的网络架构</li>
+<li>此外，密集连接有一种正则化的效果，有助于减小在小规模数据集上的过拟合问题</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<ul>
+<li><p>第l层的输出定义为$x_l$，$H_l(*)是一个非线性变换$</p>
+</li>
+<li><p>$x_l=H_l([x_0,x_1,…,x_{l-1}])$</p>
+</li>
+<li><p>定义$H_l(<em>)为一个复合函数$，包含BN，ReLU和一个3</em>3的Conv</p>
+</li>
+<li><p>显然，若需要图片的尺寸变化，上式的操作是不可取的。所以，我们可以把网络划分成多个连接的密集块，如下。两个密集块之间的叫做<code>过渡层</code>，过渡层包含一个BN，1x1的Conv和2x2的平均池</p>
+</li>
+</ul>
+<p><img src="/home/facico/.config/Typora/typora-user-images/image-20191216210011017.png" alt="image-20191216210011017"></p>
+<ul>
+<li><p>如果$H_l$产生了k个$feature \text { maps}$，那么第l层就有$k_0+k*(l-1)$层input featrue map，其中$k_0$是输入层的channels。DenseNet的一个很好的优点就是DenseNet可以变得很窄，如k=12，把k当做一个超参数，叫做growth rate</p>
+<ul>
+<li>解释：block中每一层都能获得前面所有的feature_maps，因此，相当于获得了网络的“集体知识(collective knowledge)”，feature_maps可以看做网络的总体状态，每一层都加上k个属于自己当前状态的feature_maps，这个增长率(growth rate)可以调节网络每次加入多少个新的信息。整个网络状态，一旦被写完，不想传统的网络那样，而可以从任何一个地方获得网络状态，而不需要像传统的网络那样需要在层与层之间复制。</li>
+</ul>
+</li>
+<li><p>即使每层只产生k个特征，还是会产生很多的输入。所以我们在每个3x3的Conv前引入1x1的Conv来当做<code>瓶颈层</code>。以此减少input feature-maps的数量并提高计算效率。文章的<code>瓶颈层</code>设计：BN-ReLU-Conv(1×1)-BN-ReLU-Conv(3×3) version ofH</p>
+</li>
+<li><p>压缩：为了提高模型的致密性，我们可以减少过滤层中feature-maps的数量.如果一个Dense block包含了m个featrue-maps，我们让之后的过滤层生成$\lfloor \theta m\rfloor$的out featrue-maps</p>
+</li>
+<li><p>1x1的卷积核：升维或降维，减少参数，增加非线性运算（让其看起来更deep）。注意，卷积核计算的时候是贯穿channel的，就比如3x3—&gt;3x3xchannels</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/10/A%20Neural%20Algorithm%20of%20Artistic%20Style/" rel="next" title="A Neural Algorithm of Artistic Style">
+                  <i class="fa fa-chevron-left"></i> A Neural Algorithm of Artistic Style
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/18/Batch%20Normalization%20Accelerating%20Deep%20Network%20Training%20byReducing%20Internal%20Covariate%20Shift/" rel="prev" title="Batch Normalization Accelerating Deep Network Training byReducing Internal Covariate Shift">
+                  Batch Normalization Accelerating Deep Network Training byReducing Internal Covariate Shift <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Densely-Connected-Convolutional-Networks"><span class="nav-number">1.</span> <span class="nav-text">Densely Connected Convolutional Networks</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

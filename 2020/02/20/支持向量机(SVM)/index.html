@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="支持向量机(SVM)简介 是一种二分类模型，基本模型的定义是在特征空间上的间隔最大的线性分类器 ==间隔最大有利于感知== 学习策略： 间隔最大化，可以形式化为一个求解凸二次规划问题，也等价于正则化的合页损失函数的最小化问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="支持向量机(SVM)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;20&#x2F;%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA(SVM)&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="支持向量机(SVM)简介 是一种二分类模型，基本模型的定义是在特征空间上的间隔最大的线性分类器 ==间隔最大有利于感知== 学习策略： 间隔最大化，可以形式化为一个求解凸二次规划问题，也等价于正则化的合页损失函数的最小化问题">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200220202349908.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200220205149018.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;f&#x2F;fa&#x2F;Lagrange_multiplier.png&#x2F;300px-Lagrange_multiplier.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190308204423711.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RwZW5nd2FuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200222204858454.png">
+<meta property="og:updated_time" content="2020-02-23T03:05:28.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200220202349908.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/02/20/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA(SVM)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>支持向量机(SVM) | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/20/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA(SVM)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          支持向量机(SVM)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-02-20 20:17:47" itemprop="dateCreated datePublished" datetime="2020-02-20T20:17:47+08:00">2020-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-23 11:05:28" itemprop="dateModified" datetime="2020-02-23T11:05:28+08:00">2020-02-23</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="支持向量机-SVM"><a href="#支持向量机-SVM" class="headerlink" title="支持向量机(SVM)"></a>支持向量机(SVM)</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>是一种二分类模型，基本模型的定义是在特征空间上的间隔最大的线性分类器</li>
+<li>==间隔最大有利于感知==</li>
+<li>学习策略： 间隔最大化，可以形式化为一个求解凸二次规划问题，也等价于正则化的合页损失函数的最小化问题</li>
+</ul><a id="more"></a>
+<h2 id="线性可分支持向量机"><a href="#线性可分支持向量机" class="headerlink" title="线性可分支持向量机"></a>线性可分支持向量机</h2><ul>
+<li><p>通过间隔最大化或等价地求解相应的凸二次规划问题得到的分离超平面为</p>
+</li>
+<li><p>$$<br>w^{<em>}x+b^{</em>}=0<br>$$</p>
+</li>
+<li><p>以及相应的分离决策函数</p>
+</li>
+<li><p>$$<br>f(x)=sign(w^{<em>}x+b^{</em>})<br>$$</p>
+</li>
+</ul>
+<p><img src="/home/facico/.config/Typora/typora-user-images/image-20200220202349908.png" alt="image-20200220202349908"></p>
+<h2 id="硬间隔"><a href="#硬间隔" class="headerlink" title="硬间隔"></a>硬间隔</h2><ul>
+<li>在超平面$wx+b$确定的情况下，$|wx+b|$能够表示点$x$与超平面的距离，$wx+b$的符号表示为预测为哪一类</li>
+</ul>
+<h3 id="函数间隔"><a href="#函数间隔" class="headerlink" title="函数间隔"></a>函数间隔</h3><ul>
+<li><p>定义函数间隔为</p>
+</li>
+<li><p>$$<br>\hat \gamma_i=y_i(wx_i+b)<br>$$</p>
+</li>
+<li><p>定义最小值<br>$$<br>\hat \gamma_i = \min_{i=1,…,n}\hat \gamma_i<br>$$</p>
+</li>
+</ul>
+<h4 id="规范化"><a href="#规范化" class="headerlink" title="规范化"></a>规范化</h4><ul>
+<li>只有函数间隔还不够，因为只要成比例的改变w和b，例如改成2w和2b。<ul>
+<li>这样超平面并没有改变，但是函数间隔却变成了原来的两倍，如果这样额话，那么只要改的很小，那么也会达到最小化的目的</li>
+</ul>
+</li>
+<li>所以我们要加上一点约束<ul>
+<li>对向量w规范化，$||w||=1$</li>
+<li>这样使得间隔是确定的(???)，此时的函数间隔变成了几何间隔</li>
+</ul>
+</li>
+</ul>
+<h3 id="几何间隔"><a href="#几何间隔" class="headerlink" title="几何间隔"></a>几何间隔</h3><p><img src="/home/facico/.config/Typora/typora-user-images/image-20200220205149018.png" alt="image-20200220205149018"></p>
+<ul>
+<li><p>点A与超平面(w,b)的距离由线段AB给出</p>
+</li>
+<li><p>总所周知，ax+by+c=0中(a,b)为直线的发现，所以w也为超平面的发现-  </p>
+</li>
+<li><p>所以点到超平面的距离为</p>
+</li>
+</ul>
+<p>  $$<br>  \gamma_i = \frac{w}{||w||}x_i+\frac{b}{||w||}<br>  $$</p>
+<ul>
+<li><p>因此导出<code>几何间隔</code></p>
+<ul>
+<li><p>$$<br>\gamma_i = y_i(\frac{w}{||w||}x_i+\frac{b}{||w||})<br>$$</p>
+</li>
+<li><p>$$<br>\gamma = \min_{i=1,..,n}\gamma_i<br>$$</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>所以，容易知道函数间隔和几何间隔之间额关系</p>
+<ul>
+<li><p>$$<br>\gamma_i = \frac{\hat \gamma_i}{||w||},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,::\  \gamma_i = \frac{\hat \gamma_i}{||w||}<br>$$</p>
+</li>
+<li><p>而因为||w||=1所以两者相等，但是当w和b成比例变化的时候，函数间隔会变，但是几何间隔不会变(因为超平面并没有变化)</p>
+</li>
+</ul>
+<h2 id="最大间隔分离超平面"><a href="#最大间隔分离超平面" class="headerlink" title="最大间隔分离超平面"></a>最大间隔分离超平面</h2><ul>
+<li>几何间隔的问题</li>
+</ul>
+<p>$$<br>max_{w,b};;;;\gamma   \y_i(\frac{w}{||w||}x_i+\frac{b}{||w||})≥\gamma<br>$$</p>
+<ul>
+<li><p>用函数间隔和几何间隔的关系</p>
+</li>
+<li><p>$$<br>max_{w,b};;;;\frac{\hat \gamma}{||w||}  \y_i(wx_i+b)≥\hat\gamma<br>$$</p>
+<ul>
+<li>此时将w和b成比例改变，可以也把$\hat\gamma$也成比例改变，例如同时乘2。所以$\hat\gamma$的值并不影响优化问题，所以固定其为1</li>
+</ul>
+</li>
+</ul>
+<p>再把最小化和最大化的问题转化，所以有<br>$$<br>min_{w,b};;;;\frac{1}{2}{||w||}^2  \y_i(wx_i+b)-1≥0<br>$$<br>\ \最小化后变成这种形式可能只是习惯均方误差而已，不过也有是其他形式的变形</p>
+<ul>
+<li>到此直接用SGD能简单的解决问题</li>
+</ul>
+<h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><h3 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h3><ul>
+<li>拉格朗日乘子法是一种寻找多元函数在其变量收到一个或多个条件的约束时的极值的方法。<ul>
+<li>这种方法可以把n个变量与k个约束条件的问题转化成n+k个变量的方程组问题</li>
+<li>这个方法中引入了一个或一组新的未知数，即拉格朗日乘数，它们是约束方程作为梯度的线性组合中各向量的系数</li>
+<li>这种方法所得到的极点会包含原问题中所有的极值点，但并不保证每个极值点都是原问题的极值点</li>
+</ul>
+</li>
+</ul>
+<h4 id="形式"><a href="#形式" class="headerlink" title="形式"></a>形式</h4><ul>
+<li>如</li>
+</ul>
+<p>$$要求f(x,y)在g(x,y)=c时的最大值是，我们引入\lambda,转化成\L(x,y,\lambda)=f(x,y)+\lambda(g(x,y)-c)$$</p>
+<ul>
+<li>更一般的</li>
+</ul>
+<p>$$<br>L(x_1,x_2,…,x_n,\lambda_1,…,\lambda_k)=f(x_1,…,x_n)-\sum_{i=1}^k\lambda_ig_i(x_1,…,x_n)<br>$$</p>
+<h4 id="驻点一定在切点处"><a href="#驻点一定在切点处" class="headerlink" title="驻点一定在切点处"></a>驻点一定在切点处</h4><p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Lagrange_multiplier.png/300px-Lagrange_multiplier.png" alt="img"></p>
+<ul>
+<li>f(x,y)有n个变量，g(x,y)=c是限制条件画出来的曲线，图上越小的圈的值越小</li>
+<li>$f(x,y)=d$是n个变量的所有集合组成使得f的值为d画出的曲线</li>
+<li>易证在切线处有驻点</li>
+<li>==切线处，梯度方向相同，用向量的形式就是在且向上平行==</li>
+</ul>
+<h4 id="引入变量表示梯度向量"><a href="#引入变量表示梯度向量" class="headerlink" title="引入变量表示梯度向量"></a>引入变量表示梯度向量</h4><ul>
+<li>引入变量$\lambda$</li>
+</ul>
+<p>$$<br>\nabla f(x,y)=-\lambda\nabla(g(x,y)-c)\<br>即\nabla [f(x,y)+\lambda(g(x,y)-c)]=0<br>$$<br>所以，一旦求出$\lambda$的值，将其套入下列公式，容易求出在无约束条件下的极值和对应的极值点<br>$$<br>F(x,y,\lambda)=f(x,y)+\lambda(g(x,y)-c)<br>$$<br>$F(x,y,\lambda)达到极值的时候与f(x,y)相等，因为达到极值时，g(x,y)-c总\为0(在切点处)，这也是为什么要减c的原因$</p>
+<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>$$<br>设f(x,y)，和g(x,y)=c\<br>两个函数在A处的全微分为\<br>df=\frac{\vartheta f}{\vartheta x}dx+\frac{\vartheta f}{\vartheta y}dy=0\<br>dg=\frac{\vartheta g}{\vartheta x}dx+\frac{\vartheta g}{\vartheta y}dy=0\<br>由于dx,dy是任取的无穷小量，所以线性方程组的系数成比例\<br>\frac{\frac{\vartheta f}{\vartheta x}}{\frac{\vartheta g}{\vartheta x}}=\frac{\frac{\vartheta f}{\vartheta y}}{\frac{\vartheta g}{\vartheta y}}=-\lambda\<br>即\<br>\frac{\vartheta f}{\vartheta x}+\lambda\frac{\vartheta g}{\vartheta x}=0\<br>\frac{\vartheta f}{\vartheta y}+\lambda\frac{\vartheta g}{\vartheta y}=0\<br>将上两式分别乘dx,dy再相加并积分，就得到新函数\<br>L(x,y,\lambda)=f(x,y)+\lambda g(x,y)<br>$$</p>
+<h4 id="对于不等式约束时"><a href="#对于不等式约束时" class="headerlink" title="对于不等式约束时"></a>对于不等式约束时</h4><p><img src="https://img-blog.csdnimg.cn/20190308204423711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RwZW5nd2FuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li><p>==暂时把-c和g(x,y)划分到一起==</p>
+</li>
+<li><p>形式为<br>$$<br>min;;;f(x)\<br>g(x)≤0<br>$$</p>
+</li>
+</ul>
+<h5 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h5><ul>
+<li><p>现在g(x,y)有边界解和内部解</p>
+</li>
+<li><p>$\nabla f=-\lambda \nabla g$</p>
+<ul>
+<li>这个负号是有意义的：梯度f应该指向f最陡峭的地方，即指向g的内部，但是梯度g却是指向g的外部的。因此有$\lambda≥0$,成为<code>对偶可行性</code>。<code>按照上面的图就是，g(x)标的是≤，所以方向应该向里面指，但是梯度是从小的地方向大的地方指的，所以对于≤来说，切点的梯度方向是相反的</code>。==特殊的，如果要求的是max f(x)，g(x)≥0，则λ≤0==</li>
+<li>因此，不管是内部解还是边界解$\lambda  g=0$恒成立，称为<code>互补松弛性</code></li>
+</ul>
+</li>
+<li><p>所以上面的那个形式要对应的KKT条件为<br>$$<br>g(x)≤0\<br>\lambda ≥0\<br>\lambda g(x)=0\<br>\nabla f+\lambda \nabla g = 0<br>$$<br>所对应的广义拉格朗日函数还是<br>$$<br>L(x,\lambda)=f(x)+\lambda g(x)<br>$$</p>
+</li>
+</ul>
+<h3 id="引入拉格朗日乘子"><a href="#引入拉格朗日乘子" class="headerlink" title="引入拉格朗日乘子"></a>引入拉格朗日乘子</h3><p>$$<br>L(w,b,a)=\frac{1}{2}||w||^2+\sum_{i=1}^Na_i(1-y_i(wx_i+b))<br>$$</p>
+<ul>
+<li><p>问题会变成</p>
+<p>$$<br>\min <em>{w,b}\max _{a&gt;=0}L(w,b,a)=\frac{1}{2}||w||^2+\sum</em>{i=1}^Na_i(1-y_i(wx_i+b))<br>$$</p>
+<ul>
+<li>为什么会有max(a)呢</li>
+<li>max的存在代替了原来的约束条件<ul>
+<li>假设，各个参数范围是符合要求的话，那么会正常的返回值，但是假如有不符合条件的，那么会通过对a的调整取到+∞</li>
+<li>所以这个max的作用就是来判断对错的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>==因为到了这一步之后还是无法求解，(因为我们对无穷大求最小并没有解决问题)所以我们引入对偶问题==</p>
+</li>
+<li><p>对偶后的问题变成了一个极大极小问题<br>$$<br>\max <em>a \min _{w,b}L(w,b,a)=\frac{1}{2}||w||^2+\sum</em>{i=1}^Na_i(1-y_i(wx_i+b))<br>$$</p>
+<ul>
+<li>先对w,b求导得到极小，再对a得到极大</li>
+<li>其实就是把最大和最小换了一个顺序</li>
+</ul>
+</li>
+</ul>
+<p>分别对w，b偏导为0得<br>$$<br>w=\sum a_iy_ix_i\<br>0=\sum a_iy_i<br>$$<br>带入原问题<br>$$<br>\min_a \frac{1}{2}\sum\sum a_ia_jy_iy_j(x_i\cdot x_j)-\sum a_i\<br>\sum a_iy_i=0\<br>a_i≥0<br>$$</p>
+<h3 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h3><ul>
+<li><p>得到$a^*$</p>
+</li>
+<li><p>根据$a^<em>$算$w^</em>,b^*$</p>
+<ul>
+<li><p>$$<br>w^<em>=\sum a_i^*y_ix_i\<br>b^</em>=y-\sum a_i^*y_i(x_i\cdot x_j)<br>$$</p>
+</li>
+<li><p>$w^<em>,b^</em>$只依赖于数据中对应的$a_i^<em>&gt;0$的样本点，而其他样本点对这两个值没有影响。我们将数据集中对应的$a_i^</em>&gt;0$的点称为<code>支持向量</code></p>
+</li>
+<li><p>这个用坐标下降算法来优化</p>
+</li>
+</ul>
+</li>
+<li><p>搞了半天最后的答案可能只和两个点有关系QAQ，不过毕竟这个还是只能解决线性可分的问题的，解决的都是硬间隔</p>
+</li>
+</ul>
+<h2 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h2><ul>
+<li>毕竟很多问题还是线性不可分的，所以上述的很多约束并不能成立</li>
+</ul>
+<p>所以，我们考虑引入松弛变量$\xi_i\geq0$</p>
+<ul>
+<li>约束条件变为$y_i(w\cdot x_i+b)\geq1-\xi_i$</li>
+</ul>
+<p>对于每一个松弛变量我们支付一个$\xi_i$的代价</p>
+<ul>
+<li>$\frac{1}{2}||w||^2+C\sum \xi_i$<ul>
+<li>这个的C是惩罚参数</li>
+</ul>
+</li>
+</ul>
+<p>原问题就变成<br>$$<br>\min_{w,b,\xi}\frac{1}{2}||w||^2+C\sum \xi_i\<br>y_i(w\cdot x_i+b)\geq1-\xi_i\<br>\xi_i\geq0<br>$$<br>然后用类似硬间隔的解决方法就行了</p>
+<h2 id="软间隔的另一种解释：合页损失函数-hinge-loss"><a href="#软间隔的另一种解释：合页损失函数-hinge-loss" class="headerlink" title="软间隔的另一种解释：合页损失函数(hinge-loss)"></a>软间隔的另一种解释：合页损失函数(hinge-loss)</h2><ul>
+<li><p>另一种解释，最小化下面的函数<br>$$<br>min \sum [1-y_i(w\cdot x_i+b)]_++\lambda||w||^2<br>$$</p>
+<ul>
+<li>下标“+”是取正值函数即max(x,0)，前面那一项是经验损失</li>
+<li>优化这个问题和优化软间隔问题等价(经验损失那一项就等价于软间隔$\xi_i&gt;=0$)</li>
+<li>这个东西直接SGD就行了</li>
+</ul>
+</li>
+</ul>
+<h2 id="核技巧"><a href="#核技巧" class="headerlink" title="核技巧"></a>核技巧</h2><p><img src="/home/facico/.config/Typora/typora-user-images/image-20200222204858454.png" alt="image-20200222204858454"></p>
+<ul>
+<li><p>非线性的东西往往不好求解，如上图左边的，直接用hinge-loss可能不会得到好的结果，而我们现在的策略就是把==把非线性问题转化为线性的问题==</p>
+</li>
+<li><p>设原空间$x=(x^{(1)},x^{(2)})^T$,新空间$z=(z^{(1)},z^{(2)})$</p>
+<ul>
+<li>从原空间到新空间的仿射变换为$z=\phi(x)=((x^{(1)})^2,(x^{(2)})^2)$</li>
+<li>然后就能把左边的图变成右边的图</li>
+</ul>
+</li>
+<li><p>这种方法被称为<code>核化</code>，用这种方法把非线性分类转化为线性的分类</p>
+</li>
+</ul>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><ul>
+<li>设$X$是输入空间，又设$H$为特征空间(希尔伯特空间)<ul>
+<li>如存在$\phi(x)$为输入空间到特征空间的映射使得$K(x,y)=\phi(x)\cdot\phi(y)$（这个是两个向量的内积）</li>
+<li>经常把输入空间映射到高维空间，这样可能能更高的划分</li>
+</ul>
+</li>
+</ul>
+<h3 id="核技巧在SVM中的应用"><a href="#核技巧在SVM中的应用" class="headerlink" title="核技巧在SVM中的应用"></a>核技巧在SVM中的应用</h3><ul>
+<li><p>我们在对偶问题中涉及输入实例之间的内积，我们可以把内积用核函数代替</p>
+<ul>
+<li><p>$$<br>W(a)=\frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i<br>$$</p>
+</li>
+<li><p>同样其他的有内积的地方也能用核函数来替换</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="正定核"><a href="#正定核" class="headerlink" title="正定核"></a>正定核</h3><ul>
+<li><p>已知映射函数$\phi$，可以通过内积来求核函数，但是我们能不构造$\phi$而直接判断一个给定的函数是不是核函数吗？</p>
+</li>
+<li><p>此地涉及大量的数学证明，不做讲述</p>
+</li>
+</ul>
+<h3 id="常用的核函数"><a href="#常用的核函数" class="headerlink" title="常用的核函数"></a>常用的核函数</h3><h4 id="多项式核函数"><a href="#多项式核函数" class="headerlink" title="多项式核函数"></a>多项式核函数</h4><p>$$<br>K(x,z) = (x\cdot z+1)^p<br>$$</p>
+<ul>
+<li>对应的SVM是一个p次多项式分类器</li>
+</ul>
+<h4 id="高斯核函数"><a href="#高斯核函数" class="headerlink" title="高斯核函数"></a>高斯核函数</h4><p>$$<br>K(x,z)=exp(-\frac{||x-z||^2}{2\delta^2})<br>$$</p>
+<ul>
+<li>对应的SVM是高斯径向基函数分类器</li>
+</ul>
+<h4 id="字符串核函数"><a href="#字符串核函数" class="headerlink" title="字符串核函数"></a>字符串核函数</h4><ul>
+<li><p>这个是基于离散集合的核函数</p>
+</li>
+<li><p>自行了解</p>
+</li>
+</ul>
+<h2 id="SMO-序列最小优化方法"><a href="#SMO-序列最小优化方法" class="headerlink" title="SMO(序列最小优化方法)"></a>SMO(序列最小优化方法)</h2><ul>
+<li><p>SMO算法要解决如下的凸二次规划的对偶问题<br>$$<br>\min_a \frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i\<br>\sum a_iy_i=0\<br>0\leq a_i\leq C<br>$$</p>
+</li>
+<li><p>SMO算法是一个启发式算法</p>
+<ul>
+<li>思路：<ul>
+<li>如果所有变量都满足此优化问题的KKT条件，那么答案就找到了</li>
+<li>否则，选择两个变量，固定其他变量，针对两个变量构建一个二次规划问题，这二次规划关于这两个变量的解应该更接近与原始问题的解，因而会使原始二次规划问题的函数目标值更小<ul>
+<li>重要的是，子问题可以通过解析方法求解</li>
+<li>子问题有两个变量，一个是违反KKT条件最严重的那个，另一个由约束条件自动确定</li>
+<li>如此，SMO算法不断分解为子问题并对子问题求解，进而达到求解原问题的目的</li>
+</ul>
+</li>
+<li>注意子问题的两个变量只有一个是自由变量，如果a1,a2为两个变量，其他的固定，由约束条件可知，假如a2为自由变量，那么a1可以有其他变量求出来</li>
+<li>SMO算法包括两个部分：<code>求解两个变量二次规划的解析方法</code>，<code>选择变量的启发式方法</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="两个变量的二次规划的求解方法"><a href="#两个变量的二次规划的求解方法" class="headerlink" title="两个变量的二次规划的求解方法"></a>两个变量的二次规划的求解方法</h3><p>我们选择变量a1,a2，其他变量固定<br>$$<br>\min_{a_1,a_2};;;W(a_1,a_2)=\frac{1}{2}K_{11}z_1^2+\frac{1}<br>{2}K_{22}a_2^2+y_1y_2K_{12}a_1a_2-\(a_1+a_2)+y_1a_1\sum_{i=3}^Ny_ia_iK_{i1}+y_2a_2\sum_{i=3}^Ny_ia_iK_{i2}\<br>a_1y_1+a_2y_2=-\sum_{i=3}^Ny_ia_i=\zeta\<br>0\leq a_i \leq C<br>$$</p>
+<ul>
+<li>$\zeta$是常数，显然上面列举的是不含a1,a2的常数项</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/02/19/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/" rel="next" title="线性代数笔记">
+                  <i class="fa fa-chevron-left"></i> 线性代数笔记
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机-SVM"><span class="nav-number">1.</span> <span class="nav-text">支持向量机(SVM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性可分支持向量机"><span class="nav-number">1.2.</span> <span class="nav-text">线性可分支持向量机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬间隔"><span class="nav-number">1.3.</span> <span class="nav-text">硬间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数间隔"><span class="nav-number">1.3.1.</span> <span class="nav-text">函数间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#规范化"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">规范化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大间隔分离超平面"><span class="nav-number">1.4.</span> <span class="nav-text">最大间隔分离超平面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">1.5.</span> <span class="nav-text">对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日乘子法"><span class="nav-number">1.5.1.</span> <span class="nav-text">拉格朗日乘子法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#形式"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#驻点一定在切点处"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">驻点一定在切点处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引入变量表示梯度向量"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">引入变量表示梯度向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#证明"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于不等式约束时"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">对于不等式约束时</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#KKT条件"><span class="nav-number">1.5.1.5.1.</span> <span class="nav-text">KKT条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入拉格朗日乘子"><span class="nav-number">1.5.2.</span> <span class="nav-text">引入拉格朗日乘子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求解"><span class="nav-number">1.5.3.</span> <span class="nav-text">求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔"><span class="nav-number">1.6.</span> <span class="nav-text">软间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔的另一种解释：合页损失函数-hinge-loss"><span class="nav-number">1.7.</span> <span class="nav-text">软间隔的另一种解释：合页损失函数(hinge-loss)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核技巧"><span class="nav-number">1.8.</span> <span class="nav-text">核技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">1.8.1.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核技巧在SVM中的应用"><span class="nav-number">1.8.2.</span> <span class="nav-text">核技巧在SVM中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正定核"><span class="nav-number">1.8.3.</span> <span class="nav-text">正定核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的核函数"><span class="nav-number">1.8.4.</span> <span class="nav-text">常用的核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式核函数"><span class="nav-number">1.8.4.1.</span> <span class="nav-text">多项式核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高斯核函数"><span class="nav-number">1.8.4.2.</span> <span class="nav-text">高斯核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串核函数"><span class="nav-number">1.8.4.3.</span> <span class="nav-text">字符串核函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO-序列最小优化方法"><span class="nav-number">1.9.</span> <span class="nav-text">SMO(序列最小优化方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两个变量的二次规划的求解方法"><span class="nav-number">1.9.1.</span> <span class="nav-text">两个变量的二次规划的求解方法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

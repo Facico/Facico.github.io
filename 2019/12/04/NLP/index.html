@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="NLP词向量用一个向量表示一个词基于One-hot 的词向量特点 每个词的词向量都是一个地方为1，其他的地方为0的稀疏向量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;04&#x2F;NLP&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="NLP词向量用一个向量表示一个词基于One-hot 的词向量特点 每个词的词向量都是一个地方为1，其他的地方为0的稀疏向量">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-04T05:08:31.696Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/04/NLP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>NLP | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/04/NLP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NLP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-04 11:03:10 / Modified: 13:08:31" itemprop="dateCreated datePublished" datetime="2019-12-04T11:03:10+08:00">2019-12-04</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h1><h2 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h2><p>用一个向量表示一个词</p><h3 id="基于One-hot-的词向量"><a href="#基于One-hot-的词向量" class="headerlink" title="基于One-hot 的词向量"></a>基于One-hot 的词向量</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>每个词的词向量都是一个地方为1，其他的地方为0的稀疏向量</li>
+</ul><a id="more"></a>
+
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><ul>
+<li>基于one-hot的是简单的词袋模型，并没有考虑词与词之间的顺序问题，且假设了词与词之间相互独立</li>
+<li>虽然增加了识别特征，但是很可能会出现维度灾难</li>
+</ul>
+<h3 id="word2vec得到词向量"><a href="#word2vec得到词向量" class="headerlink" title="word2vec得到词向量"></a>word2vec得到词向量</h3><ul>
+<li>“一个单词的意思经常是由其附近的单词给出的”—现代统计NLP最成功的概念之一    </li>
+</ul>
+<h4 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h4><p>word2vec将每个词以固定维度的向量表现出来，如前面的“向量表现出来”，一共有三个词，每个词都有一个n维的向量。</p>
+<ul>
+<li><p>与one-hot不同的是，word2vec充分利用上下文信息，对上下文进行训练</p>
+</li>
+<li><p>每个词不再是只有一个地方是1的稀疏向量，而是一个稠密的固定维度的向量</p>
+</li>
+</ul>
+<h4 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h4><ul>
+<li>直观上可以减少额外的储存和计算开销</li>
+<li>在深层次的语义上训练后能利用上下文的信息，能判定找到相似的词语</li>
+</ul>
+<h4 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h4><ul>
+<li>1、用上下文预测中心词(CBOW: continue baga of word)</li>
+<li>2、用中心词预测上下文(skip-gram)</li>
+</ul>
+<p>从实现方式来看只是输入层和输出层上的变化（输入层是上下文或是中心词）</p>
+<p>当然在预测的时候不会用全部上下文的数据，会有一个<strong>窗口</strong>（[x-r,x+r]），用这个窗口中的数据来搞</p>
+<h4 id="CBOW模型"><a href="#CBOW模型" class="headerlink" title="CBOW模型"></a>CBOW模型</h4><ul>
+<li>输入层：上下文单词的one-hot(1*V)</li>
+<li>所有的onehot分别乘以共享的输入权重矩阵W(V*N)</li>
+<li>所得到的向量(1*N)相加，作为隐层向量(再加上偏置)</li>
+<li>乘以输出权重矩阵(N*V)</li>
+<li>得到的向量用激活函数处理得到概率分布</li>
+</ul>
+<h3 id="Huffman"><a href="#Huffman" class="headerlink" title="Huffman"></a>Huffman</h3><h4 id="Huffman树（合并果子的流程树）"><a href="#Huffman树（合并果子的流程树）" class="headerlink" title="Huffman树（合并果子的流程树）"></a>Huffman树（合并果子的流程树）</h4><ul>
+<li>每个叶子节点有一个点权，构建一颗树使得每个叶子节点的点权乘上根节点到叶子节点的路径只和最小(在合并果子上就相当于，根节点到叶子节点的路劲就相当于一个果子被合并的次数)</li>
+</ul>
+<h4 id="Huffman树的构建"><a href="#Huffman树的构建" class="headerlink" title="Huffman树的构建"></a>Huffman树的构建</h4><ul>
+<li>就用合并果子的方法构建就行了</li>
+</ul>
+<h4 id="Huffman编码"><a href="#Huffman编码" class="headerlink" title="Huffman编码"></a>Huffman编码</h4><p>在数据通信中，需要将传送的文字转化成二进制的字符串。比如说一串文字，出现了”A,B,C,D”的字符，分别出现了100,100,10,10。<strong>然而</strong>我们在进行二进制编码的时候如果用00,01,10,11来编码，那么00,和01的出现次数会很多，这样会浪费空间</p>
+<ul>
+<li>我们的策略是：出现频率低的用短码，出现频率高的用长码，以此来优化整个串的编码</li>
+<li>所以我们可以直接根据出现的评率来构建一颗树，然后每个分叉的左右子树的标记为0和1，然后一个词的编码就是沿着Huffman树从上至下的01串</li>
+</ul>
+<h3 id="计算一个句子的出现概率"><a href="#计算一个句子的出现概率" class="headerlink" title="计算一个句子的出现概率"></a>计算一个句子的出现概率</h3><h3 id="直接基于条件概率"><a href="#直接基于条件概率" class="headerlink" title="直接基于条件概率"></a>直接基于条件概率</h3><p>$$<br>P(S)=(w_1,w_2,…,w_n)\<br>=P(w_1)P(w2|w1)P(w3|w1,w2)…P(wn|w1,w2,…)<br>$$</p>
+<p>这样计算到后面，参数空间过大，条件概率非常难计算</p>
+<h3 id="马尔科夫假设"><a href="#马尔科夫假设" class="headerlink" title="马尔科夫假设"></a>马尔科夫假设</h3><p>为了解决参数空间过大的问题，<strong>根据马尔科夫链的定义</strong>：随意一个词的出现的概率只与前面出现的有限的一个或几个词有关</p>
+<p>所以假设每个词只和前面那个词的出现概率有关，所以就有<br>$$<br>P(w_1,w_2,…,w_n)≈P(w_1)P(w_2|w_1)P(w_2|w_3)…P(w_{n-1}|w_n)<br>$$<br>然后$P(w_i)和P(w_x|w_y)$的概率直接用大数定律就可以了</p>
+<h4 id="一元语言模型"><a href="#一元语言模型" class="headerlink" title="一元语言模型"></a>一元语言模型</h4><p>各个词出现概率独立<br>$$<br>P(w_1,w_2…w_n)=P(w_1)P(w_2)…P(w_n)<br>$$</p>
+<h4 id="二元语言模型"><a href="#二元语言模型" class="headerlink" title="二元语言模型"></a>二元语言模型</h4><p>每个词的出现概率和前一个有关<br>$$<br>P(w_1,w_2,…,w_n)≈P(w_1)P(w_2|w_1)P(w_2|w_3)…P(w_{n-1}|w_n)<br>$$</p>
+<h4 id="三元语言模型"><a href="#三元语言模型" class="headerlink" title="三元语言模型"></a>三元语言模型</h4><p>每个词的出现概率和前两个有关<br>$$<br>P(w_1,w_2,…,w_n)≈P(w_1)P(w_2|w_1)P(w_1,w_2|w_3)…P(w_{n-2},w_{n-1}|w_n)<br>$$</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/03/NLP%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" rel="next" title="NLP基础知识">
+                  <i class="fa fa-chevron-left"></i> NLP基础知识
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/10/Pytorch%E5%AD%A6%E4%B9%A0/" rel="prev" title="Pytorch学习">
+                  Pytorch学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#NLP"><span class="nav-number">1.</span> <span class="nav-text">NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#词向量"><span class="nav-number">1.1.</span> <span class="nav-text">词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于One-hot-的词向量"><span class="nav-number">1.1.1.</span> <span class="nav-text">基于One-hot 的词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优缺点"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#word2vec得到词向量"><span class="nav-number">1.1.2.</span> <span class="nav-text">word2vec得到词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点-1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优缺点-1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现方式"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CBOW模型"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">CBOW模型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Huffman"><span class="nav-number">1.1.3.</span> <span class="nav-text">Huffman</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Huffman树（合并果子的流程树）"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">Huffman树（合并果子的流程树）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Huffman树的构建"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">Huffman树的构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Huffman编码"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">Huffman编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算一个句子的出现概率"><span class="nav-number">1.1.4.</span> <span class="nav-text">计算一个句子的出现概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接基于条件概率"><span class="nav-number">1.1.5.</span> <span class="nav-text">直接基于条件概率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#马尔科夫假设"><span class="nav-number">1.1.6.</span> <span class="nav-text">马尔科夫假设</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一元语言模型"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">一元语言模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二元语言模型"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">二元语言模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三元语言模型"><span class="nav-number">1.1.6.3.</span> <span class="nav-text">三元语言模型</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Pytorch学习Tensor张量 tensor是pytorch里面的数据类型  标量，向量和矩阵三个其实都是张量，标量是零维的张量，向量是一维的张量，矩阵是二维的张量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pytorch学习">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;10&#x2F;Pytorch%E5%AD%A6%E4%B9%A0&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="Pytorch学习Tensor张量 tensor是pytorch里面的数据类型  标量，向量和矩阵三个其实都是张量，标量是零维的张量，向量是一维的张量，矩阵是二维的张量">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-12T13:56:18.872Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/10/Pytorch%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Pytorch学习 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/10/Pytorch%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Pytorch学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-10 16:53:59" itemprop="dateCreated datePublished" datetime="2019-12-10T16:53:59+08:00">2019-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-12 21:56:18" itemprop="dateModified" datetime="2019-12-12T21:56:18+08:00">2019-12-12</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Pytorch学习"><a href="#Pytorch学习" class="headerlink" title="Pytorch学习"></a>Pytorch学习</h1><h2 id="Tensor张量"><a href="#Tensor张量" class="headerlink" title="Tensor张量"></a>Tensor张量</h2><ul>
+<li><p>tensor是pytorch里面的数据类型</p>
+</li>
+<li><p>标量，向量和矩阵三个其实都是张量，标量是零维的张量，向量是一维的张量，矩阵是二维的张量</p>
+</li>
+</ul><a id="more"></a>
+<h3 id="tensor的成员"><a href="#tensor的成员" class="headerlink" title="tensor的成员"></a>tensor的成员</h3><ul>
+<li>==tensor.data==:张量的数据值是什么</li>
+<li>==tensor.grad==:该张量的梯度(如果没有就显示NONE)</li>
+<li>==tensor.grad_fn==:指向该张量处的函数计算(计算图中的计算节点)，进行梯度反向传播的时候会用到。如果是由用户创建的tensor，则该值 为 NONE</li>
+<li>==tensor.grad_fn.next_function==: 上一级节点的grad_fn</li>
+<li>==tensor.requires_grad==: 是否需要梯度，如果需要pytorch会在图中跟踪该张量然后在反向传播的时候计算梯度</li>
+</ul>
+<h3 id="创建tensor"><a href="#创建tensor" class="headerlink" title="创建tensor"></a>创建tensor</h3><ul>
+<li><p>==torch.eye(n)==, ==torch.ones((n,m))==,== torch.zeros((n,m))==和numpy建立矩阵的方法差不多</p>
+</li>
+<li><p>==torch.t(x)== 对x进行转置</p>
+</li>
+<li><p>直接==torch.tensor(x)==</p>
+</li>
+</ul>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><ul>
+<li><p>把numpy数组装成tensor：==torch.from_numpy(array)==</p>
+</li>
+<li><p>展开为特定的大小：==tensor.view(x,y)==</p>
+<ul>
+<li>若x,y中任意一个的维度为-1，则另外一个自动计算（就是可以少打一个，改成-1）</li>
+<li>tensor.view(-1)则直接展开为1*n的张量</li>
+</ul>
+</li>
+<li><p>==tensor,squeeze(n)==表示若tensor的n维度是1，则去掉该维度(例如(3,1,3)的squeeze(1)就会变成(3,3))</p>
+</li>
+<li><p>==tensor.unsqueeze(n)==: squeeze的逆向操作，参数含义相同</p>
+</li>
+<li><p>==torch.max(tensor, axis)==和numpy的max差不多</p>
+</li>
+<li><p>==torch.randn(x,y)==生成随机的二维tensor</p>
+</li>
+<li><p>==x.mm(y)==：x与y矩阵乘法</p>
+</li>
+</ul>
+<h2 id="自动求导Autograd"><a href="#自动求导Autograd" class="headerlink" title="自动求导Autograd"></a>自动求导Autograd</h2><ul>
+<li><p>设置一个张量的==requires_grad=True==，只要调用tensor.backward()即可方向计算所有点的梯度，但是注意，图里面的tensor要是一个浮点数</p>
+</li>
+<li><p>还要注意的是，在直接==tensor.backward()==的时候，这个tensor要是一个标量</p>
+</li>
+<li><p>但是我们可以也可以对任意张量求导，==tensor.backward(torch.tensor([[1.0,1.0]])==，设置张量每个值的权重，在backward的时候，每一步得到的关于这个向量的梯度，然后按照这个权重加起来</p>
+</li>
+</ul>
+<h3 id="计算图会自动销毁"><a href="#计算图会自动销毁" class="headerlink" title="计算图会自动销毁"></a>计算图会自动销毁</h3><ul>
+<li>一个计算图在进行反向求导之后，为了节省内存，这个计算图就销毁了，如果这时候还想求导就会报错。</li>
+</ul>
+<h3 id="不想追踪张量"><a href="#不想追踪张量" class="headerlink" title="不想追踪张量"></a>不想追踪张量</h3><ul>
+<li>==tensor.detach()==，把该张量从计算图中分离</li>
+<li>使用==with torch.no_grad():==包装可以直接分离多个点</li>
+</ul>
+<h2 id="torch-nn"><a href="#torch-nn" class="headerlink" title="torch.nn"></a>torch.nn</h2><h3 id="containers—-gt-torch-nn-Module"><a href="#containers—-gt-torch-nn-Module" class="headerlink" title="containers—&gt;torch.nn.Module"></a>containers—&gt;torch.nn.Module</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Model</span><span class="params">(nn.Module)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        super(Model, self).__init__()</span><br><span class="line">        self.conv1 = nn.Conv2d(<span class="number">1</span>, <span class="number">20</span>, <span class="number">5</span>)<span class="comment"># submodule: Conv2d</span></span><br><span class="line">        self.conv2 = nn.Conv2d(<span class="number">20</span>, <span class="number">20</span>, <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">       x = F.relu(self.conv1(x))</span><br><span class="line">       <span class="keyword">return</span> F.relu(self.conv2(x))</span><br></pre></td></tr></table></figure>
+
+<p>你的类可以继承这个类</p>
+<ul>
+<li>注意，在所有的子类中都要重写forward函数，定义了每次执行的计算步骤</li>
+</ul>
+<h3 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h3><ul>
+<li>传给==nn.Conv2d()==的张量size应当为</li>
+</ul>
+<p>$$<br>batchSize<em>channels</em>height*width<br>$$</p>
+<ul>
+<li><ul>
+<li>==nn.Conv2d==的输入输出的图像尺寸关系为：</li>
+</ul>
+<p>$$<br>output=\frac{input-kernerSize+2*paddings}{stride}+1<br>$$</p>
+<ul>
+<li>以上为CNN中的参数</li>
+<li>in_channels(<code>int</code>) – 输入信号的通道</li>
+<li>out_channels(<code>int</code>) – 卷积产生的通道</li>
+<li>kerner_size(<code>int</code> or <code>tuple</code>) - 卷积核的尺寸</li>
+<li>stride(<code>int</code> or <code>tuple</code>, <code>optional</code>) - 卷积步长</li>
+<li>padding(<code>int</code> or <code>tuple</code>, <code>optional</code>) - 输入的每一条边补充0的层数</li>
+<li>dilation(<code>int</code> or <code>tuple</code>, <code>optional</code>) – 卷积核元素之间的间距</li>
+<li>groups(<code>int</code>, <code>optional</code>) – 从输入通道到输出通道的阻塞连接数</li>
+<li>bias(<code>bool</code>, <code>optional</code>) - 如果<code>bias=True</code>，添加偏置</li>
+</ul>
+</li>
+</ul>
+<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><ul>
+<li>==nn.Linear(m,n)== 线性全连接层。接受一个张量，输出一个张量，输入的size必须为(<del>,m)，输出的size必须为(</del>,n)，即只对最后一个维度进行全连接计算，再将各个维度拼接起来。这是为了保证在网络中进行随机梯度下降的时候(假设batchSize=b)，最后传到全连接层的张量size为(b,m)，这样设计可以保证全连接层的输出size为(b,n)，即只对每个样本进行计算，而不会把不同样本的数据放在一起计算。</li>
+</ul>
+<h3 id="Sequentail与add-module"><a href="#Sequentail与add-module" class="headerlink" title="Sequentail与add_module"></a>Sequentail与add_module</h3><ul>
+<li><p>Sequential是一个时序容器</p>
+</li>
+<li><pre><code class="python">model = nn.Sequential(OrderedDict([
+                  (<span class="string">'conv1'</span>, nn.Conv2d(<span class="number">1</span>,<span class="number">20</span>,<span class="number">5</span>)),
+                  (<span class="string">'relu1'</span>, nn.ReLU()),
+                  (<span class="string">'conv2'</span>, nn.Conv2d(<span class="number">20</span>,<span class="number">64</span>,<span class="number">5</span>)),
+                  (<span class="string">'relu2'</span>, nn.ReLU())
+                ]))
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">如上，就相当于model是一个模型，可以像内置模型那样出结果，如`model(x)`</span><br><span class="line"></span><br><span class="line">再加上`add_module(name, layer)`可以自己重构一个模型，name是一个字符串表示名字，layer是一个模型的内容像conv,relu之类的</span><br><span class="line"></span><br><span class="line">### MSELoss</span><br><span class="line"></span><br><span class="line">有两个参数，模型预测输出x和目标y。能计算这之间的均方误差。</span><br><span class="line"></span><br><span class="line">## cuda加速运算</span><br><span class="line"></span><br><span class="line">- cuda可以使用显卡的gpu计算tensor的运算（前提是要有一个支持cuda的显卡）</span><br><span class="line">  - 1、==torch.cuda.is_available==来判断cuda是否可用</span><br><span class="line">  - 2、把tensor或模型放到gpu中计算：==x=x.cuda()==</span><br><span class="line">  - 3、然后计算的时候就能快速运算了</span><br><span class="line">- ==torch.device(&quot;设备名&quot;)==可以定义计算时所用的设备，例如例如==torch.device(&quot;cuda&quot;)==表示使用cuda，==torch.device(&quot;cpu&quot;==)表示使用cpu。使用==x.to(torch.device(&quot;设备名&quot;))==可以将模型/张量放到相应的设备上。</span><br><span class="line"></span><br><span class="line">## 数据加载</span><br><span class="line"></span><br><span class="line">### dataset</span><br><span class="line"></span><br><span class="line">- 重写torch.utils.data.dataset类</span><br><span class="line">  - `__init__():`初始化数据集，一般传入数据存放位置，储存标签信息文件路径等</span><br><span class="line">  - `__getitem__():`定义给定一个索引，加载相应样本的方法。传入参的索引i，返回数据集中第i个样本文件(tensor、PIL.image等)</span><br><span class="line">  - `__len__():`返回数据集中样本的个数</span><br><span class="line"></span><br><span class="line">### dataloader</span><br><span class="line"></span><br><span class="line">- 将dataset加载为dataloader：==torch.utils.data.dataloader.Dataloader(dataset,batch_size=n,shuufle=True,drop_last=True,num_worker)==</span><br><span class="line">  - batch_size表示每个batch的大小</span><br><span class="line">  - shuffle表示是否在训练时打乱数据</span><br><span class="line">  - drop_last表示当前最后剩下的数据不足一个batch时，是否丢弃</span><br><span class="line">  - num_worker表示加载数据所用的线程数</span><br><span class="line"></span><br><span class="line">## 图像操作</span><br><span class="line"></span><br><span class="line">### torchvision.transforms</span><br><span class="line"></span><br><span class="line">- Resize(h,w)将图片缩放为指定尺寸。只传入一个参数x的时候，将图像缩放使得其中一条边大小为x</span><br><span class="line">- Centercrop(h,w)从图片的中心裁剪下(h,w)的大小，当只有一个参数x的时候为正方形</span><br><span class="line">- Randomcrop(h,w)从图片随机裁剪下(h,w)的大小，当只有一个参数x的时候，裁剪正方形</span><br><span class="line">- ToTesor()把PIL_Image或numpy数组变为tensor，同时进行归一化操作</span><br><span class="line">- Normaliuze()进行归一化操作</span><br><span class="line">- ToPILImage(tensor)把tensor变为PIL格式</span><br><span class="line">- tensor.numpy()变为numpy数组</span><br><span class="line">- 使用matplotlib显示图片：plt.imshow(np.transpose(img,(1,2,0)))，img是由tensor转化来的数组，之所以要转置，是因为torch和numpy中表示图片的格式不同</span><br><span class="line">- torchvision.utils.save_image(img, path)</span><br><span class="line"></span><br><span class="line">## models</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">import torchvision.models as models</span><br><span class="line">VGG = models.vgg16(pretrained=True)</span><br></pre></td></tr></table></figure></code></pre>
+</li>
+<li><p>pretrained为True表示要训练模型，为False表示只保留网络结构</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/04/NLP/" rel="next" title="NLP">
+                  <i class="fa fa-chevron-left"></i> NLP
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/10/A%20Neural%20Algorithm%20of%20Artistic%20Style/" rel="prev" title="A Neural Algorithm of Artistic Style">
+                  A Neural Algorithm of Artistic Style <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pytorch学习"><span class="nav-number">1.</span> <span class="nav-text">Pytorch学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tensor张量"><span class="nav-number">1.1.</span> <span class="nav-text">Tensor张量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tensor的成员"><span class="nav-number">1.1.1.</span> <span class="nav-text">tensor的成员</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建tensor"><span class="nav-number">1.1.2.</span> <span class="nav-text">创建tensor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用操作"><span class="nav-number">1.1.3.</span> <span class="nav-text">常用操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动求导Autograd"><span class="nav-number">1.2.</span> <span class="nav-text">自动求导Autograd</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计算图会自动销毁"><span class="nav-number">1.2.1.</span> <span class="nav-text">计算图会自动销毁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不想追踪张量"><span class="nav-number">1.2.2.</span> <span class="nav-text">不想追踪张量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#torch-nn"><span class="nav-number">1.3.</span> <span class="nav-text">torch.nn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#containers—-gt-torch-nn-Module"><span class="nav-number">1.3.1.</span> <span class="nav-text">containers—&gt;torch.nn.Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层"><span class="nav-number">1.3.2.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sequentail与add-module"><span class="nav-number">1.3.4.</span> <span class="nav-text">Sequentail与add_module</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

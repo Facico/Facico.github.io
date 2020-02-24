@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="A Neural Algorithm of Artistic Style 文章大致：算法基于深度神经网络，能将任意图片根据任意画家的风格转化，并提供一种方法了解人类如何创造和感知艺术意象 feature map(特征映射)s: 对于输入图像的不同的过滤视觉 当CNN作用在物体识别的时候，网络产生一种能沿着处理层使得物体信息明显增加的==表征==，因此沿着网络的处理层，比起具体的像素值，输入图像对当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Neural Algorithm of Artistic Style">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;10&#x2F;A%20Neural%20Algorithm%20of%20Artistic%20Style&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="A Neural Algorithm of Artistic Style 文章大致：算法基于深度神经网络，能将任意图片根据任意画家的风格转化，并提供一种方法了解人类如何创造和感知艺术意象 feature map(特征映射)s: 对于输入图像的不同的过滤视觉 当CNN作用在物体识别的时候，网络产生一种能沿着处理层使得物体信息明显增加的==表征==，因此沿着网络的处理层，比起具体的像素值，输入图像对当">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-13T05:48:26.384Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/12/10/A%20Neural%20Algorithm%20of%20Artistic%20Style/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>A Neural Algorithm of Artistic Style | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/10/A%20Neural%20Algorithm%20of%20Artistic%20Style/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          A Neural Algorithm of Artistic Style
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-12-10 21:16:54" itemprop="dateCreated datePublished" datetime="2019-12-10T21:16:54+08:00">2019-12-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-13 13:48:26" itemprop="dateModified" datetime="2019-12-13T13:48:26+08:00">2019-12-13</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="A-Neural-Algorithm-of-Artistic-Style"><a href="#A-Neural-Algorithm-of-Artistic-Style" class="headerlink" title="A Neural Algorithm of Artistic Style"></a>A Neural Algorithm of Artistic Style</h1><ul>
+<li>文章大致：算法基于深度神经网络，能将任意图片根据任意画家的风格转化，并提供一种方法了解人类如何创造和感知艺术意象</li>
+<li>feature map(特征映射)s: 对于输入图像的不同的过滤视觉</li>
+<li>当CNN作用在物体识别的时候，网络产生一种能沿着处理层使得物体信息明显增加的==表征==，因此沿着网络的处理层，比起具体的像素值，输入图像对当前图像的内容(content)关注度会增加。</li>
+</ul><a id="more"></a>
+<p>因此，我们把把每一层的被重构的图像可视化可以发现</p>
+<ul>
+<li>高层捕获在图像中关于物体的高级内容和他们排列，但不限制重构后确切的像素值(就是不怎么改变)</li>
+<li>底层只简单的重构造原图像确切的像素值</li>
+</ul>
+<p>我们因此把网络高层的表达当做内容表征(content representation)<br>为了获得风格表征(style representation)：我们用一个原创设计的特征空间来捕获特征信息</p>
+<pre><code>- 这个特征空间是建立在每一层的滤波器之上，它包含了不同滤波器在特征地图的空间范围之间的联系
+    - 基于多层的特征联系，我们获得一个稳定的多规模的图像表征，它捕获图像的本质信息而不是整体排列信息，我们把这个多规模的表征叫风格表征(style representation)</code></pre><p>关键的发现是CNN上内容和风格的表征是可分的,我们可以操控两个独立的表征来产生新的，感性的，有意义的图片(并不是能完全解开，但是可以调整偏向比重)<br>为了论证这个发现，我们混合来自两个不同图片的内容和风格，所以我们采用画家的风格和现实图片的内容来混合。</p>
+<p>方法：</p>
+<ul>
+<li><p>算法由vgg-n和CNN组成</p>
+</li>
+<li><p>特征空间由19层的vgg的16个卷积层、5个池化层提供，没有用到任何的全连接层</p>
+</li>
+<li><p>该模型是公开的，可以在caffe-framework中被找到</p>
+</li>
+<li><p>对于图像合成，我们发现用平均池来替换最大池可以改善梯度流，可以获得更优吸引力的结果</p>
+</li>
+</ul>
+<p>通常：网络里的每一层定义了的非线性过滤器组的复杂度随着该层的位置的增加 而增加，因此给定的输入图像$\vec x$被过滤器相应而编码在每一层的CNN中。</p>
+<h2 id="内容表征"><a href="#内容表征" class="headerlink" title="内容表征"></a>内容表征</h2><p>一层的$N_l$个过滤器有$N_l$个特征映射，特征映射的大小是$M_l$(特征映射的高*宽)</p>
+<ul>
+<li><p>所以第$l$层的相应可以被存储在矩阵$F^l\in R^{N_l*M_l}$中($F^l_{ij}是第l层第i个过滤器在第j个位置的激活$)</p>
+</li>
+<li><p>为了可视化每一层被编码的图像信息，我们用==梯度下降==来在白噪声图像上找另一个图像来匹配原图像的特征信息</p>
+</li>
+<li><p>所以我们设$\vec p和\vec x$表示原图像和生成图像，$P^l和F^l$来表示他们相应的特征表征</p>
+</li>
+<li><p>我们定义两个表征的平方缺失为<br>$$<br>L_{content}(\vec p,\vec x,l)=\frac{1}{2}\sum_{i,j}(F_{ij}^l-P_{i,j}^l)^2<br>$$</p>
+</li>
+<li><p>关于这个缺失在第l层上激活的导数为<br>$$<br>\frac{\part L_{content}}{\part F_{ij}^l}=\begin{cases}<br>(F^l-P^l)<em>{ij} &amp;\text{if }F</em>{ij}^l&gt;0   \<br>0 &amp;\text{if }F_{ij}^l&lt;=0<br>\end{cases}<br>$$</p>
+</li>
+<li><p>关于其他的梯度可以用反向传播计算</p>
+</li>
+<li><p>然后我们可以更改随机图像$\vec x$直到它在CCN的某一层产生了与原图像相同的相应</p>
+<h2 id="风格表征"><a href="#风格表征" class="headerlink" title="风格表征"></a>风格表征</h2></li>
+<li><p>在CNN的每一层的相应基础上，我们建立一个风格表征，可以计算不同滤波器相应之间的相关性，这些特征的相关性由Gram matrix得到$G^l \in R^{N_l*N_l}$($G_{ij}^l是特征映射i和特征映射j在第l层的内积$)<br>$$<br>G_{ij}^l=\sum_k F_{ik}^lF_{jk}^l<br>$$</p>
+</li>
+<li><p>为了生成匹配给定图片风格的本质，我们用==梯度下降==来在白噪声图像上找另一个图像来匹配原图像的风格，这是通过最小化原图像Gram matrix和将要生成的图像之间每一项的均方距离来实现的</p>
+</li>
+<li><p>所以我们设$\vec a和\vec x$表示原图像和生成图像，$A^l和G^l$来表示他们相应的风格表征的Gram matrix</p>
+</li>
+<li><p>第l层的缺失总贡献为<br>$$<br>E_l=\frac{1}{4N_l^2M_l^2}\sum_{i,j}(G_{ij}^l-A_{ij}^l)^2<br>$$</p>
+</li>
+<li><p>所有的缺失总贡献为<br>$$<br>L_{style}(\vec a, \vec x)=\sum_{l=0}^Lw_lE_l<br>$$<br>$w_l$是对各层缺失值的加权因子</p>
+</li>
+<li><p>关于这个缺失在第l层上激活的导数为<br>$$<br>\frac{\part E_{l}}{\part F_{ij}^l}=\begin{cases}<br>\frac{1}{N_l^2M_l^2}((F^l)^T(G^l-A^l))<em>{ji} &amp;\text{if }F</em>{ij}^l&gt;0   \<br>0 &amp;\text{if }F_{ij}^l&lt;=0<br>\end{cases}<br>$$</p>
+</li>
+<li><p>关于其他的梯度可以用反向传播计算</p>
+</li>
+</ul>
+<h2 id="合并图像"><a href="#合并图像" class="headerlink" title="合并图像"></a>合并图像</h2><ul>
+<li><p>为了生成用内容和风格混合的图像，我们最小化内容表征第一层的白噪声图像和风格表征CNN中多层图像的距离</p>
+</li>
+<li><p>我们令$\vec p为内容信息，\vec a为风格信息$</p>
+</li>
+<li><p>我们最小化的缺失函数是<br>$$<br>L_{total}(\vec p,\vec a,\vec x)=\alpha L_{content}(\vec p,\vec x)+\beta L_{style}(\vec a,\vec x)<br>$$</p>
+<ul>
+<li>$\alpha 和\beta就是分别的权重$</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/12/10/Pytorch%E5%AD%A6%E4%B9%A0/" rel="next" title="Pytorch学习">
+                  <i class="fa fa-chevron-left"></i> Pytorch学习
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/16/Densely%20Connected%20Convolutional%20Networks/" rel="prev" title="Densely Connected Convolutional Networks">
+                  Densely Connected Convolutional Networks <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#A-Neural-Algorithm-of-Artistic-Style"><span class="nav-number">1.</span> <span class="nav-text">A Neural Algorithm of Artistic Style</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内容表征"><span class="nav-number">1.1.</span> <span class="nav-text">内容表征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#风格表征"><span class="nav-number">1.2.</span> <span class="nav-text">风格表征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并图像"><span class="nav-number">1.3.</span> <span class="nav-text">合并图像</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

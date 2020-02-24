@@ -61,7 +61,7 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;images2015.cnblogs.com&#x2F;blog&#x2F;673793&#x2F;201512&#x2F;673793-20151230204223917-579926148.jpg">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180123140254140">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;%E6%A1%8C%E9%9D%A2&#x2F;93E4B7E6CB979E7C410025F5384E84A5.jpg">
-<meta property="og:updated_time" content="2019-11-26T11:53:29.240Z">
+<meta property="og:updated_time" content="2019-11-28T14:11:32.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;ss0.bdstatic.com&#x2F;70cFuHSh_Q1YnxGkpoWK1HF6hhy&#x2F;it&#x2F;u=2956569879,4024414811&amp;fm=27&amp;gp=0.jpg">
 
@@ -217,10 +217,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-11-26 14:32:24 / Modified: 19:53:29" itemprop="dateCreated datePublished" datetime="2019-11-26T14:32:24+08:00">2019-11-26</time>
+              <time title="Created: 2019-11-26 14:32:24" itemprop="dateCreated datePublished" datetime="2019-11-26T14:32:24+08:00">2019-11-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-28 22:11:32" itemprop="dateModified" datetime="2019-11-28T22:11:32+08:00">2019-11-28</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -251,7 +257,7 @@
 <p>我们可以发现上面的这个东西其实就是一个线性分类器</p>
 <h2 id="单层神经网络（感知机）"><a href="#单层神经网络（感知机）" class="headerlink" title="单层神经网络（感知机）"></a>单层神经网络（感知机）</h2><h3 id="简单介绍"><a href="#简单介绍" class="headerlink" title="简单介绍"></a>简单介绍</h3><p>感知机中有两个层次：输入层和输出层</p>
 <ul>
-<li>输入层：处理输入数据和传递，不做任何计算</li>
+<li>输入层：处理输入数据和传递，不做任何计算(整个输入层负责一个样本的输入，而不是输入层的每个元素负责一个样本的输入)</li>
 <li>输出层：负责整合各个输入层来的数据</li>
 </ul>
 <p><img src="https://images2015.cnblogs.com/blog/673793/201512/673793-20151230204223917-579926148.jpg" alt="img"></p>
@@ -290,7 +296,7 @@
 <li>通常所说的“BP网络”时，一般是指用BP算法训练的多层前馈神经网络</li>
 </ul>
 <p><img src="/home/facico/%E6%A1%8C%E9%9D%A2/93E4B7E6CB979E7C410025F5384E84A5.jpg" alt></p>
-<h3 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h3><ul>
+<h4 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h4><ul>
 <li><p>有d个输入神经元，l个输出神经元，q个隐层神经元(只有一个隐层)</p>
 </li>
 <li><p>输出层第j个神经元的阈值$\theta_j$，隐层第h个神经元的阈值$\gamma_h$</p>
@@ -314,7 +320,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="学习策略-1"><a href="#学习策略-1" class="headerlink" title="学习策略"></a>学习策略</h3><p>BP是一个迭代学习算法，在每一轮的迭代中采用广义感知机的规则对参数进行估计（就是对与误差分类有关的参数都梯度下降）</p>
+<h4 id="学习策略-1"><a href="#学习策略-1" class="headerlink" title="学习策略"></a>学习策略</h4><p>BP是一个迭代学习算法，在每一轮的迭代中采用广义感知机的规则对参数进行估计（就是对与误差分类有关的参数都梯度下降）</p>
 <p>任意参数$v$的更新估计为$v&lt;—v+\Delta v$</p>
 <p>如，对于参数$w_{hj}$<br>$$<br>\Delta w_{hj}=-\eta \frac{\vartheta E_k}{\vartheta w_{hj}}=\-\eta \frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}*<br>\frac{\vartheta  \beta_{j}}{\vartheta  w_{hj}}<br>$$</p>
 <p>$$<br>设g_j=-\frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}<br>$$</p>
@@ -322,6 +328,16 @@
 <p>$$<br>所以g_j=-\frac{\vartheta E_k}{\vartheta \hat y_{j}^k}*<br>\frac{\vartheta \hat y_{j}^k}{\vartheta  \beta_{j}}\=<br>-(\hat y_j^k-y_j^k)f’(\beta_j-\theta_j)\=<br>-(\hat y_j^k-y_j^k)\hat y_j^k(1-\hat y_j^k)<br>$$</p>
 <p>又因为$\frac{\vartheta  \beta_{j}}{\vartheta  w_{hj}}=b_h$<br>$$<br>\Delta w_{hj}=\eta g_jb_h<br>$$</p>
 <p>类似的有<br>$$<br>\Delta \theta_j=-\eta g_j\<br>\Delta v_{ih}=\eta e_hx_i\<br>\Delta \gamma_h=-\eta e_h\<br>e_h = b_h(1-b_h)\sum_{j=1}^lw_{hj}g_j<br>$$</p>
+<h4 id="链式规则的缺陷"><a href="#链式规则的缺陷" class="headerlink" title="链式规则的缺陷"></a>链式规则的缺陷</h4><p>我们在上面求导的时候，使用了类似函数套函数求导的链式规则。很显然这种做法只是对求导的一个近似。</p>
+<p>缺点如下：</p>
+<ul>
+<li>某个地方梯度过大</li>
+<li>某个地方梯度过小</li>
+</ul>
+<p>一条链的一个部分的梯度与相邻两边差距非常大，这样会影响整体的套数，理论上可以做一些误差调整，这里不做讲述。</p>
+<p>特别的：把链式规则的每个地方的元素记录在节点上得到的图叫做<strong>计算图</strong></p>
+<h3 id="积累BP算法"><a href="#积累BP算法" class="headerlink" title="积累BP算法"></a>积累BP算法</h3><p>由于标准的BP算法每次只针对一个数据进行参数的调整，参数更新非常的频繁，有时甚至会出现“抵消”的现象。所以可以考虑对所有数据进行参数调整，<strong>梯度为所有数据得到的梯度的平均值</strong>。</p>
+<p>不过在大数据下，标准的BP算法会表现的比较好。</p>
 
     </div>
 
@@ -343,6 +359,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/12/01/PIL%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0/" rel="prev" title="PIL模块学习">
+                  PIL模块学习 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -381,7 +400,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想来源"><span class="nav-number">1.1.</span> <span class="nav-text">思想来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经元"><span class="nav-number">1.2.</span> <span class="nav-text">神经元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#M-P神经元模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">M-P神经元模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#典型的激活函数"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">典型的激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阶跃函数"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">阶跃函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sigmoid函数"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">Sigmoid函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单层神经网络（感知机）"><span class="nav-number">1.3.</span> <span class="nav-text">单层神经网络（感知机）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">学习策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的原始形式"><span class="nav-number">1.3.4.</span> <span class="nav-text">感知机的原始形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收敛性"><span class="nav-number">1.3.5.</span> <span class="nav-text">收敛性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的对偶形式"><span class="nav-number">1.3.6.</span> <span class="nav-text">感知机的对偶形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多层前馈神经网络"><span class="nav-number">1.4.</span> <span class="nav-text">多层前馈神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#误差逆传播算法（BP算法）"><span class="nav-number">1.4.2.</span> <span class="nav-text">误差逆传播算法（BP算法）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量定义"><span class="nav-number">1.4.3.</span> <span class="nav-text">变量定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习策略-1"><span class="nav-number">1.4.4.</span> <span class="nav-text">学习策略</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想来源"><span class="nav-number">1.1.</span> <span class="nav-text">思想来源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经元"><span class="nav-number">1.2.</span> <span class="nav-text">神经元</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#M-P神经元模型"><span class="nav-number">1.2.1.</span> <span class="nav-text">M-P神经元模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#典型的激活函数"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">典型的激活函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阶跃函数"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">阶跃函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Sigmoid函数"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">Sigmoid函数</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单层神经网络（感知机）"><span class="nav-number">1.3.</span> <span class="nav-text">单层神经网络（感知机）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍"><span class="nav-number">1.3.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#学习策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">学习策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的原始形式"><span class="nav-number">1.3.4.</span> <span class="nav-text">感知机的原始形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#收敛性"><span class="nav-number">1.3.5.</span> <span class="nav-text">收敛性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感知机的对偶形式"><span class="nav-number">1.3.6.</span> <span class="nav-text">感知机的对偶形式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多层前馈神经网络"><span class="nav-number">1.4.</span> <span class="nav-text">多层前馈神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单介绍-1"><span class="nav-number">1.4.1.</span> <span class="nav-text">简单介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#误差逆传播算法（BP算法）"><span class="nav-number">1.4.2.</span> <span class="nav-text">误差逆传播算法（BP算法）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量定义"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">变量定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#学习策略-1"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">学习策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链式规则的缺陷"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">链式规则的缺陷</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#积累BP算法"><span class="nav-number">1.4.3.</span> <span class="nav-text">积累BP算法</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -396,7 +415,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -437,7 +456,7 @@
 <div class="copyright">
   
   &copy; 2019.10.26 – 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
