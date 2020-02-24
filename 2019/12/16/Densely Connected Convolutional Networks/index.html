@@ -58,7 +58,7 @@
 <meta property="og:description" content="Densely Connected Convolutional Networks 如果在接近输入层和接近输出层之间有更短的连接(如1-&amp;gt;n)，则卷积神经网络会更深入，更准确，更有效。 稠密卷及神经网络：每一层之间都有连接($\frac{L(L-1)}{2}$，由此密集的连接方式而得名)，连接都以前馈的方式连接（对于每一层，前面所有层的特征图作为输入，它自己的特征图作为后面所有层的输入） 优点">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191216210011017.png">
-<meta property="og:updated_time" content="2020-01-01T14:22:14.733Z">
+<meta property="og:updated_time" content="2020-02-24T00:49:34.802Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20191216210011017.png">
 
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-01 22:22:14" itemprop="dateModified" datetime="2020-01-01T22:22:14+08:00">2020-01-01</time>
+                <time title="Modified: 2020-02-24 08:49:34" itemprop="dateModified" datetime="2020-02-24T08:49:34+08:00">2020-02-24</time>
               </span>
 
           
@@ -480,6 +480,56 @@
   
 
   
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

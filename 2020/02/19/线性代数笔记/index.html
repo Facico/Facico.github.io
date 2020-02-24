@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="Facico的博客">
 <meta property="og:description" content="线性代数笔记行列式 证明交换变号 用数学归纳法 对交换i，j行来说，用第k行的余子式来求值 第k行的所有余子式的i，j行都交换了 得证   逆序对法易证   化成上下三角 1、先观察能否换行列 使得减的时候更好减   2、观察能否加出来一个全相等的行列   高化 在不好减的时候，扩充 扩充的时候，只要是三角型，对角线的是1，其他随意   递推 行列式内的结构和大结构都长得很像 设$F_n$来递推">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-02-19T01:22:06.021Z">
+<meta property="og:updated_time" content="2020-02-24T00:37:49.717Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/02/19/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%AC%94%E8%AE%B0/">
@@ -212,10 +212,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-02-19 08:35:56 / Modified: 09:22:06" itemprop="dateCreated datePublished" datetime="2020-02-19T08:35:56+08:00">2020-02-19</time>
+              <time title="Created: 2020-02-19 08:35:56" itemprop="dateCreated datePublished" datetime="2020-02-19T08:35:56+08:00">2020-02-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-02-24 08:37:49" itemprop="dateModified" datetime="2020-02-24T08:37:49+08:00">2020-02-24</time>
+              </span>
 
           
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
@@ -475,6 +481,56 @@
   
 
   
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 
