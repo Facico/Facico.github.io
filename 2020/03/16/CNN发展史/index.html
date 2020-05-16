@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="CNN发展史早期铺垫神经网络起源 Hubel和Wiesel对猫大脑中的视觉系统的研究。 各种结构的铺垫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CNN发展史">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;16&#x2F;CNN%E5%8F%91%E5%B1%95%E5%8F%B2&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="CNN发展史早期铺垫神经网络起源 Hubel和Wiesel对猫大脑中的视觉系统的研究。 各种结构的铺垫">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190427162252848.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE5MzI5Nzg1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180720065915431?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180720070636470?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180720070823697?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180712172601492?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA1MTMzMjc=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;images2018.cnblogs.com&#x2F;blog&#x2F;1370487&#x2F;201807&#x2F;1370487-20180717145622000-773000260.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180415160228709?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20181030173712626.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzQxMTMyODYw,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;2018041517590341?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180503231727530?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:image" content="https:&#x2F;&#x2F;pic4.zhimg.com&#x2F;80&#x2F;v2-0f6aa9f364b302da5826a4108cb899cb_720w.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;10902146-6a05d0ebcc98cd87.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;207">
+<meta property="og:image" content="https:&#x2F;&#x2F;wx3.sinaimg.cn&#x2F;large&#x2F;4caedc7agy1fgeztfbwf2j20hs06daae.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;wx3.sinaimg.cn&#x2F;large&#x2F;4caedc7agy1fgeztlflguj20hs0afgmd.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;wx2.sinaimg.cn&#x2F;large&#x2F;4caedc7agy1fgezu3hr66j20hs04kmxz.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;pic&#x2F;201709&#x2F;46c2d76556606733ded2903f1b40b8f8.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614140536136.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614141318448.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614145617751.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614150200903.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0314&#x2F;022939_Pl12_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0314&#x2F;023015_rDZR_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;1450389&#x2F;201810&#x2F;1450389-20181015155238095-1514892633.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0314&#x2F;023135_0OwO_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141510_fIWh_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141520_31TH_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141544_FfKB_876354.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141641_H28K_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141700_GV5l_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141713_bGpL_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141726_LQNh_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141734_OEPA_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.oschina.net&#x2F;uploads&#x2F;space&#x2F;2018&#x2F;0317&#x2F;141746_Fw1D_876354.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190617164400326.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-05-15T12:58:59.645Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190427162252848.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE5MzI5Nzg1,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>CNN发展史 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CNN发展史
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-16 21:54:43" itemprop="dateCreated datePublished" datetime="2020-03-16T21:54:43+08:00">2020-03-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 20:58:59" itemprop="dateModified" datetime="2020-05-15T20:58:59+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="CNN发展史"><a href="#CNN发展史" class="headerlink" title="CNN发展史"></a>CNN发展史</h1><p><img src="https://img-blog.csdnimg.cn/20190427162252848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE5MzI5Nzg1,size_16,color_FFFFFF,t_70" alt="深度神经网络相关汇总，更新至2019.4.25"></p><h2 id="早期铺垫"><a href="#早期铺垫" class="headerlink" title="早期铺垫"></a>早期铺垫</h2><h3 id="神经网络起源"><a href="#神经网络起源" class="headerlink" title="神经网络起源"></a>神经网络起源</h3><ul>
+<li>Hubel和Wiesel对猫大脑中的视觉系统的研究。</li>
+</ul><h3 id="各种结构的铺垫"><a href="#各种结构的铺垫" class="headerlink" title="各种结构的铺垫"></a>各种结构的铺垫</h3><a id="more"></a>
+
+<ul>
+<li>1980年，日本科学家福岛邦彦《Neocognitron: A self-organizing neural network model for a mechanism of pattern recognition unaffected by shift in position》</li>
+<li>提出了一个包含卷积层、池化层的神经网络结构。</li>
+</ul>
+<h2 id="LeNet"><a href="#LeNet" class="headerlink" title="LeNet"></a>LeNet</h2><ul>
+<li><p>LeNet几乎是所有CNN的开端</p>
+</li>
+<li><p>作者：Yann Lecun</p>
+</li>
+<li><p>首次形成经典结构，但是效果比起当时的SVM等不是很好。用于minst分类</p>
+</li>
+</ul>
+<h3 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h3><ul>
+<li>输入根据各种白化，缩放等处理，是信息更好的处理</li>
+</ul>
+<h4 id="输入层疑问"><a href="#输入层疑问" class="headerlink" title="输入层疑问"></a>输入层疑问</h4><ul>
+<li>1、为什么很多把图像处理成224*224(感性有道理的解释)<ul>
+<li>卷积是会掉分辨率的，这个掉的分辨率根据公式和stride有关：stride一般是用2的次幂的(毕竟1或者2好除)</li>
+<li>然后$224=7*2^5$，那么我们在考虑后面的stride的时候就要宏观考虑一下了，以及考虑我们用的核都是(1,3,5,7,9)，所以为这个。当然，我觉得不一定要是7，根据最后图像情况而定，但是很多这样搞就习惯了</li>
+</ul>
+</li>
+</ul>
+<h3 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h3><h4 id="卷积-卷积核"><a href="#卷积-卷积核" class="headerlink" title="卷积(卷积核)"></a>卷积(卷积核)</h4><ul>
+<li><p>线性、平移不变性运算，在输入信号执行局部加权组成。根据所选择的<code>权重集合</code>(即所选择的<code>点扩散函数</code>)的不同，来揭示输入信号的不同性质。</p>
+</li>
+<li><p>具体特点</p>
+<ul>
+<li><p>1、通过卷积运算，使得原信号特征增强，并且降低噪音</p>
+<ul>
+<li><p>a.不同的卷积核能提取不同的特征</p>
+<ul>
+<li><p>1、边缘检测(横向同理)</p>
+<p><img src="https://img-blog.csdn.net/20180720065915431?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+</li>
+<li><p>2、sobel滤波(横向同理)</p>
+<p><img src="https://img-blog.csdn.net/20180720070636470?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+</li>
+<li><p>3、scharr滤波(横向同理)</p>
+<p><img src="https://img-blog.csdn.net/20180720070823697?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NTRE5fQmxhY2s=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+</li>
+</ul>
+</li>
+<li><p>b.参数共享减少参数(就是不用每个地方，像全连接那样去弄一个参数)</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>点扩散函数</p>
+<ul>
+<li><p>频域中，与点扩散函数关联的是调制函数——说明了输入的频率组分通过缩放和相移进行调制的方式。</p>
+</li>
+<li><p>==因此，选择合适的kernel对输入信号中包含最显著和最重要的信息而言至关重要。==</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="激活函数-以下与发展史不太有关"><a href="#激活函数-以下与发展史不太有关" class="headerlink" title="激活函数(以下与发展史不太有关)"></a>激活函数(以下与发展史不太有关)</h4><p>  <img src="https://img-blog.csdn.net/20180712172601492?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTA1MTMzMjc=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<ul>
+<li><p>由于卷积是线性的，要拟合一些非线性的模型需要一些非线性的运算来拟合，所以就有了激活函数</p>
+</li>
+<li><p>饱和的定义</p>
+<p><img src="https://images2018.cnblogs.com/blog/1370487/201807/1370487-20180717145622000-773000260.png" alt="img"></p>
+</li>
+<li><p>sigmoid($\sigma(x)$左端-&gt;0，右端-&gt;1，两段饱和)</p>
+<ul>
+<li><p><img src="https://img-blog.csdn.net/20180415160228709?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+</li>
+<li><p>现在已经较少使用(主要是不在隐藏层使用，也就在输出层是二分类问题的时候使用)</p>
+</li>
+<li><p>优点：</p>
+<ul>
+<li>可作为概率输出</li>
+<li>平滑，易于求导</li>
+</ul>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p>两边饱和，所以接近饱和之后就会有梯度消失的问题</p>
+</li>
+<li><p>输出都是正数，所有数据改变的方向都相同，会引起“Z字抖动”(Z字下降，收敛的很慢)</p>
+<ul>
+<li>为什么方向相同，假设$z=f(\sigma(x))$，导数为$f’(\sigma(x))\sigma’(x)$，f的导数和$\sigma(x)$的正负有关，因为输出全为正数，所以整体方向相同</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20181030173712626.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzQxMTMyODYw,size_16,color_FFFFFF,t_70" alt="img"></p>
+</li>
+<li><p>计算耗时</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>tanh($2\sigma(2x)-1$)</p>
+<p><img src="https://img-blog.csdn.net/2018041517590341?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="tanh(x)及其导数的几何图像"></p>
+<ul>
+<li>优点：<ul>
+<li>解决了sigmoid的零均值问题</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>两边饱和，仍存在梯度消失</li>
+<li>计算耗时</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ReLU(max(0,x))</p>
+<ul>
+<li><img src="https://img-blog.csdn.net/20180503231727530?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3R5aGpfc2Y=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></li>
+<li>优点：<ul>
+<li>正区间上解决了梯度消失问题</li>
+<li>计算速度快</li>
+<li>收敛速度比上两者快</li>
+<li>就神经网络而言：它是分段线性函数，非线性性弱，要把网络做的很深，这正好迎合了网络要深的要求，更深泛化更好</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>输出不是零均值</li>
+<li>神经元坏死现象：只要输入负值，那么输出就是0，就导致后面的网络输入都是0，造成大面积坏死<ul>
+<li>坏死造成因素：<ul>
+<li>1、不幸的初始化</li>
+<li>2、学习率过高，参数更新到负数—&gt;可用adagrad等调节lr</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Leaky ReLU/PReLU($max(\varepsilon x,x)，0&lt;\varepsilon&lt;1$)</p>
+<ul>
+<li><p><img src="https://pic4.zhimg.com/80/v2-0f6aa9f364b302da5826a4108cb899cb_720w.jpg" alt="img"></p>
+</li>
+<li><p>显然是对Dead ReLU Problem的改进</p>
+</li>
+<li><p>==升级版：PReLU==</p>
+<ul>
+<li>即把每个$\varepsilon$当做神经元的参数来搞</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>EReLU($max(x,\alpha(e^x-1))$)</p>
+<ul>
+<li><img src="https://upload-images.jianshu.io/upload_images/10902146-6a05d0ebcc98cd87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/207" alt="img"></li>
+<li>有一定的抗坏死能力，但是还是有梯度饱和和指数运算的问题</li>
+</ul>
+</li>
+<li><p>RReLU<br>$$<br>y_{ji}=\begin{cases}</p>
+<pre><code>x_{ji} (x_{ji}\geq 0)\\
+a_{ji}x_{ji}(x_{ji}\leq0)
+\end{cases}\\
+\\
+a_{ji}\text{~}U(l,u),l&lt;u(l,u \in[0,1))</code></pre><p>$$</p>
+</li>
+<li><p>GReLU、Swish。。。再说XD</p>
+</li>
+</ul>
+<h4 id="卷积层疑问"><a href="#卷积层疑问" class="headerlink" title="卷积层疑问"></a>卷积层疑问</h4><ul>
+<li><p>1、为什么卷积核的边长都是奇数*奇数</p>
+<ul>
+<li>1、中心点理论：偶数*偶数没有中心点<ul>
+<li>更容易描点：没有中心点那得到的东西要放在哪里，如果一下放四个一样的肯定影响特征的提取且参数两量增加；如果放一个，得到的特征分布会偏移(比如4*4的)</li>
+<li>为了各种中心的统一</li>
+</ul>
+</li>
+<li>2、padding理论<ul>
+<li>如果为奇数加padding，那么得到的值中心对称；若是偶数只得到一个值则会偏移</li>
+<li>根据卷积结果结算公式，当$stride=1,padding={(k-1)\over 2}$，只有在k为奇数的时候，才能使得图片大小与原来相同</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>2、关于卷积核是正方形</p>
+<ul>
+<li><p>1、首先统一的就是中心点理论，输入的图片要关于卷积核中心对称，正方形较好；同时还考虑到padding等的方便形</p>
+</li>
+<li><p>2、非对称的卷积核会有<code>混叠错误</code>，加了padding之后还有<code>信息丢失</code>和<code>噪声引入</code></p>
+</li>
+<li><p>3、==但是长方形的核也是按轴对称的==：所以其实是可以用长方形的，有时在长条形的图片上用长方形会更好一点</p>
+</li>
+<li><p>4、==关于可变形卷积==：</p>
+<ul>
+<li><p>方形的核是针对这个像素点的完全周围信息来考虑的，而可变形的卷积核是根据任务需要自适应的调整</p>
+<p><img src="https://wx3.sinaimg.cn/large/4caedc7agy1fgeztfbwf2j20hs06daae.jpg" alt="img"></p>
+<p><img src="https://wx3.sinaimg.cn/large/4caedc7agy1fgeztlflguj20hs0afgmd.jpg" alt="img"></p>
+<p><img src="https://wx2.sinaimg.cn/large/4caedc7agy1fgezu3hr66j20hs04kmxz.jpg" alt="img"></p>
+</li>
+<li><p>如上(环境，小物体，大物体)，只管效果就是根据图像内容的不用发生自适应的变化</p>
+</li>
+<li><p>暂时还未深入研究</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>3、新的卷积核(不在发展史讨论内)</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/pic/201709/46c2d76556606733ded2903f1b40b8f8.jpg" alt="CNN 中千奇百怪的卷积方式大汇总"></p>
+</li>
+</ul>
+<h3 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h3><ul>
+<li>是一种形式的降采样</li>
+<li>为什么需要pooling<ul>
+<li>1、增大感受野——感受野就是一个像素对应回原图的区域大小，增大感受野能提取更加多的特征</li>
+<li>2、平移不变性——我们希望目标有些许位置移动，能得到相同的结果，因为pooling不断抽象了区域的特征而不关心位置，所以一定程度增加了平移不变性——也就意味着即使图像经历了一小段平移，也会产生相同的(池化)特征<ul>
+<li>增加这个性质有什么用呢？——比如在处理图像的时候，两个相同的内容虽然有些小差别，但是提取的特征相同</li>
+</ul>
+</li>
+<li>3、减小参数和优化难度</li>
+</ul>
+</li>
+<li>种类<ul>
+<li>最大池化<ul>
+<li>最大池化可以更好的保留纹理的特征</li>
+<li>却打断梯度回传</li>
+</ul>
+</li>
+<li>平均池化<ul>
+<li>平均池化可以更好的保留数据的特征</li>
+<li>却会丢失细节</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>据说已有代步长的卷积不用池化</li>
+</ul>
+<h3 id="全连接层-fc"><a href="#全连接层-fc" class="headerlink" title="全连接层(fc)"></a>全连接层(fc)</h3><h3 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h3><p><img src="https://img-blog.csdnimg.cn/20190614140536136.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70" alt="LeNet网络结构"></p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><ul>
+<li>准确率大幅度提高，让CNN兴起</li>
+<li>作者Hinton</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190614141318448.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="比之前的优化处理"><a href="#比之前的优化处理" class="headerlink" title="比之前的优化处理"></a>比之前的优化处理</h3><ul>
+<li><p>增加了ReLU，优点参见上面</p>
+</li>
+<li><p>增加了dropout层，防止过拟合，这个成为以后fc层的标配</p>
+</li>
+<li><p>通过数据增强，减少过拟合</p>
+</li>
+<li><p>引入标准化层：通过放大那些分类贡献较大的神经元，来抑制那些贡献较少的神经元，用过局部归一化来达到作用(<code>LRN局部响应归一化层</code>)</p>
+</li>
+<li><p>GPU并行</p>
+</li>
+</ul>
+<h2 id="ZFNet"><a href="#ZFNet" class="headerlink" title="ZFNet"></a>ZFNet</h2><p><img src="https://img-blog.csdnimg.cn/20190614145617751.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>在AlexNet上做了小小的改进<ul>
+<li>调整第一层卷积核大小为7*7</li>
+<li>设置卷积参数stride=2</li>
+</ul>
+</li>
+<li>通过更小的kernel和stride来提取更多的信息，同时加多了核的数量也使网络更深</li>
+</ul>
+<h3 id="最重要的是–对CNN的可视化解释"><a href="#最重要的是–对CNN的可视化解释" class="headerlink" title="最重要的是–对CNN的可视化解释"></a>最重要的是–对CNN的可视化解释</h3><ul>
+<li>作者从可视化的角度出发，解释了CNN有非常好的性能的原因</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190614150200903.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>有半边是我们的一个正常的神经网络的数据流向：<ul>
+<li>对于一副输入图像，我们通过pooling层来进行下采样，再通过卷积层进行特征提取，通过ReLU层来提取非线性表达能力</li>
+<li>不过，对于最后的数据结果，我们怎么还原成图片呢</li>
+</ul>
+</li>
+<li>当然，不可能100%还原，因为每次pooling的时候都会有数据的丢失，所以我们在可视化的时候，更重要的是对图像的特征语义进行更高层次的解析<ul>
+<li>通过对输出层，上采样，可以得到与原始图像一样大小的特征图，观察这些图得出结论<ul>
+<li>特征分 层次体系结构</li>
+<li>深层特征更鲁棒(区分度高，不受图片微小的影响)</li>
+<li>深层特征收敛更慢</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="VGGNet"><a href="#VGGNet" class="headerlink" title="VGGNet"></a>VGGNet</h2><p>作者：牛津大学和Google Deepmind共同设计</p>
+<p>特点：全部使用1X1、3X3的conv kernel和2X2的pooling kernel</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0314/022939_Pl12_876354.png" alt="img"></p>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
+<li><p>通过小的核来不断的增加网络结构来提高性能，但是并不会把参数量搞大(证明增加深度能够提高性能)</p>
+<ul>
+<li>如2个3X3的核$\Leftrightarrow$ 5X5的核，3个3X3的核$\Leftrightarrow$7X7的核</li>
+<li>而3个3X3的参数量只有7X7的一半左右，原因类似1X1的核减小参数的方法，用小的核制造出新的channel显然会小一点</li>
+<li>而核小量多，导致非线性层变多，特征学习能力更强</li>
+<li>2X2的pooling也是一样，每次使得channelx2而feature map宽高减半，通道数增倍</li>
+</ul>
+</li>
+<li><p>引入<code>1X1</code>的kernel</p>
+<ul>
+<li><p>减小参数</p>
+</li>
+<li><p>能在保持空间维度不变，不影响感受野的情况下增加非线性性</p>
+</li>
+<li><p>==有时1X1的核还能用来代替fc层==</p>
+<h3 id="trick"><a href="#trick" class="headerlink" title="trick"></a>trick</h3></li>
+<li><p>创建<code>卷积组</code>，每个组有2-4个层，更方便实现</p>
+</li>
+<li><p>在测试的时候，把fc层改为全卷积层，重用训练时的参数，使得测试的网络没有全连接的限制因而可以任意改变长宽</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0314/023015_rDZR_876354.png" alt="img"></p>
+<ul>
+<li>这样最后的conv kernel的个数只与channel数有关，可以处理任意图像，不会因为缩放而特征丢失</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>特征图的空间分辨率单调递减，特征图的通道数单调递增，这样更好的把HxWx3的图像转化为1x1xC的输出</p>
+<ul>
+<li>而在初始的时候通道数变多，能提出更多的特征</li>
+</ul>
+</li>
+<li><p>先训练A网络，在用A网络的权重来初始化后面的更复杂的网络</p>
+<ul>
+<li><img src="https://img2018.cnblogs.com/blog/1450389/201810/1450389-20181015155238095-1514892633.png" alt="img"></li>
+<li>作者提到用LRN层无性能增益，所以之后没有用过LRN<ul>
+<li><img src="https://static.oschina.net/uploads/space/2018/0314/023135_0OwO_876354.png" alt="img"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>耗费资源很大，所以我们用的时候是直接调用公开的预训练参数</li>
+</ul>
+<h2 id="GoogleNet"><a href="#GoogleNet" class="headerlink" title="GoogleNet"></a>GoogleNet</h2><ul>
+<li>不仅考虑了深度还考虑了宽度，进一步增加了网络的深度和宽度，但是参数量更低</li>
+</ul>
+<h3 id="Inception"><a href="#Inception" class="headerlink" title="Inception"></a>Inception</h3><ul>
+<li>一种NIN结构</li>
+</ul>
+<h4 id="V1"><a href="#V1" class="headerlink" title="V1"></a>V1</h4><p><img src="https://static.oschina.net/uploads/space/2018/0317/141510_fIWh_876354.png" alt="img"></p>
+<ul>
+<li><p>该结构将常用的卷积和池化，<code>堆叠</code>(尺度相同，将通道相加)在一起</p>
+<ul>
+<li>一方面增加了网络的宽度，另一方面增加了网络对尺度的适应性</li>
+<li>这样的结构可以提取很多细节的信息，加了pooling之后还能减小空间大小，降低过度拟合，每个conv配上个ReLU，增加非线性性</li>
+</ul>
+</li>
+<li><p>然后使用经典的1x1 conv来减参，增激活</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141520_31TH_876354.png" alt="img"></p>
+</li>
+<li><p>为什么1x1的conv放在pooling的后面，而其他的放前面</p>
+<ul>
+<li>我的理解是先用pooling提取特征再做变换，虽然会导致部分特征缺失</li>
+</ul>
+</li>
+</ul>
+<p>最后变为</p>
+<img src="https://static.oschina.net/uploads/space/2018/0317/141544_FfKB_876354.jpg" alt="img" style="zoom: 33%;">
+
+<ul>
+<li>学习了VGG的模块化</li>
+<li>网络最后采用平均池来代替全连接层，该想法来自于NIN，可以提高精度(我自己还有待研究)。实际上，为了方便操作还是加上了一个fc</li>
+<li>虽然没有了fc，但是网络中还是使用了dropout</li>
+<li>为了避免梯度消失，网络额外增加了辅助的softmax用于向前传导梯度<ul>
+<li>辅助分类器是将中间的某一层的输出用作分类，并按一个较小的权重加到最终的分类结果中</li>
+<li>这样有利于模型分融合，同时给网络一个梯度信号，也提供额外的正则化</li>
+<li>当然，测试的时候是没有softmax的</li>
+</ul>
+</li>
+<li>只是用到Inception v1就能有较好的效果</li>
+</ul>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141641_H28K_876354.png" alt="img"></p>
+<h4 id="V2"><a href="#V2" class="headerlink" title="V2"></a>V2</h4><ul>
+<li>由于单纯的堆叠会使计算效率明显下降，所以要研究如何不增加过多的计算量的同时提高网络的表达能力</li>
+<li>这个版本的解决方案就是修改Inception的内部逻辑，提出了特殊的卷积计算方式</li>
+</ul>
+<h5 id="卷积分解"><a href="#卷积分解" class="headerlink" title="卷积分解"></a><code>卷积分解</code></h5><ul>
+<li><p>大卷积核有大的感受野，但是也会有更大的参量—&gt;所以我们打算在保持感受野的同时减少参量</p>
+<ul>
+<li><p>但是这样会导致表达能力下降吗？    目前大量的实验表明：不会有什么损失</p>
+</li>
+<li><p>所以构造出了一个nx1的卷积。如下图，用2个3x1取代3x3</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141700_GV5l_876354.png" alt="img"></p>
+</li>
+<li><p>因此，任意一个nxn的卷积都能用nx1后接一个1xn的卷积代替</p>
+</li>
+</ul>
+</li>
+<li><p>所以把Inception V1的5x5的结构也换成3x3的结构，然后再拆成1x3和3x1的结构</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141713_bGpL_876354.png" alt="img"></p>
+</li>
+</ul>
+<h5 id="降低特征图的大小"><a href="#降低特征图的大小" class="headerlink" title="降低特征图的大小"></a><code>降低特征图的大小</code></h5><p>  <img src="https://static.oschina.net/uploads/space/2018/0317/141726_LQNh_876354.png" alt="img">– </p>
+<ul>
+<li><p>上面两个方法都可以减小特征图的大小</p>
+<ul>
+<li>但是方法1会导致特征缺失<ul>
+<li>方法2是正常的缩小，但是计算量很大</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>所以我们为了保持特征表示并降低计算量，将网络的结构使用下图，使用两个并行化的模块来降低计算量</p>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141734_OEPA_876354.png" alt="img"></p>
+<ul>
+<li>就是简单的分成两个部分XD</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://static.oschina.net/uploads/space/2018/0317/141746_Fw1D_876354.png" alt="img"></p>
+<ul>
+<li>正确率较旧模型有所提升</li>
+</ul>
+<h4 id="V3"><a href="#V3" class="headerlink" title="V3"></a>V3</h4><ul>
+<li>就是参照V2的把各种nxn的给拆开了</li>
+<li>然后网络输出从224x224变成299x299</li>
+</ul>
+<p>(为什么拆开在之前不干完呢，可能是一些其他原因，在当时干的时候模型并没有提升，或是忘了???)</p>
+<h4 id="V4"><a href="#V4" class="headerlink" title="V4"></a>V4</h4><ul>
+<li>结合了残差模块</li>
+</ul>
+<h2 id="ResNet"><a href="#ResNet" class="headerlink" title="ResNet"></a>ResNet</h2><ul>
+<li>作者：何kaiming团队</li>
+</ul>
+<ul>
+<li>特点：<ul>
+<li>核心单元简单堆叠</li>
+<li>跳连结构解决网络梯度消失问题</li>
+<li>最大池化代替fc层</li>
+<li>BN层加快网络速度和收敛时的稳定性</li>
+<li>加大网络深度，提高模型的特征抽取能力</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20190617164400326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1bl9zaGluZTU2,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/14/%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8/" rel="next" title="自编码器">
+                  <i class="fa fa-chevron-left"></i> 自编码器
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/28/%E6%8A%A0%E5%9B%BE/" rel="prev" title="抠图">
+                  抠图 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CNN发展史"><span class="nav-number">1.</span> <span class="nav-text">CNN发展史</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#早期铺垫"><span class="nav-number">1.1.</span> <span class="nav-text">早期铺垫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络起源"><span class="nav-number">1.1.1.</span> <span class="nav-text">神经网络起源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#各种结构的铺垫"><span class="nav-number">1.1.2.</span> <span class="nav-text">各种结构的铺垫</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeNet"><span class="nav-number">1.2.</span> <span class="nav-text">LeNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#输入层"><span class="nav-number">1.2.1.</span> <span class="nav-text">输入层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入层疑问"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">输入层疑问</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层"><span class="nav-number">1.2.2.</span> <span class="nav-text">卷积层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#卷积-卷积核"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">卷积(卷积核)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#激活函数-以下与发展史不太有关"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">激活函数(以下与发展史不太有关)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#卷积层疑问"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">卷积层疑问</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#池化层"><span class="nav-number">1.2.3.</span> <span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全连接层-fc"><span class="nav-number">1.2.4.</span> <span class="nav-text">全连接层(fc)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输出层"><span class="nav-number">1.2.5.</span> <span class="nav-text">输出层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AlexNet"><span class="nav-number">1.3.</span> <span class="nav-text">AlexNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#比之前的优化处理"><span class="nav-number">1.3.1.</span> <span class="nav-text">比之前的优化处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZFNet"><span class="nav-number">1.4.</span> <span class="nav-text">ZFNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最重要的是–对CNN的可视化解释"><span class="nav-number">1.4.1.</span> <span class="nav-text">最重要的是–对CNN的可视化解释</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGGNet"><span class="nav-number">1.5.</span> <span class="nav-text">VGGNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点："><span class="nav-number">1.5.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trick"><span class="nav-number">1.5.2.</span> <span class="nav-text">trick</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.5.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GoogleNet"><span class="nav-number">1.6.</span> <span class="nav-text">GoogleNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Inception"><span class="nav-number">1.6.1.</span> <span class="nav-text">Inception</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#V1"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">V1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V2"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">V2</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#卷积分解"><span class="nav-number">1.6.1.2.1.</span> <span class="nav-text">卷积分解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#降低特征图的大小"><span class="nav-number">1.6.1.2.2.</span> <span class="nav-text">降低特征图的大小</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V3"><span class="nav-number">1.6.1.3.</span> <span class="nav-text">V3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#V4"><span class="nav-number">1.6.1.4.</span> <span class="nav-text">V4</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ResNet"><span class="nav-number">1.7.</span> <span class="nav-text">ResNet</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

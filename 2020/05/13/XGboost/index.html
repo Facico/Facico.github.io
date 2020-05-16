@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="XGboost基础GDBT 对于任意函数进行提升树，拟合的残差就是这个函数在当前节点的梯度 最后的多棵树对应的权值加起来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XGboost">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;13&#x2F;XGboost&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="XGboost基础GDBT 对于任意函数进行提升树，拟合的残差就是这个函数在当前节点的梯度 最后的多棵树对应的权值加起来">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.biaodianfu.com&#x2F;wp-content&#x2F;uploads&#x2F;2019&#x2F;03&#x2F;xgboost-1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.biaodianfu.com&#x2F;wp-content&#x2F;uploads&#x2F;2019&#x2F;03&#x2F;xgboost-2.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;www.biaodianfu.com&#x2F;wp-content&#x2F;uploads&#x2F;2019&#x2F;03&#x2F;xgboost-4.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;13876065-70de2323b576808b.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;13876065-11151506d0014afc.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200103122641627.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZfSlVMWV92,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200103122709377.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20181208010713981.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZfSlVMWV92,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421105610771">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421105711217">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421110031784">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421110139754">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421110535150">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20160421110908655">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20170228144201588">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;5012681-b31af1b59c9cb244.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1200">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;5012681-88f8bc34a6524c08.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1084">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200410162009294.PNG?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Fuc2h1YWlfYXcx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20200410162517600.PNG?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Fuc2h1YWlfYXcx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;5012681-441f98b660b3d49a.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1200">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190305205332351.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3phaXNoaWppemhpZGlhbg==,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-05-15T12:57:55.758Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;www.biaodianfu.com&#x2F;wp-content&#x2F;uploads&#x2F;2019&#x2F;03&#x2F;xgboost-1.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/05/13/XGboost/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>XGboost | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/13/XGboost/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          XGboost
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-13 22:19:45" itemprop="dateCreated datePublished" datetime="2020-05-13T22:19:45+08:00">2020-05-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 20:57:55" itemprop="dateModified" datetime="2020-05-15T20:57:55+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="XGboost"><a href="#XGboost" class="headerlink" title="XGboost"></a>XGboost</h1><h2 id="基础GDBT"><a href="#基础GDBT" class="headerlink" title="基础GDBT"></a>基础GDBT</h2><ul>
+<li>对于任意函数进行提升树，拟合的残差就是这个函数在当前节点的梯度</li>
+<li>最后的多棵树对应的权值加起来</li>
+</ul><a id="more"></a>
+<h2 id="目标函数"><a href="#目标函数" class="headerlink" title="目标函数"></a>目标函数</h2><h3 id="定义树的复杂度"><a href="#定义树的复杂度" class="headerlink" title="定义树的复杂度"></a>定义树的复杂度</h3><h4 id="设计XGboost树的结构：树结构和叶子权重"><a href="#设计XGboost树的结构：树结构和叶子权重" class="headerlink" title="设计XGboost树的结构：树结构和叶子权重"></a>设计XGboost树的结构：树结构和叶子权重</h4><p><img src="https://www.biaodianfu.com/wp-content/uploads/2019/03/xgboost-1.png" alt="img"></p>
+<h4 id="定义树的结构的复杂度"><a href="#定义树的结构的复杂度" class="headerlink" title="定义树的结构的复杂度"></a>定义树的结构的复杂度</h4><p><img src="https://www.biaodianfu.com/wp-content/uploads/2019/03/xgboost-2.png" alt="img"></p>
+<p>相当于正则</p>
+<h3 id="原始的目标函数"><a href="#原始的目标函数" class="headerlink" title="原始的目标函数"></a>原始的目标函数</h3><p><img src="https://www.biaodianfu.com/wp-content/uploads/2019/03/xgboost-4.png" alt="img"></p>
+<p>假设有t棵树，我们把t棵树的权值加起来就是答案，形式如下</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13876065-70de2323b576808b.png" alt="img"></p>
+<p>我们定义的函数就决定了上面的<code>New function</code>，加上这个==从而使整体距离目标越来越近==。我们把原始目标函数的式子展开就变成下面的东西(<code>constant</code>是一个常数，起到正则作用)<img src="https://upload-images.jianshu.io/upload_images/13876065-11151506d0014afc.png" alt="img"></p>
+<ul>
+<li>GDBT是使用梯度加上学习率来拟合$f_t$的，XGboost则是多求了一阶的导数(共两阶)，使用泰勒展开</li>
+</ul>
+<h3 id="泰勒展开定义目标函数"><a href="#泰勒展开定义目标函数" class="headerlink" title="泰勒展开定义目标函数"></a>泰勒展开定义目标函数</h3><p><img src="https://img-blog.csdnimg.cn/20200103122641627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZfSlVMWV92,size_16,color_FFFFFF,t_70" alt="img"></p>
+<ul>
+<li><p>我们假设$f_t(x_i)$就是$\Delta x$，然后对于二元函数$l(y_i,\hat y^{(t-1)})$求关于$\hat y^{(t-1)}$的一阶偏导和二阶偏导，最后用泰勒展开近似$l(y_i,\hat y^{(t-1)}+f_t(x_i))$</p>
+</li>
+<li><p>再把常数项，和对目标函数优化不影响的$l(y_i,\hat y^{(t-1)})$去掉，剩下的东西就是待优化的如下</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20200103122709377.png" alt="img"></p>
+<ul>
+<li>所以与gdbt在函数定义上的区别就是对了个二阶导和正则项</li>
+</ul>
+<h3 id="将目标函数变形"><a href="#将目标函数变形" class="headerlink" title="将目标函数变形"></a>将目标函数变形</h3><ul>
+<li>首先展开正则项</li>
+<li>然后因为$f_t(x_i)$拟合的就是当前节点的分数，所以替换为$w_q(x_i)$</li>
+<li>然后考虑将未知参数合并，将$\sum_{i=1}^n\qquad n是样本数$转化成$\sum_{j=1}^T\qquad T是叶子节点数$</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20181208010713981.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZfSlVMWV92,size_16,color_FFFFFF,t_70" alt="img"></p>
+<ul>
+<li><ul>
+<li>显然$I_x$表示x的叶子x</li>
+</ul>
+</li>
+<li><p>接着，简化公式</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20160421105610771" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20160421105711217" alt="img"></p>
+<h3 id="求导"><a href="#求导" class="headerlink" title="求导"></a>求导</h3><ul>
+<li>分别对每个$w_j$偏导</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20160421110031784" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20160421110139754" alt="img"></p>
+<ul>
+<li>我们的优化目标就是$Obj$越小越好</li>
+<li>例</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20160421110535150" alt="img"></p>
+<h2 id="节点的分裂"><a href="#节点的分裂" class="headerlink" title="节点的分裂"></a>节点的分裂</h2><ul>
+<li>目标函数千奇百怪，但是对于决策树来说，最关键的还是==最优分割点==</li>
+</ul>
+<h3 id="第一种方法：决策树的传统分割-精确贪心算法"><a href="#第一种方法：决策树的传统分割-精确贪心算法" class="headerlink" title="第一种方法：决策树的传统分割(精确贪心算法)"></a>第一种方法：决策树的传统分割(精确贪心算法)</h3><p><img src="https://img-blog.csdn.net/20160421110908655" alt="img"></p>
+<p>不同的就是按照上面目标函数的定义，比平常的分法多了新叶子节点引入的代价，即：不分比分好</p>
+<p><img src="https://img-blog.csdn.net/20170228144201588" alt="img"></p>
+<ul>
+<li>显然的是时间复杂度还是很高$O(kdn\log n)\qquad k为树的深度，d为特征数$</li>
+<li>XGboost的单线程版就是这种方法</li>
+</ul>
+<h3 id="第二种方法：近似算法"><a href="#第二种方法：近似算法" class="headerlink" title="第二种方法：近似算法"></a>第二种方法：近似算法</h3><ul>
+<li>显然的，对于一个特征的分割来说，我们关心的不是这个特征数值的范围，我们寻找的只是特征之间的缝隙，具体点来说——特征百分比</li>
+<li>该算法有两种策略(上面的当然也有两种策略)<ul>
+<li>1、全局近似<ul>
+<li>在生成一颗树之前就做好了对特征百分比的划分</li>
+</ul>
+</li>
+<li>2、局部近似<ul>
+<li>在每一层分裂的时候再做对特征百分比的划分</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5012681-b31af1b59c9cb244.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200" alt="img"></p>
+<h3 id="带权重的分位数略图（weighted-quantile-sketch）算法"><a href="#带权重的分位数略图（weighted-quantile-sketch）算法" class="headerlink" title="带权重的分位数略图（weighted quantile sketch）算法"></a>带权重的分位数略图（weighted quantile sketch）算法</h3><ul>
+<li>上面的近似算法每个单位值的权重是1，我们这里改一下，每个单位值的权重是$二阶导h$</li>
+<li>我们定义一个数据集Dk = {(x1k, h1), (x2k, h2) … }代表样本的第k个特征及其对应的二阶梯度，现在我们定义一个函数rk：</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5012681-88f8bc34a6524c08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1084" alt="img"></p>
+<ul>
+<li><ul>
+<li>上式表示第k个特征，值z所在数据的比例</li>
+</ul>
+</li>
+<li>且候选集的目标要使得相邻的两个候选分裂点相差不超过阈值(这个阈值当然也是百分数)$\epsilon$，就是规定最小间距</li>
+<li>下图为不同的百分数比较与两种策略比较</li>
+</ul>
+<p><img src="https://img-blog.csdnimg.cn/20200410162009294.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Fuc2h1YWlfYXcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h4 id="为什么用二阶导作为权重"><a href="#为什么用二阶导作为权重" class="headerlink" title="为什么用二阶导作为权重"></a>为什么用二阶导作为权重</h4><p><img src="https://img-blog.csdnimg.cn/20200410162517600.PNG?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Fuc2h1YWlfYXcx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<ul>
+<li>对于平方误差：权重恒为2，所以相当于不带权</li>
+<li>对于log loss：h=p(1-p)，是开口朝下的二次函数。当p在0.5附近，值较大，也就是权重都比较大，在切直方图时，我们希望每个柱子都比较均匀，因此这部分就会被切分的更细。</li>
+<li>总的来说就是基于二阶导的含义：梯度的梯度，梯度若波动大，预测则不稳定，样本权重高，切分的更细</li>
+</ul>
+<h3 id="稀疏自适应分割"><a href="#稀疏自适应分割" class="headerlink" title="稀疏自适应分割"></a>稀疏自适应分割</h3><ul>
+<li>产生数据稀疏的原因主要有三个：<ul>
+<li>1、数据缺失</li>
+<li>2、统计上的0</li>
+<li>3、one-hot编码</li>
+</ul>
+</li>
+<li>以往的经验表明，当出现稀疏、缺失值时，算法需要很好的自适应，就是适应稀疏数据。</li>
+<li>XGboost提出：在计算分割后的分数时，遇到缺失值，分别将缺失值带入左右两个分割节点，然后取最大值的方向为其默认方向（就是把缺失的东西全部当做-∞或+∞）</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5012681-441f98b660b3d49a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200" alt="img"></p>
+<p>当出现稀疏情况的时候，稀疏性计算只有线性的计算复杂度。如图所示，稀疏自适应算法比基本的非稀疏数据算法快大约50倍。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190305205332351.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3phaXNoaWppemhpZGlhbg==,size_16,color_FFFFFF,t_70" alt="img"></p>
+<h2 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h2><h3 id="采用随机森林的列抽样和行抽样"><a href="#采用随机森林的列抽样和行抽样" class="headerlink" title="采用随机森林的列抽样和行抽样"></a>采用随机森林的列抽样和行抽样</h3><ul>
+<li>行采样：用自助法(BootStrapping)。也就是在采用的样本集合可能会出现重复</li>
+<li>列采样：从M个feature中，选择m个，然后对于这些特征来搞</li>
+</ul>
+<p>这样即能降低过拟合风险，又能降低计算。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/04/26/%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/" rel="next" title="隐马尔科夫模型(HMM)">
+                  <i class="fa fa-chevron-left"></i> 隐马尔科夫模型(HMM)
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/05/14/LightGBM/" rel="prev" title="LightGBM">
+                  LightGBM <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XGboost"><span class="nav-number">1.</span> <span class="nav-text">XGboost</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础GDBT"><span class="nav-number">1.1.</span> <span class="nav-text">基础GDBT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目标函数"><span class="nav-number">1.2.</span> <span class="nav-text">目标函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义树的复杂度"><span class="nav-number">1.2.1.</span> <span class="nav-text">定义树的复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设计XGboost树的结构：树结构和叶子权重"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">设计XGboost树的结构：树结构和叶子权重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定义树的结构的复杂度"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">定义树的结构的复杂度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原始的目标函数"><span class="nav-number">1.2.2.</span> <span class="nav-text">原始的目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泰勒展开定义目标函数"><span class="nav-number">1.2.3.</span> <span class="nav-text">泰勒展开定义目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将目标函数变形"><span class="nav-number">1.2.4.</span> <span class="nav-text">将目标函数变形</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求导"><span class="nav-number">1.2.5.</span> <span class="nav-text">求导</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#节点的分裂"><span class="nav-number">1.3.</span> <span class="nav-text">节点的分裂</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一种方法：决策树的传统分割-精确贪心算法"><span class="nav-number">1.3.1.</span> <span class="nav-text">第一种方法：决策树的传统分割(精确贪心算法)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二种方法：近似算法"><span class="nav-number">1.3.2.</span> <span class="nav-text">第二种方法：近似算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带权重的分位数略图（weighted-quantile-sketch）算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">带权重的分位数略图（weighted quantile sketch）算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么用二阶导作为权重"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">为什么用二阶导作为权重</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稀疏自适应分割"><span class="nav-number">1.3.4.</span> <span class="nav-text">稀疏自适应分割</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他优化"><span class="nav-number">1.4.</span> <span class="nav-text">其他优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#采用随机森林的列抽样和行抽样"><span class="nav-number">1.4.1.</span> <span class="nav-text">采用随机森林的列抽样和行抽样</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

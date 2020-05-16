@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="gym学习 gym库是一个开发和比较强化学习算法的包，并提供可视化，非常的有趣 gym.make 调用智能体模型的库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gym学习">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;08&#x2F;gym%E5%AD%A6%E4%B9%A0&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="gym学习 gym库是一个开发和比较强化学习算法的包，并提供可视化，非常的有趣 gym.make 调用智能体模型的库">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-15T12:58:51.629Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/08/gym%E5%AD%A6%E4%B9%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>gym学习 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/08/gym%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          gym学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-08 13:17:22" itemprop="dateCreated datePublished" datetime="2020-03-08T13:17:22+08:00">2020-03-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 20:58:51" itemprop="dateModified" datetime="2020-05-15T20:58:51+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="gym学习"><a href="#gym学习" class="headerlink" title="gym学习"></a>gym学习</h1><ul>
+<li>gym库是一个开发和比较强化学习算法的包，并提供可视化，非常的有趣</li>
+</ul><h2 id="gym-make"><a href="#gym-make" class="headerlink" title="gym.make"></a>gym.make</h2><ul>
+<li>调用智能体模型的库</li>
+</ul><a id="more"></a>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env = gym.make(‘CartPole-v0’)  <span class="comment">#调用小车倒立摆系统</span></span><br></pre></td></tr></table></figure>
+
+<p>其他库如下</p>
+<p><code>(Acrobot-v1),
+(AirRaid-ram-v0),
+(AirRaid-ram-v4),
+(AirRaid-ramDeterministic-v0),
+(AirRaid-ramDeterministic-v4),
+(AirRaid-ramNoFrameskip-v0),
+(AirRaid-ramNoFrameskip-v4),
+(AirRaid-v0),
+(AirRaid-v4),
+(AirRaidDeterministic-v0),
+(AirRaidDeterministic-v4),
+(AirRaidNoFrameskip-v0),
+(AirRaidNoFrameskip-v4),2d飞机
+(Alien-ram-v0),
+(Alien-ram-v4),
+(Alien-ramDeterministic-v0),
+(Alien-ramDeterministic-v4),
+(Alien-ramNoFrameskip-v0), 2d迷宫小游戏
+(Alien-ramNoFrameskip-v4),
+(Alien-v0),小游戏迷宫打怪
+(Alien-v4),
+(AlienDeterministic-v0),
+(AlienDeterministic-v4),
+(AlienNoFrameskip-v0),
+(AlienNoFrameskip-v4),
+(Amidar-ram-v0), 、
+(Amidar-ram-v4),
+(Amidar-ramDeterministic-v0),
+(Amidar-ramDeterministic-v4), 小游戏迷宫打怪
+(Amidar-ramNoFrameskip-v0),
+(Amidar-ramNoFrameskip-v4), 小游戏迷宫打怪
+(Amidar-v0),
+(Amidar-v4),
+(AmidarDeterministic-v0),
+(AmidarDeterministic-v4),小游戏迷宫
+(AmidarNoFrameskip-v0),
+(AmidarNoFrameskip-v4), 2d迷宫
+(Ant-v2),
+(Assault-ram-v0), 2d飞行小游戏
+(Assault-ram-v4),
+(Assault-ramDeterministic-v0), 小游戏2d飞行打怪
+(Assault-ramDeterministic-v4),
+(Assault-ramNoFrameskip-v0),
+(Assault-ramNoFrameskip-v4), 小游戏打怪
+(Assault-v0),
+(Assault-v4),
+(AssaultDeterministic-v0),
+(AssaultDeterministic-v4),
+(AssaultNoFrameskip-v0),
+(AssaultNoFrameskip-v4),
+(Asterix-ram-v0),
+(Asterix-ram-v4),
+(Asterix-ramDeterministic-v0),
+(Asterix-ramDeterministic-v4),小游戏飞行打怪
+(Asterix-ramNoFrameskip-v0),
+(Asterix-ramNoFrameskip-v4),
+(Asterix-v0),
+(Asterix-v4),
+(AsterixDeterministic-v0),
+(AsterixDeterministic-v4),
+(AsterixNoFrameskip-v0),
+(AsterixNoFrameskip-v4),
+(Asteroids-ram-v0),
+(Asteroids-ram-v4), 小游戏
+(Asteroids-ramDeterministic-v0),
+(Asteroids-ramDeterministic-v4), 小游戏打怪
+(Asteroids-ramNoFrameskip-v0),
+(Asteroids-ramNoFrameskip-v4),
+(Asteroids-v0),
+(Asteroids-v4),
+(AsteroidsDeterministic-v0),
+(AsteroidsDeterministic-v4),
+(AsteroidsNoFrameskip-v0),
+(AsteroidsNoFrameskip-v4),
+(Atlantis-ram-v0),
+(Atlantis-ram-v4),
+(Atlantis-ramDeterministic-v0), 打水怪
+(Atlantis-ramDeterministic-v4),
+(Atlantis-ramNoFrameskip-v0),小游戏打水怪
+(Atlantis-ramNoFrameskip-v4),
+(Atlantis-v0),
+(Atlantis-v4),
+(AtlantisDeterministic-v0),飞行打怪小游戏
+(AtlantisDeterministic-v4), 2D飞机打水怪
+(AtlantisNoFrameskip-v0),
+(AtlantisNoFrameskip-v4),
+(BankHeist-ram-v0),
+(BankHeist-ram-v4),
+(BankHeist-ramDeterministic-v0), 2d迷宫
+(BankHeist-ramDeterministic-v4),
+(BankHeist-ramNoFrameskip-v0),
+(BankHeist-ramNoFrameskip-v4),
+(BankHeist-v0),
+(BankHeist-v4),
+(BankHeistDeterministic-v0),
+(BankHeistDeterministic-v4),
+(BankHeistNoFrameskip-v0),
+(BankHeistNoFrameskip-v4),
+(BattleZone-ram-v0),
+(BattleZone-ram-v4),
+(BattleZone-ramDeterministic-v0),
+(BattleZone-ramDeterministic-v4),
+(BattleZone-ramNoFrameskip-v0),
+(BattleZone-ramNoFrameskip-v4), 2D坦克
+(BattleZone-v0),
+(BattleZone-v4),
+(BattleZoneDeterministic-v0), 坦克小游戏
+(BattleZoneDeterministic-v4),
+(BattleZoneNoFrameskip-v0),
+(BattleZoneNoFrameskip-v4),
+(BeamRider-ram-v0),
+(BeamRider-ram-v4),
+(BeamRider-ramDeterministic-v0),
+(BeamRider-ramDeterministic-v4),
+(BeamRider-ramNoFrameskip-v0),
+(BeamRider-ramNoFrameskip-v4),
+(BeamRider-v0),
+(BeamRider-v4),
+(BeamRiderDeterministic-v0),
+(BeamRiderDeterministic-v4), 小游戏2d飞行打怪
+(BeamRiderNoFrameskip-v0),
+(BeamRiderNoFrameskip-v4),
+(Berzerk-ram-v0),
+(Berzerk-ram-v4),
+(Berzerk-ramDeterministic-v0),小游戏迷宫打怪
+(Berzerk-ramDeterministic-v4), 小游戏迷宫打怪
+(Berzerk-ramNoFrameskip-v0),
+(Berzerk-ramNoFrameskip-v4),
+(Berzerk-v0),
+(Berzerk-v4),
+(BerzerkDeterministic-v0), 2d迷宫
+(BerzerkDeterministic-v4), 2d飞行小游戏
+(BerzerkNoFrameskip-v0),
+(BerzerkNoFrameskip-v4), 小游戏迷宫打怪
+(BipedalWalker-v2),
+(BipedalWalkerHardcore-v2),
+(Blackjack-v0), 错误
+(Bowling-ram-v0),
+(Bowling-ram-v4), 弹球类小游戏
+(Bowling-ramDeterministic-v0),
+(Bowling-ramDeterministic-v4),
+(Bowling-ramNoFrameskip-v0),
+(Bowling-ramNoFrameskip-v4),
+(Bowling-v0),
+(Bowling-v4), 小游戏弹球
+(BowlingDeterministic-v0),
+(BowlingDeterministic-v4),
+(BowlingNoFrameskip-v0),
+(BowlingNoFrameskip-v4),
+(Boxing-ram-v0),
+(Boxing-ram-v4),
+(Boxing-ramDeterministic-v0),小游戏博弈
+(Boxing-ramDeterministic-v4),
+(Boxing-ramNoFrameskip-v0),
+(Boxing-ramNoFrameskip-v4),
+(Boxing-v0), 小游戏博弈
+(Boxing-v4),
+(BoxingDeterministic-v0),
+(BoxingDeterministic-v4), 小游戏博弈
+(BoxingNoFrameskip-v0),
+(BoxingNoFrameskip-v4),
+(Breakout-ram-v0), 乒乓球
+(Breakout-ram-v4),
+(Breakout-ramDeterministic-v0),
+(Breakout-ramDeterministic-v4), 小游戏乒乓球
+(Breakout-ramNoFrameskip-v0),
+(Breakout-ramNoFrameskip-v4),
+(Breakout-v0),
+(Breakout-v4), 小游戏打乒乓球
+(BreakoutDeterministic-v0),
+(BreakoutDeterministic-v4),
+(BreakoutNoFrameskip-v0),
+(BreakoutNoFrameskip-v4),
+(CNNClassifierTraining-v0),
+(CarRacing-v0),
+(Carnival-ram-v0), 2d飞机打怪
+(Carnival-ram-v4),
+(Carnival-ramDeterministic-v0),
+(Carnival-ramDeterministic-v4),
+(Carnival-ramNoFrameskip-v0), 小游戏2d飞行打怪
+(Carnival-ramNoFrameskip-v4),
+(Carnival-v0),
+(Carnival-v4),
+(CarnivalDeterministic-v0),
+(CarnivalDeterministic-v4),
+(CarnivalNoFrameskip-v0),
+(CarnivalNoFrameskip-v4),
+(CartPole-v0),
+(CartPole-v1),
+(Centipede-ram-v0),
+(Centipede-ram-v4),
+(Centipede-ramDeterministic-v0),
+(Centipede-ramDeterministic-v4),
+(Centipede-ramNoFrameskip-v0),
+(Centipede-ramNoFrameskip-v4),
+(Centipede-v0), 小游戏弹球打怪
+(Centipede-v4),
+(CentipedeDeterministic-v0),
+(CentipedeDeterministic-v4),
+(CentipedeNoFrameskip-v0),
+(CentipedeNoFrameskip-v4),
+(ChopperCommand-ram-v0),
+(ChopperCommand-ram-v4),小游戏打怪
+(ChopperCommand-ramDeterministic-v0),
+(ChopperCommand-ramDeterministic-v4),
+(ChopperCommand-ramNoFrameskip-v0),
+(ChopperCommand-ramNoFrameskip-v4),小游戏打怪
+(ChopperCommand-v0),
+(ChopperCommand-v4),
+(ChopperCommandDeterministic-v0), 小游戏两边射出子弹打怪
+(ChopperCommandDeterministic-v4),
+(ChopperCommandNoFrameskip-v0),
+(ChopperCommandNoFrameskip-v4),
+(CliffWalking-v0),
+(ConvergenceControl-v0),
+(Copy-v0),
+(CrazyClimber-ram-v0),
+(CrazyClimber-ram-v4),
+(CrazyClimber-ramDeterministic-v0),
+(CrazyClimber-ramDeterministic-v4),
+(CrazyClimber-ramNoFrameskip-v0),
+(CrazyClimber-ramNoFrameskip-v4),
+(CrazyClimber-v0), 小游戏2d攀爬
+(CrazyClimber-v4),
+(CrazyClimberDeterministic-v0),
+(CrazyClimberDeterministic-v4),
+(CrazyClimberNoFrameskip-v0),
+(CrazyClimberNoFrameskip-v4),
+(DemonAttack-ram-v0),
+(DemonAttack-ram-v4),
+(DemonAttack-ramDeterministic-v0),
+(DemonAttack-ramDeterministic-v4),
+(DemonAttack-ramNoFrameskip-v0),
+(DemonAttack-ramNoFrameskip-v4),
+(DemonAttack-v0),
+(DemonAttack-v4),
+(DemonAttackDeterministic-v0),
+(DemonAttackDeterministic-v4),
+(DemonAttackNoFrameskip-v0),
+(DemonAttackNoFrameskip-v4),
+(DoubleDunk-ram-v0),
+(DoubleDunk-ram-v4),
+(DoubleDunk-ramDeterministic-v0),
+(DoubleDunk-ramDeterministic-v4),
+(DoubleDunk-ramNoFrameskip-v0),
+(DoubleDunk-ramNoFrameskip-v4),
+(DoubleDunk-v0),
+(DoubleDunk-v4),
+(DoubleDunkDeterministic-v0),
+(DoubleDunkDeterministic-v4),
+(DoubleDunkNoFrameskip-v0),
+(DoubleDunkNoFrameskip-v4), 投篮小游戏
+(DuplicatedInput-v0),
+(ElevatorAction-ram-v0),
+(ElevatorAction-ram-v4),
+(ElevatorAction-ramDeterministic-v0),
+(ElevatorAction-ramDeterministic-v4),
+(ElevatorAction-ramNoFrameskip-v0),
+(ElevatorAction-ramNoFrameskip-v4),
+(ElevatorAction-v0),
+(ElevatorAction-v4),
+(ElevatorActionDeterministic-v0),
+(ElevatorActionDeterministic-v4),
+(ElevatorActionNoFrameskip-v0),
+(ElevatorActionNoFrameskip-v4),
+(Enduro-ram-v0),
+(Enduro-ram-v4),
+(Enduro-ramDeterministic-v0), 小游戏赛车
+(Enduro-ramDeterministic-v4),
+(Enduro-ramNoFrameskip-v0),
+(Enduro-ramNoFrameskip-v4),
+(Enduro-v0),
+(Enduro-v4), 2d赛车
+(EnduroDeterministic-v0),
+(EnduroDeterministic-v4),
+(EnduroNoFrameskip-v0),
+(EnduroNoFrameskip-v4),
+(FishingDerby-ram-v0),
+(FishingDerby-ram-v4),
+(FishingDerby-ramDeterministic-v0),
+(FishingDerby-ramDeterministic-v4),
+(FishingDerby-ramNoFrameskip-v0),
+(FishingDerby-ramNoFrameskip-v4),
+(FishingDerby-v0),小游戏钓鱼
+(FishingDerby-v4),
+(FishingDerbyDeterministic-v0),
+(FishingDerbyDeterministic-v4),
+(FishingDerbyNoFrameskip-v0),
+(FishingDerbyNoFrameskip-v4),
+(Freeway-ram-v0),
+(Freeway-ram-v4),
+(Freeway-ramDeterministic-v0),
+(Freeway-ramDeterministic-v4),
+(Freeway-ramNoFrameskip-v0),
+(Freeway-ramNoFrameskip-v4),
+(Freeway-v0),
+(Freeway-v4),
+(FreewayDeterministic-v0),
+(FreewayDeterministic-v4),
+(FreewayNoFrameskip-v0),
+(FreewayNoFrameskip-v4),
+(Frostbite-ram-v0), 小游戏类似跳水
+(Frostbite-ram-v4),小游戏类似跳水
+(Frostbite-ramDeterministic-v0),
+(Frostbite-ramDeterministic-v4),
+(Frostbite-ramNoFrameskip-v0),
+(Frostbite-ramNoFrameskip-v4),
+(Frostbite-v0),
+(Frostbite-v4),
+(FrostbiteDeterministic-v0),
+(FrostbiteDeterministic-v4),
+(FrostbiteNoFrameskip-v0), 小游戏
+(FrostbiteNoFrameskip-v4),
+(FrozenLake-v0),
+(FrozenLake8x8-v0),
+(Go19x19-v0),
+(Go9x9-v0),
+(Gopher-ram-v0), 小游戏鱼儿
+(Gopher-ram-v4), 小游戏鱼儿
+(Gopher-ramDeterministic-v0),小游戏鱼儿
+(Gopher-ramDeterministic-v4),
+(Gopher-ramNoFrameskip-v0),
+(Gopher-ramNoFrameskip-v4), 小游戏鱼儿
+(Gopher-v0),
+(Gopher-v4),
+(GopherDeterministic-v0),
+(GopherDeterministic-v4),
+(GopherNoFrameskip-v0),
+(GopherNoFrameskip-v4),
+(Gravitar-ram-v0),
+(Gravitar-ram-v4),
+(Gravitar-ramDeterministic-v0),
+(Gravitar-ramDeterministic-v4),
+(Gravitar-ramNoFrameskip-v0),
+(Gravitar-ramNoFrameskip-v4),
+(Gravitar-v0),
+(Gravitar-v4), 2d射击类小游戏
+(GravitarDeterministic-v0),
+(GravitarDeterministic-v4),
+(GravitarNoFrameskip-v0), 小游戏打怪
+(GravitarNoFrameskip-v4),
+(GuessingGame-v0),
+(HalfCheetah-v2), 错误
+(Hero-ram-v0),
+(Hero-ram-v4),
+(Hero-ramDeterministic-v0),
+(Hero-ramDeterministic-v4),
+(Hero-ramNoFrameskip-v0), 小游戏类似挖宝藏
+(Hero-ramNoFrameskip-v4),
+(Hero-v0),
+(Hero-v4),
+(HeroDeterministic-v0),
+(HeroDeterministic-v4), 小游戏类似挖宝藏
+(HeroNoFrameskip-v0),
+(HeroNoFrameskip-v4),
+(Hex9x9-v0),
+(Hopper-v2), 错误
+(HotterColder-v0),
+(Humanoid-v2), 错误
+(HumanoidStandup-v2)])
+(IceHockey-ram-v0),
+(IceHockey-ram-v4),
+(IceHockey-ramDeterministic-v0),
+(IceHockey-ramDeterministic-v4),2d小游戏
+(IceHockey-ramNoFrameskip-v0), 打冰球
+(IceHockey-ramNoFrameskip-v4),
+(IceHockey-v0),
+(IceHockey-v4),
+(IceHockeyDeterministic-v0), 冰球
+(IceHockeyDeterministic-v4),
+(IceHockeyNoFrameskip-v0),
+(IceHockeyNoFrameskip-v4),
+(InvertedDoublePendulum-v2),
+(InvertedPendulum-v2),
+(Jamesbond-ram-v0),
+(Jamesbond-ram-v4), 射击打怪小游戏
+(Jamesbond-ramDeterministic-v0),
+(Jamesbond-ramDeterministic-v4),
+(Jamesbond-ramNoFrameskip-v0),
+(Jamesbond-ramNoFrameskip-v4),
+(Jamesbond-v0),
+(Jamesbond-v4),
+(JamesbondDeterministic-v0), 2d射击打怪
+(JamesbondDeterministic-v4),
+(JamesbondNoFrameskip-v0),
+(JamesbondNoFrameskip-v4),
+(JourneyEscape-ram-v0),
+(JourneyEscape-ram-v4),
+(JourneyEscape-ramDeterministic-v0),
+(JourneyEscape-ramDeterministic-v4),
+(JourneyEscape-ramNoFrameskip-v0),
+(JourneyEscape-ramNoFrameskip-v4),
+(JourneyEscape-v0),
+(JourneyEscape-v4),
+(JourneyEscapeDeterministic-v0),
+(JourneyEscapeDeterministic-v4),飞行射击类小游戏
+(JourneyEscapeNoFrameskip-v0),
+(JourneyEscapeNoFrameskip-v4),
+(Kangaroo-ram-v0),
+(Kangaroo-ram-v4),
+(Kangaroo-ramDeterministic-v0),
+(Kangaroo-ramDeterministic-v4),
+(Kangaroo-ramNoFrameskip-v0),
+(Kangaroo-ramNoFrameskip-v4),
+(Kangaroo-v0),
+(Kangaroo-v4), 小游戏寻宝
+(KangarooDeterministic-v0),
+(KangarooDeterministic-v4),
+(KangarooNoFrameskip-v0),
+(KangarooNoFrameskip-v4),
+(KellyCoinflip-v0),
+(KellyCoinflipGeneralized-v0),
+(Krull-ram-v0),小游戏
+(Krull-ram-v4),
+(Krull-ramDeterministic-v0), 小游戏
+(Krull-ramDeterministic-v4),
+(Krull-ramNoFrameskip-v0),小游戏打怪
+(Krull-ramNoFrameskip-v4),
+(Krull-v0),
+(Krull-v4),
+(KrullDeterministic-v0),
+(KrullDeterministic-v4), 小游戏
+(KrullNoFrameskip-v0),
+(KrullNoFrameskip-v4),
+(KungFuMaster-ram-v0),
+(KungFuMaster-ram-v4),
+(KungFuMaster-ramDeterministic-v0),
+(KungFuMaster-ramDeterministic-v4),
+(KungFuMaster-ramNoFrameskip-v0),
+(KungFuMaster-ramNoFrameskip-v4),
+(KungFuMaster-v0),
+(KungFuMaster-v4),
+(KungFuMasterDeterministic-v0),
+(KungFuMasterDeterministic-v4),
+(KungFuMasterNoFrameskip-v0),
+(KungFuMasterNoFrameskip-v4),
+(LunarLander-v2),
+(LunarLanderContinuous-v2),
+(MontezumaRevenge-ram-v0),
+(MontezumaRevenge-ram-v4),
+(MontezumaRevenge-ramDeterministic-v0),
+(MontezumaRevenge-ramDeterministic-v4),
+(MontezumaRevenge-ramNoFrameskip-v0),
+(MontezumaRevenge-ramNoFrameskip-v4),
+(MontezumaRevenge-v0),
+(MontezumaRevenge-v4),
+(MontezumaRevengeDeterministic-v0),
+(MontezumaRevengeDeterministic-v4),
+(MontezumaRevengeNoFrameskip-v0),
+(MontezumaRevengeNoFrameskip-v4),
+(MountainCar-v0),
+(MountainCarContinuous-v0),
+(MsPacman-ram-v0),
+(MsPacman-ram-v4), 小游戏走迷宫
+(MsPacman-ramDeterministic-v0),
+(MsPacman-ramDeterministic-v4),
+(MsPacman-ramNoFrameskip-v0),
+(MsPacman-ramNoFrameskip-v4),
+(MsPacman-v0),
+(MsPacman-v4),
+(MsPacmanDeterministic-v0),
+(MsPacmanDeterministic-v4),
+(MsPacmanNoFrameskip-v0),
+(MsPacmanNoFrameskip-v4),
+(NChain-v0),
+(NameThisGame-ram-v0),
+(NameThisGame-ram-v4),
+(NameThisGame-ramDeterministic-v0),
+(NameThisGame-ramDeterministic-v4),
+(NameThisGame-ramNoFrameskip-v0),2d打怪
+(NameThisGame-ramNoFrameskip-v4),
+(NameThisGame-v0),
+(NameThisGame-v4),
+(NameThisGameDeterministic-v0),
+(NameThisGameDeterministic-v4),
+(NameThisGameNoFrameskip-v0),
+(NameThisGameNoFrameskip-v4),
+(OffSwitchCartpole-v0),
+(OffSwitchCartpoleProb-v0),
+(OneRoundDeterministicReward-v0),
+(OneRoundNondeterministicReward-v0),
+(Pendulum-v0),
+(Phoenix-ram-v0),
+(Phoenix-ram-v4),
+(Phoenix-ramDeterministic-v0),
+(Phoenix-ramDeterministic-v4),
+(Phoenix-ramNoFrameskip-v0),
+(Phoenix-ramNoFrameskip-v4),
+(Phoenix-v0),
+(Phoenix-v4),
+(PhoenixDeterministic-v0),
+(PhoenixDeterministic-v4), 2d移动打怪小游戏
+(PhoenixNoFrameskip-v0),
+(PhoenixNoFrameskip-v4),
+(Pitfall-ram-v0),
+(Pitfall-ram-v4),
+(Pitfall-ramDeterministic-v0),
+(Pitfall-ramDeterministic-v4),
+(Pitfall-ramNoFrameskip-v0),
+(Pitfall-ramNoFrameskip-v4),
+(Pitfall-v0),
+(Pitfall-v4), 小游戏
+(PitfallDeterministic-v0),
+(PitfallDeterministic-v4),
+(PitfallNoFrameskip-v0),
+(PitfallNoFrameskip-v4),
+(Pong-ram-v0),
+(Pong-ram-v4),
+(Pong-ramDeterministic-v0),
+(Pong-ramDeterministic-v4),
+(Pong-ramNoFrameskip-v0),
+(Pong-ramNoFrameskip-v4),
+(Pong-v0),
+(Pong-v4), 小游戏乒乓球
+(PongDeterministic-v0),
+(PongDeterministic-v4),
+(PongNoFrameskip-v0),
+(PongNoFrameskip-v4),
+(Pooyan-ram-v0),
+(Pooyan-ram-v4), 小游戏
+(Pooyan-ramDeterministic-v0),
+(Pooyan-ramDeterministic-v4),
+(Pooyan-ramNoFrameskip-v0),
+(Pooyan-ramNoFrameskip-v4),
+(Pooyan-v0), 2d飞行小游戏
+(Pooyan-v4),
+(PooyanDeterministic-v0),
+(PooyanDeterministic-v4),
+(PooyanNoFrameskip-v0), 2d小游戏打怪
+(PooyanNoFrameskip-v4), 2d打怪小游戏
+(PredictActionsCartpole-v0),
+(PredictObsCartpole-v0),
+(PrivateEye-ram-v0),
+(PrivateEye-ram-v4),
+(PrivateEye-ramDeterministic-v0),
+(PrivateEye-ramDeterministic-v4),
+(PrivateEye-ramNoFrameskip-v0),
+(PrivateEye-ramNoFrameskip-v4),
+(PrivateEye-v0),
+(PrivateEye-v4),
+(PrivateEyeDeterministic-v0),
+(PrivateEyeDeterministic-v4),
+(PrivateEyeNoFrameskip-v0),
+(PrivateEyeNoFrameskip-v4),
+(Pusher-v2),
+(Qbert-ram-v0),
+(Qbert-ram-v4),
+(Qbert-ramDeterministic-v0),
+(Qbert-ramDeterministic-v4),
+(Qbert-ramNoFrameskip-v0),
+(Qbert-ramNoFrameskip-v4),
+(Qbert-v0),
+(Qbert-v4),
+(QbertDeterministic-v0),
+(QbertDeterministic-v4),
+(QbertNoFrameskip-v0),
+(QbertNoFrameskip-v4),小游戏跳塔
+(Reacher-v2),
+(RepeatCopy-v0),
+(Reverse-v0),
+(ReversedAddition-v0),
+(ReversedAddition3-v0),
+(Riverraid-ram-v0),
+(Riverraid-ram-v4),
+(Riverraid-ramDeterministic-v0),
+(Riverraid-ramNoFrameskip-v0),
+(Riverraid-ramNoFrameskip-v4),
+(Riverraid-v0),
+(Riverraid-v4),
+(RiverraidDeterministic-v0),
+(RiverraidDeterministic-v4),
+(RiverraidNoFrameskip-v0),
+(RiverraidNoFrameskip-v4),
+(RoadRunner-ram-v0), 2d博弈
+(RoadRunner-ram-v4),
+(RoadRunner-ramDeterministic-v0),
+(RoadRunner-ramDeterministic-v4),
+(RoadRunner-ramNoFrameskip-v0),
+(RoadRunner-ramNoFrameskip-v4),
+(RoadRunner-v0), 小游戏博弈
+(RoadRunner-v4),
+(RoadRunnerDeterministic-v0),
+(RoadRunnerDeterministic-v4),
+(RoadRunnerNoFrameskip-v0),
+(RoadRunnerNoFrameskip-v4),
+(Robotank-ram-v0), 小游戏打靶
+(Robotank-ram-v4),
+(Robotank-ramDeterministic-v0),
+(Robotank-ramDeterministic-v4),
+(Robotank-ramNoFrameskip-v0),
+(Robotank-ramNoFrameskip-v4),
+(Robotank-v0),
+(Robotank-v4),
+(RobotankDeterministic-v0),
+(RobotankDeterministic-v4),
+(RobotankNoFrameskip-v0),
+(RobotankNoFrameskip-v4),
+(Roulette-v0), 错误
+(Seaquest-ram-v0), 小游戏2d左右打怪
+(Seaquest-ram-v4),
+(Seaquest-ramDeterministic-v0),
+(Seaquest-ramDeterministic-v4),
+(Seaquest-ramNoFrameskip-v0),
+(Seaquest-ramNoFrameskip-v4),
+(Seaquest-v0),
+(Seaquest-v4),
+(SeaquestDeterministic-v0),
+(SeaquestDeterministic-v4),
+(SeaquestNoFrameskip-v0),
+(SeaquestNoFrameskip-v4),
+(SemisuperPendulumDecay-v0),
+(SemisuperPendulumNoise-v0),
+(SemisuperPendulumRandom-v0),
+(Skiing-ram-v0),
+(Skiing-ram-v4),
+(Skiing-ramDeterministic-v0),
+(Skiing-ramDeterministic-v4),
+(Skiing-ramNoFrameskip-v0),
+(Skiing-ramNoFrameskip-v4),
+(Skiing-v0), 小游戏滑雪
+(Skiing-v4),
+(SkiingDeterministic-v0),
+(SkiingDeterministic-v4),
+(SkiingNoFrameskip-v0),
+(SkiingNoFrameskip-v4),
+(Solaris-ram-v0),
+(Solaris-ram-v4),
+(Solaris-ramDeterministic-v0),
+(Solaris-ramDeterministic-v4),
+(Solaris-ramNoFrameskip-v0),
+(Solaris-ramNoFrameskip-v4),
+(Solaris-v0),
+(Solaris-v4),
+(SolarisDeterministic-v0),
+(SolarisDeterministic-v4),
+(SolarisNoFrameskip-v0),
+(SolarisNoFrameskip-v4),2d飞行类似小游戏
+(SpaceInvaders-ram-v0),
+(SpaceInvaders-ram-v4),
+(SpaceInvaders-ramDeterministic-v0),
+(SpaceInvaders-ramDeterministic-v4),
+(SpaceInvaders-ramNoFrameskip-v0),
+(SpaceInvaders-ramNoFrameskip-v4),
+(SpaceInvaders-v0),
+(SpaceInvaders-v4),
+(SpaceInvadersDeterministic-v0),
+(SpaceInvadersDeterministic-v4),
+(SpaceInvadersNoFrameskip-v0),
+(SpaceInvadersNoFrameskip-v4),
+(StarGunner-ram-v0),
+(StarGunner-ram-v4),
+(StarGunner-ramDeterministic-v0),
+(StarGunner-ramDeterministic-v4),
+(StarGunner-ramNoFrameskip-v0),
+(StarGunner-ramNoFrameskip-v4),
+(StarGunner-v0),
+(StarGunner-v4),
+(StarGunnerDeterministic-v0),小游戏2d飞行
+(StarGunnerDeterministic-v4),
+(StarGunnerNoFrameskip-v0),
+(StarGunnerNoFrameskip-v4),
+(Striker-v2),
+(Swimmer-v2),
+(Taxi-v2),
+(Tennis-ram-v0),
+(Tennis-ram-v4),
+(Tennis-ramDeterministic-v0),
+(Tennis-ramDeterministic-v4),
+(Tennis-ramNoFrameskip-v0),
+(Tennis-ramNoFrameskip-v4), 网球小游戏
+(Tennis-v0), 网球
+(Tennis-v4),
+(TennisDeterministic-v0), 小游戏打网球
+(TennisDeterministic-v4), 网球小游戏
+(TennisNoFrameskip-v0),
+(TennisNoFrameskip-v4),
+(Thrower-v2),
+(TimePilot-ram-v0),
+(TimePilot-ram-v4),
+(TimePilot-ramDeterministic-v0), 小游戏飞云打怪
+(TimePilot-ramDeterministic-v4),
+(TimePilot-ramNoFrameskip-v0),
+(TimePilot-ramNoFrameskip-v4),
+(TimePilot-v0),
+(TimePilot-v4),
+(TimePilotDeterministic-v0), 小游戏飞云打怪
+(TimePilotDeterministic-v4),
+(TimePilotNoFrameskip-v0),
+(TimePilotNoFrameskip-v4),
+(Tutankham-ram-v0),
+(Tutankham-ram-v4), 小游戏
+(Tutankham-ramDeterministic-v0),
+(Tutankham-ramDeterministic-v4),
+(Tutankham-ramNoFrameskip-v0),
+(Tutankham-ramNoFrameskip-v4),
+(Tutankham-v0), 小游戏打怪
+(Tutankham-v4),
+(TutankhamDeterministic-v0),
+(TutankhamDeterministic-v4),
+(TutankhamNoFrameskip-v0),
+(TutankhamNoFrameskip-v4),
+(TwoRoundDeterministicReward-v0),
+(TwoRoundNondeterministicReward-v0),
+(UpNDown-ram-v0),
+(UpNDown-ram-v4),
+(UpNDown-ramDeterministic-v0), 小路上开车小游戏
+(UpNDown-ramDeterministic-v4),
+(UpNDown-ramNoFrameskip-v0),
+(UpNDown-ramNoFrameskip-v4),
+(UpNDown-v0), 小路上开车小游戏
+(UpNDown-v4),
+(UpNDownDeterministic-v0),
+(UpNDownDeterministic-v4),
+(UpNDownNoFrameskip-v0),
+(UpNDownNoFrameskip-v4),
+(Venture-ram-v0),
+(Venture-ram-v4),
+(Venture-ramDeterministic-v0),
+(Venture-ramDeterministic-v4),
+(Venture-ramNoFrameskip-v0),
+(Venture-ramNoFrameskip-v4),
+(Venture-v0),
+(Venture-v4),
+(VentureDeterministic-v0),
+(VentureDeterministic-v4),
+(VentureNoFrameskip-v0),
+(VentureNoFrameskip-v4),
+(VideoPinball-ram-v0),
+(VideoPinball-ram-v4),
+(VideoPinball-ramDeterministic-v0),
+(VideoPinball-ramDeterministic-v4),
+(VideoPinball-ramNoFrameskip-v0),
+(VideoPinball-ramNoFrameskip-v4),
+(VideoPinball-v0),
+(VideoPinball-v4),小游戏弹球
+(VideoPinballDeterministic-v0),
+(VideoPinballDeterministic-v4),
+(VideoPinballNoFrameskip-v0),
+(VideoPinballNoFrameskip-v4),
+(Walker2d-v2), 错误
+(WizardOfWor-ram-v0),
+(WizardOfWor-ram-v4),
+(WizardOfWor-ramDeterministic-v0),
+(WizardOfWor-ramDeterministic-v4),
+(WizardOfWor-ramNoFrameskip-v0),
+(WizardOfWor-ramNoFrameskip-v4),
+(WizardOfWor-v0),
+(WizardOfWor-v4), 小游戏迷宫
+(WizardOfWorDeterministic-v0),
+(WizardOfWorDeterministic-v4),
+(WizardOfWorNoFrameskip-v0),
+(WizardOfWorNoFrameskip-v4),
+(YarsRevenge-ram-v0),
+(YarsRevenge-ram-v4),
+(YarsRevenge-ramDeterministic-v0),
+(YarsRevenge-ramDeterministic-v4),
+(YarsRevenge-ramNoFrameskip-v0),
+(YarsRevenge-ramNoFrameskip-v4),
+(YarsRevenge-v0),
+(YarsRevenge-v4), 小游戏2d飞行打怪
+(YarsRevengeDeterministic-v0),
+(YarsRevengeDeterministic-v4),
+(YarsRevengeNoFrameskip-v0),
+(YarsRevengeNoFrameskip-v4), 2d打怪小游戏
+(Zaxxon-ram-v0),
+(Zaxxon-ram-v4), 小游戏打怪
+(Zaxxon-ramDeterministic-v0),
+(Zaxxon-ramDeterministic-v4),
+(Zaxxon-ramNoFrameskip-v0),小游戏越过墙打怪
+(Zaxxon-ramNoFrameskip-v4),
+(Zaxxon-v0),
+(Zaxxon-v4),
+(ZaxxonDeterministic-v0),
+(ZaxxonDeterministic-v4),
+(ZaxxonNoFrameskip-v0),小游戏打怪
+(ZaxxonNoFrameskip-v4),</code></p>
+<h2 id="几乎每个智能体都有的通用方法"><a href="#几乎每个智能体都有的通用方法" class="headerlink" title="几乎每个智能体都有的通用方法"></a>几乎每个智能体都有的通用方法</h2><h3 id="reset"><a href="#reset" class="headerlink" title="reset()"></a>reset()</h3><ul>
+<li>重置环境，就是初始化</li>
+<li>可以返回值，返回的为智能体的初始状态</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">env = gym.make(<span class="string">'CartPole-v0'</span>)</span><br><span class="line">    observation = env.reset()</span><br><span class="line">    print(observation)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="render"><a href="#render" class="headerlink" title="render()"></a>render()</h3><ul>
+<li>扮演图像引擎的角色，用这个可以更加直观的观察强化学习的结果</li>
+<li>就是能画出当前结果</li>
+</ul>
+<h3 id="step"><a href="#step" class="headerlink" title="step()"></a>step()</h3><ul>
+<li>扮演物理引擎的角色，执行物理引擎的下一步</li>
+<li>可以返回值[obervation, reward, done, info]$\iff$[反馈，奖励，是否结束，其他信息]</li>
+<li>done的是否结束：例如CartPole-v0的结束就是杆子要倒了，然后车跑了</li>
+</ul>
+<h4 id="各种决策"><a href="#各种决策" class="headerlink" title="各种决策"></a>各种决策</h4><ul>
+<li><pre><code class="python">env.action_space.sample() <span class="comment">#随机决策</span></code></pre>
+</li>
+<li></li>
+</ul>
+<h3 id="close"><a href="#close" class="headerlink" title="close()"></a>close()</h3><ul>
+<li>关闭</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/02/29/%E6%AE%8B%E5%B7%AE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0/" rel="next" title="残差神经网络学习">
+                  <i class="fa fa-chevron-left"></i> 残差神经网络学习
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0/" rel="prev" title="强化学习学习">
+                  强化学习学习 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#gym学习"><span class="nav-number">1.</span> <span class="nav-text">gym学习</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gym-make"><span class="nav-number">1.1.</span> <span class="nav-text">gym.make</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#几乎每个智能体都有的通用方法"><span class="nav-number">1.2.</span> <span class="nav-text">几乎每个智能体都有的通用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reset"><span class="nav-number">1.2.1.</span> <span class="nav-text">reset()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#render"><span class="nav-number">1.2.2.</span> <span class="nav-text">render()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step"><span class="nav-number">1.2.3.</span> <span class="nav-text">step()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#各种决策"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">各种决策</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#close"><span class="nav-number">1.2.4.</span> <span class="nav-text">close()</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

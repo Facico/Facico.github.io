@@ -57,16 +57,25 @@
 <meta property="og:site_name" content="Facico的博客">
 <meta property="og:description" content="LSTM学习小记 RNN缺点：对所以信息都进行了存储，数据没有选择性，计算量大；梯度衰减严重。基于以上缺点。X0、X1与输出h t+1之间的距离太长，RNN对长时间记忆有明显的不足。提出了LSTM网络。">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6983308-f8c19513a9a46570.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1190">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;2019061410502874.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ3MjgzMA==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200227114736335.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;1072375&#x2F;201904&#x2F;1072375-20190416113219384-1870638590.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614105358866.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ3MjgzMA==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190614105509732.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;1072375&#x2F;201904&#x2F;1072375-20190416113236304-314861026.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;1072375&#x2F;201904&#x2F;1072375-20190416113245679-1192728656.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;1072375&#x2F;201904&#x2F;1072375-20190416113252009-251664288.png">
-<meta property="og:updated_time" content="2020-02-24T00:49:53.891Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;5b0988e595225.cdn.sohucs.com&#x2F;images&#x2F;20190826&#x2F;e3b7834b97764216be1653389c30468a.jpeg">
+<meta property="og:image" content="https:&#x2F;&#x2F;image.jiqizhixin.com&#x2F;uploads&#x2F;editor&#x2F;37a1ae9e-9e95-44e5-8746-e03085f7e7f8&#x2F;1540354951193.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;5b0988e595225.cdn.sohucs.com&#x2F;images&#x2F;20190826&#x2F;303d6ed5d1b84455ac037ed08a67d472.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;80&#x2F;v2-7fff5d817530dada1b279c7279d73b8a_720w.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;pic4.zhimg.com&#x2F;80&#x2F;v2-390781506bbebbef799f1a12acd7865b_720w.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;pic1.zhimg.com&#x2F;80&#x2F;v2-8134a00c243153bfd9fd2bcbe0844e9c_720w.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;5b0988e595225.cdn.sohucs.com&#x2F;images&#x2F;20190826&#x2F;c199f8d2effd4064a45daefa04f48300.jpeg">
+<meta property="og:updated_time" content="2020-04-09T15:58:57.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;2019061410502874.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ3MjgzMA==,size_16,color_FFFFFF,t_70">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6983308-f8c19513a9a46570.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1190">
 
 <link rel="canonical" href="http://yoursite.com/2020/02/06/LSTM%E5%AD%A6%E4%B9%A0%E5%B0%8F%E8%AE%B0/">
 
@@ -228,7 +237,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-24 08:49:53" itemprop="dateModified" datetime="2020-02-24T08:49:53+08:00">2020-02-24</time>
+                <time title="Modified: 2020-04-09 23:58:57" itemprop="dateModified" datetime="2020-04-09T23:58:57+08:00">2020-04-09</time>
               </span>
 
           
@@ -250,12 +259,16 @@
 
       
         <h1 id="LSTM学习小记"><a href="#LSTM学习小记" class="headerlink" title="LSTM学习小记"></a>LSTM学习小记</h1><ul>
-<li>RNN缺点：对所以信息都进行了存储，数据没有选择性，计算量大；梯度衰减严重。基于以上缺点。X0、X1与输出h t+1之间的距离太长，RNN对长时间记忆有明显的不足。提出了LSTM网络。</li>
+<li><p>RNN缺点：对所以信息都进行了存储，数据没有选择性，计算量大；梯度衰减严重。基于以上缺点。X0、X1与输出h t+1之间的距离太长，RNN对长时间记忆有明显的不足。提出了LSTM网络。</p>
+</li>
+<li><p><img src="https://upload-images.jianshu.io/upload_images/6983308-f8c19513a9a46570.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1190" alt="img"></p>
+</li>
 </ul><a id="more"></a>
 <ul>
 <li><img src="https://img-blog.csdnimg.cn/2019061410502874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzQ3MjgzMA==,size_16,color_FFFFFF,t_70" alt="img"></li>
 </ul>
 <p>C：控制参数。决定什么样的信息会被保留什么样的会被遗忘。C值与输出相乘决定遗忘的多少。C的范围为[0,1]，当C=0时，全部遗忘；当C=1时，全部记忆；当C=0.5时，部分记忆。 </p>
+<p><img src="/home/facico/.config/Typora/typora-user-images/image-20200227114736335.png" alt="image-20200227114736335"></p>
 <ul>
 <li>细胞更新的路线。 <ul>
 <li>两个粉色圈表示信息进行一些基础的运算，在h循环更新的过程中，细胞C的信息也在不断更新。由于细胞C只是进行一些简单的运算，所以它的信息可以在流通中保持大体不变。</li>
@@ -271,10 +284,12 @@
 <p><img src="https://img-blog.csdnimg.cn/20190614105509732.png" alt="img"></p>
 <ul>
 <li>理解：并不是全部信息都要记住的，需要选择性遗忘。上一层的输入和本层的输入通过sigmoid函数变成一个取值在[0，1]的值,0表示完全遗忘，1表示必须记住。再通过“X”乘法操作与上层数据汇合。这里被称为遗忘门。—<code>forget gate</code></li>
+<li><code>[x,y]</code>是把x和y合并在一起。$W_f，b_f$当然是学习出来的参数，下面的也一样。</li>
 </ul>
 <h2 id="输入：选择记忆现在的某些信息"><a href="#输入：选择记忆现在的某些信息" class="headerlink" title="输入：选择记忆现在的某些信息"></a>输入：选择记忆现在的某些信息</h2><p><img src="https://img2018.cnblogs.com/blog/1072375/201904/1072375-20190416113236304-314861026.png" alt="img"></p>
 <ul>
-<li>理解：将输入的信息分别通过sigmoid函数和tanh函数的处理，共同输入到“X”乘法运算中。同样的Sigmoid函数仍然输出一个[0，1]的值，表示该数据的可以记忆的价值是多少。tanh发挥的作用类似于RNN中发挥的作用，输出一个候选值。由Sigmoid函数决定该值要记忆多少。这里被称为输入门</li>
+<li>理解：将输入的信息分别通过sigmoid函数和tanh函数的处理，共同输入到“X”乘法运算中。同样的Sigmoid函数仍然输出一个[0，1]的值，表示该数据的可以记忆的价值是多少。tanh发挥的作用类似于RNN中发挥的作用，输出一个候选值，其实sigmoid和tanh都是做一个线性变换。由Sigmoid函数决定该值要记忆多少。这里被称为输入门</li>
+<li>$C_t$表示第t个细胞的候选的信息，$\widetilde{C_t}$表示候选细胞。细胞及当前状态信息。$C$负责传递下去，而$h$负责当前状态的输出。</li>
 </ul>
 <h2 id="合并：将过去的记忆和现在的记忆合并在一起"><a href="#合并：将过去的记忆和现在的记忆合并在一起" class="headerlink" title="合并：将过去的记忆和现在的记忆合并在一起"></a>合并：将过去的记忆和现在的记忆合并在一起</h2><p><img src="https://img2018.cnblogs.com/blog/1072375/201904/1072375-20190416113245679-1192728656.png" alt="img"></p>
 <p>理解：两端记忆分别通过乘法后用加法运算合并到一起。</p>
@@ -284,7 +299,52 @@
 <p>在整个过程中，sigmoid函数起的是选择作用。 通过输出的值控制记忆的记忆程度。tanh起的是变换作用，与RNN中的作用类似。此外，LSTM还有其他变体，但是根据测试各个变体之间的差距很小。</p>
 </li>
 </ul>
-<h2 id="大部分转载自"><a href="#大部分转载自" class="headerlink" title="大部分转载自"></a>大部分转载自</h2><p><a href="https://www.cnblogs.com/NewBee-CHH/p/10715831.html" target="_blank" rel="noopener">https://www.cnblogs.com/NewBee-CHH/p/10715831.html</a></p>
+<p><img src="http://5b0988e595225.cdn.sohucs.com/images/20190826/e3b7834b97764216be1653389c30468a.jpeg" alt="img"></p>
+<h2 id="LSTM解决的问题"><a href="#LSTM解决的问题" class="headerlink" title="LSTM解决的问题"></a>LSTM解决的问题</h2><ul>
+<li><p>原始的RNN因为结构在经过hidden state的反向传播的时候会乘上sigmoid的导数值，容易引发梯度爆炸或梯度消失</p>
+</li>
+<li><p>而LSTM通过门机制解决了这个问题(遗忘门，输入门，输出门)</p>
+<ul>
+<li>$$<br>遗忘门：f_t=\delta(W_f\cdot[h_{t-1},x_t]+b_f)\<br>输入门：i_t=\delta(W_i\cdot[h_{t-1},x_t]+b_i)\<br>输出门：o_t=\delta(w_o\cdot[h_{t-1},x_t]+b_0)\<br>当前单元状态c_t:c_t=f_t<em>c_{t-1}+i_t</em>tanh(w_c\cdot[h_{t-1},x_t]+b_c)\<br>当前时刻的隐层输出:h_t=o_t*tanh(c_t)<br>$$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>老实说，如果解决问题网上说法不一，作者也只是抽象的简化模型，这里不做叙述</li>
+</ul>
+<h1 id="BiLSTM"><a href="#BiLSTM" class="headerlink" title="BiLSTM"></a>BiLSTM</h1><ul>
+<li>双向LSTM，就是对于输入的信息，正向和反向同时建立一个LSTM，然后把hidden layer拼接在一起<ul>
+<li><img src="https://image.jiqizhixin.com/uploads/editor/37a1ae9e-9e95-44e5-8746-e03085f7e7f8/1540354951193.png" alt="img"></li>
+<li>如上，用BiLSTM编码句子”我爱中国”</li>
+</ul>
+</li>
+<li>BiLSTM要比LSTM训练更多次才能趋向稳定，但是可以获得更好的稳定性和准确率。但是要很多次才能稳定，要花很多时间，所以小问题上用的不是很多</li>
+</ul>
+<h1 id="LSTM变体——GRU"><a href="#LSTM变体——GRU" class="headerlink" title="LSTM变体——GRU"></a>LSTM变体——GRU</h1><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20190826/303d6ed5d1b84455ac037ed08a67d472.png" alt="img"></p>
+<ul>
+<li><p>GRU(Gate Recurrent Unit)比LSTM少一个门控，它只有两个门控：重置门和更新门</p>
+<ul>
+<li><img src="https://pic3.zhimg.com/80/v2-7fff5d817530dada1b279c7279d73b8a_720w.jpg" alt="img" style="zoom: 50%;">
+- 首先计算两个门控的参数
+- $h_{t-1}'=r*h_{t-1}\qquad{(h'就是\widetilde{h}候选细胞)}$</li>
+<li><img src="https://pic4.zhimg.com/80/v2-390781506bbebbef799f1a12acd7865b_720w.jpg" alt="img" style="zoom:50%;">
+</li>
+<li><p>然后$h_t=z*h_{t-1}+(1-z)h_{t}’，y_t=W_oh_t\qquad(y_t只是为了方便输出和表示对h_t做的线性变换)$</p>
+</li>
+<li><img src="https://pic1.zhimg.com/80/v2-8134a00c243153bfd9fd2bcbe0844e9c_720w.jpg" alt="img" style="zoom:50%;">
+</li>
+</ul>
+</li>
+<li><p><img src="http://5b0988e595225.cdn.sohucs.com/images/20190826/c199f8d2effd4064a45daefa04f48300.jpeg" alt="img"></p>
+</li>
+<li><p>与LSTM的不同</p>
+<ul>
+<li>1、GRU在信息合并的时候，只用了一组门控参数(更新门)，比LSTM少了一组门控参数</li>
+<li>2、GRU的输入只有两个，LSTM多了一个$c$。GRU摆脱了细胞状态并使用隐藏状态来传输信息。也就是两者对memory的控制不同，GRU直接传输给下一个单元，由下一个单元的<code>重置门</code>来控制输入信息，而LSTM通过<code>输出门</code>来控制。我的理解是：GRU把这个单元的输出门和下一个单元的输入门合并在了一起</li>
+<li>3、GRU的简化是用来降低复杂度的，所以在数据充足的情况下，LSTM稳定的时候精确度要比GRU好</li>
+</ul>
+</li>
+</ul>
 
     </div>
 
@@ -347,7 +407,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM学习小记"><span class="nav-number">1.</span> <span class="nav-text">LSTM学习小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#遗忘–选择忘记过去的某些信息"><span class="nav-number">1.1.</span> <span class="nav-text">遗忘–选择忘记过去的某些信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入：选择记忆现在的某些信息"><span class="nav-number">1.2.</span> <span class="nav-text">输入：选择记忆现在的某些信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并：将过去的记忆和现在的记忆合并在一起"><span class="nav-number">1.3.</span> <span class="nav-text">合并：将过去的记忆和现在的记忆合并在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出"><span class="nav-number">1.4.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大部分转载自"><span class="nav-number">1.5.</span> <span class="nav-text">大部分转载自</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM学习小记"><span class="nav-number">1.</span> <span class="nav-text">LSTM学习小记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#遗忘–选择忘记过去的某些信息"><span class="nav-number">1.1.</span> <span class="nav-text">遗忘–选择忘记过去的某些信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入：选择记忆现在的某些信息"><span class="nav-number">1.2.</span> <span class="nav-text">输入：选择记忆现在的某些信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合并：将过去的记忆和现在的记忆合并在一起"><span class="nav-number">1.3.</span> <span class="nav-text">合并：将过去的记忆和现在的记忆合并在一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出"><span class="nav-number">1.4.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSTM解决的问题"><span class="nav-number">1.5.</span> <span class="nav-text">LSTM解决的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BiLSTM"><span class="nav-number">2.</span> <span class="nav-text">BiLSTM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LSTM变体——GRU"><span class="nav-number">3.</span> <span class="nav-text">LSTM变体——GRU</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -362,7 +422,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

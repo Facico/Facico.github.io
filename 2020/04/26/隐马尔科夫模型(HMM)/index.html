@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="隐马尔科夫模型(HMM) 基于时序的概率模型 定义$$Q=[q_1,q_2…,q_N]是所有可能的状态集合 \qquad V=[v_1,v_2…v_M]是所有目标集合\I=[i_1,i_2…i_T]表示长度为T的状态序列\qquad O=[o_1,o_2…o_T]表示长度为T的观测序列\\概率转移矩阵A=[a_{ij}]{n×n}\qquad a{ij}=P(i_{t+1}=q_j|i_{t}=q">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐马尔科夫模型(HMM)">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;26&#x2F;%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="隐马尔科夫模型(HMM) 基于时序的概率模型 定义$$Q=[q_1,q_2…,q_N]是所有可能的状态集合 \qquad V=[v_1,v_2…v_M]是所有目标集合\I=[i_1,i_2…i_T]表示长度为T的状态序列\qquad O=[o_1,o_2…o_T]表示长度为T的观测序列\\概率转移矩阵A=[a_{ij}]{n×n}\qquad a{ij}=P(i_{t+1}=q_j|i_{t}=q">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-05-15T12:56:53.815Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/26/%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>隐马尔科夫模型(HMM) | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/26/%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          隐马尔科夫模型(HMM)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-26 19:35:42" itemprop="dateCreated datePublished" datetime="2020-04-26T19:35:42+08:00">2020-04-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 20:56:53" itemprop="dateModified" datetime="2020-05-15T20:56:53+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="隐马尔科夫模型-HMM"><a href="#隐马尔科夫模型-HMM" class="headerlink" title="隐马尔科夫模型(HMM)"></a>隐马尔科夫模型(HMM)</h1><ul>
+<li>基于时序的概率模型</li>
+</ul><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>$$<br>Q=[q_1,q_2…,q_N]是所有可能的状态集合 \qquad V=[v_1,v_2…v_M]是所有目标集合\<br>I=[i_1,i_2…i_T]表示长度为T的状态序列\qquad O=[o_1,o_2…o_T]表示长度为T的观测序列\<br>\<br>概率转移矩阵A=[a_{ij}]<em>{n×n}\qquad a</em>{ij}=P(i_{t+1}=q_j|i_{t}=q_i)\qquad(在t时刻)\<br>观测概率矩阵B=[b_j(k)]_{N×M}\qquad b_j(k)=P(o_t=v_k|i_t=q_j)\<br>初始状态概率向量\pi=(\pi_i)\qquad \pi_i=P(i_1=q_i)<br>$$</p><a id="more"></a>
+
+<p>综上，HMM可以用模型$\lambda=(A,B,\pi)$表示</p>
+<h2 id="基本假设"><a href="#基本假设" class="headerlink" title="基本假设"></a>基本假设</h2><ul>
+<li>从定义可知，HMM做了两个基本的假设<ul>
+<li>1、齐次马尔科夫性假设：假设HMM在任意时刻$t$只依赖于前的任意时刻</li>
+<li>2、观察独立性假设：假设任意观察序列只依赖于该时刻的状态与其他状态无关</li>
+</ul>
+</li>
+</ul>
+<h2 id="三个基本问题"><a href="#三个基本问题" class="headerlink" title="三个基本问题"></a>三个基本问题</h2><ul>
+<li>1、概率计算问题：已知模型和观测序列，求在该模型下，观测序列出现的概率</li>
+<li>2、学习问题：已知观测序列估计模型参数，即用极大似然法估计参数</li>
+<li>3、预测问题：也称为解码问题。已知模型和观测序列，求最有可能的状态序列</li>
+</ul>
+<h2 id="一、概率计算问题"><a href="#一、概率计算问题" class="headerlink" title="一、概率计算问题"></a>一、概率计算问题</h2><h3 id="直接计算法"><a href="#直接计算法" class="headerlink" title="直接计算法"></a>直接计算法</h3><ul>
+<li>列举所有可能的状态序列，然后求出状态序列的概率</li>
+<li>这样的时间复杂度是$O(TN^T)$级别的</li>
+</ul>
+<h3 id="前向算法"><a href="#前向算法" class="headerlink" title="前向算法"></a>前向算法</h3><p>$$<br>设前向概率为\alpha_t(i)=P(o_1,o_2…,o_t,i_t=q_i|\lambda)\<br>显然有以下的递推公司\<br>a_{t+1}(i)=[\sum_{j=1}^N\alpha_t(j)a_{ji}]b_i(o_{t+1})\qquad \alpha_1(i)=\pi_ib_i(o_1)\<br>所以\<br>P(O|\lambda)=\sum_{i=1}^N \alpha_T(i)<br>$$</p>
+<p>这样的时间复杂度是$O(TN^2)$级别的，这样的优化就在于，用一个递推状态来记录了前面搜索的结果，而不用像第一个方法一样重读搜索。</p>
+<h3 id="后向算法"><a href="#后向算法" class="headerlink" title="后向算法"></a>后向算法</h3><ul>
+<li>思想和前向的算法差不多，就是倒过来求</li>
+</ul>
+<p>$$<br>设后向概率为\beta_t(i)=P(o_{t+1},o_{t+2},…,o_{T}|i_t=q_i,\lambda)\<br>\beta_{T}(i)=1\qquad 初始化\<br>\beta_t(i)=\sum_{j=1}^N a_{ij}b_j(o_{t+1})\beta_{t+1}(j)\<br>P(O|\lambda)=\sum_{i=1}^N \pi_ib_i(o_1)\beta_1(i)<br>$$</p>
+<h3 id="结合前向后向概率的一些计算"><a href="#结合前向后向概率的一些计算" class="headerlink" title="结合前向后向概率的一些计算"></a>结合前向后向概率的一些计算</h3><ul>
+<li><p>1、给定模型和观测，计算时刻t时处于状态$q_i$的概率</p>
+<ul>
+<li><p>把式子化成上面$P(O|\lambda)$的形式</p>
+</li>
+<li><p>$$<br>\gamma_t(i)=P(i_t=q_i|O,\lambda)=\frac{P(i_t=q_i,O|\lambda)}{P(O|\lambda)}=\frac{\alpha_t(i)\beta_t(i)}{\sum_{j=1}^N \alpha_t(j)\beta_t(j)}<br>$$</p>
+</li>
+</ul>
+</li>
+<li><p>2、给定模型和观测，计算在时刻t处于状态$q_t$，在时刻t+1处于$q_j$的概率</p>
+<ul>
+<li>将t+1的状态空出来直接计算<br>$$<br>\xi_t(i,j)=P(i_t=q_i,i_{i+1}=q_j|O,\lambda)=\frac{P(i_t=q_i,i_{i+1}=q_j,O|\lambda)}{P(O|\lambda)}=\\frac{\alpha_t(i)a_{ij}b_j(o_{t+1})\beta_{t+1}(j)}{\sum_{i=1}^N\sum_{j=1}^N \alpha_t(i)a_{ij}b_j(o_{t+1})\beta_{t+1}(j)}<br>$$</li>
+</ul>
+</li>
+<li><p>3、。。。。。。</p>
+</li>
+</ul>
+<h2 id="二、学习问题"><a href="#二、学习问题" class="headerlink" title="二、学习问题"></a>二、学习问题</h2><h3 id="监督学习方法"><a href="#监督学习方法" class="headerlink" title="监督学习方法"></a>监督学习方法</h3><ul>
+<li><p>已知观察序列和状态序列$[(O_1,I_1),(O_2,I_2),…,(O_S,I_S)]$，然后我们利用极大似然估计来计算参数</p>
+</li>
+<li><p>直接用频率估计即可</p>
+</li>
+</ul>
+<h3 id="非监督学习方法-Baum-Welch算法"><a href="#非监督学习方法-Baum-Welch算法" class="headerlink" title="非监督学习方法(Baum-Welch算法)"></a>非监督学习方法(Baum-Welch算法)</h3><ul>
+<li>只有观察序列，并没有对应的状态序列。</li>
+<li>这种情况也就是假设状态序列是<code>隐变量</code>$I$，然后写出一个含隐变量的概率模型</li>
+</ul>
+<p>$$<br>P(O|\lambda)=\sum_{I}P(O|I,\lambda)P(I|\lambda)<br>$$</p>
+<ul>
+<li><p>然后我们就可以用EM算法解决，所以其实Baum-Welch算法就是EM算法在HMM上的应用</p>
+<ul>
+<li>EM算法简单来说就是，先明确隐函数是什么，然后把隐函数写进去写出对数似然，然后对隐变量取期望写出Q函数(E步),然后再极大化Q函数(M步)得到下一轮的参数初值</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/04/08/Attention%E6%9C%BA%E5%88%B6/" rel="next" title="Attention机制">
+                  <i class="fa fa-chevron-left"></i> Attention机制
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/05/13/XGboost/" rel="prev" title="XGboost">
+                  XGboost <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#隐马尔科夫模型-HMM"><span class="nav-number">1.</span> <span class="nav-text">隐马尔科夫模型(HMM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本假设"><span class="nav-number">1.2.</span> <span class="nav-text">基本假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三个基本问题"><span class="nav-number">1.3.</span> <span class="nav-text">三个基本问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概率计算问题"><span class="nav-number">1.4.</span> <span class="nav-text">一、概率计算问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接计算法"><span class="nav-number">1.4.1.</span> <span class="nav-text">直接计算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前向算法"><span class="nav-number">1.4.2.</span> <span class="nav-text">前向算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后向算法"><span class="nav-number">1.4.3.</span> <span class="nav-text">后向算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结合前向后向概率的一些计算"><span class="nav-number">1.4.4.</span> <span class="nav-text">结合前向后向概率的一些计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、学习问题"><span class="nav-number">1.5.</span> <span class="nav-text">二、学习问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督学习方法"><span class="nav-number">1.5.1.</span> <span class="nav-text">监督学习方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非监督学习方法-Baum-Welch算法"><span class="nav-number">1.5.2.</span> <span class="nav-text">非监督学习方法(Baum-Welch算法)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

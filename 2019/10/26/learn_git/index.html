@@ -58,7 +58,7 @@
 <meta property="og:description" content="git学习创建版本库(仓库，repository)初始设定创建一个文件之后1~$ git init就能把这个目录设置git可以管理的仓库">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;files&#x2F;attachments&#x2F;919020037470528&#x2F;0">
-<meta property="og:updated_time" content="2019-10-25T13:04:32.858Z">
+<meta property="og:updated_time" content="2020-05-15T15:47:17.072Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;files&#x2F;attachments&#x2F;919020037470528&#x2F;0">
 
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-25 21:04:32" itemprop="dateModified" datetime="2019-10-25T21:04:32+08:00">2019-10-25</time>
+                <time title="Modified: 2020-05-15 23:47:17" itemprop="dateModified" datetime="2020-05-15T23:47:17+08:00">2020-05-15</time>
               </span>
 
           
@@ -308,6 +308,16 @@
 
 <p>remove在commit上传的是删除信息</p>
 <p>特别的：只在工作区删掉之后，可以直接git checkout可以直接还原文件</p>
+<p>查看暂存区文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git ls-files</span><br></pre></td></tr></table></figure>
+
+
+
+<p>从暂存区删除文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cache 文件名              //如果是文件夹要加-r</span><br></pre></td></tr></table></figure>
+
+
+
 <h3 id="git的特点"><a href="#git的特点" class="headerlink" title="git的特点"></a>git的特点</h3><p><strong>1、</strong>git与其他版本控制系统不同的地方就是它有暂存区的概念</p>
 <ul>
 <li>工作区(working directory)：电脑上能看到的目录就是工作区，如learngit</li>
@@ -414,7 +424,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="抠图Blue Screen Matting 始祖抠图算法 定义matting问题$$I=\alpha F+(1-\alpha)B$$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抠图">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;28&#x2F;%E6%8A%A0%E5%9B%BE&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="抠图Blue Screen Matting 始祖抠图算法 定义matting问题$$I=\alpha F+(1-\alpha)B$$">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;80&#x2F;v2-59d0d75176e58fb7cdb395d2805d786a_720w.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20161126220018509">
+<meta property="og:updated_time" content="2020-05-16T13:20:22.483Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;pic3.zhimg.com&#x2F;80&#x2F;v2-59d0d75176e58fb7cdb395d2805d786a_720w.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/28/%E6%8A%A0%E5%9B%BE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>抠图 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/28/%E6%8A%A0%E5%9B%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          抠图
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-28 20:23:33" itemprop="dateCreated datePublished" datetime="2020-03-28T20:23:33+08:00">2020-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-16 21:20:22" itemprop="dateModified" datetime="2020-05-16T21:20:22+08:00">2020-05-16</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="抠图"><a href="#抠图" class="headerlink" title="抠图"></a>抠图</h1><h2 id="Blue-Screen-Matting"><a href="#Blue-Screen-Matting" class="headerlink" title="Blue Screen Matting"></a>Blue Screen Matting</h2><ul>
+<li>始祖抠图算法</li>
+</ul><h3 id="定义matting问题"><a href="#定义matting问题" class="headerlink" title="定义matting问题"></a>定义matting问题</h3><p>$$<br>I=\alpha F+(1-\alpha)B<br>$$</p><a id="more"></a>
+
+<ul>
+<li>假设一张图片由背景(background)，前景(foreground)，透明度组成。<ul>
+<li>而透明度也就是RGBA的第4个元素，对于每一个RGB像素都有着对应的A(就是$\alpha$)，当然也可以全部的$\alpha$都相等</li>
+</ul>
+</li>
+<li>那么现在的问题就变成了：<strong>已知I，求解$\alpha,F,B$的其中两个</strong></li>
+</ul>
+<h3 id="条件放松，问题转化"><a href="#条件放松，问题转化" class="headerlink" title="条件放松，问题转化"></a>条件放松，问题转化</h3><p>首先有：<strong>F是由前景对应的图片和一个纯色背景按照matting公式合成的</strong></p>
+<ul>
+<li><p>从上面的式子可知，要直接求出想要的东西是很难的，所以我们要加一些限制条件</p>
+<ul>
+<li><p>第一种限制形式：<strong>假设背景只要一种颜色，我们假定这个是蓝色</strong></p>
+<ul>
+<li>这个显然是一个极好的限制条件，这可能也是我们的各种证件照为什么会有限制的底色的原因</li>
+<li>既然B只有蓝色，那么显然的我们就可以让前景F没有蓝色了，所以matting后的图片的所有蓝色分量全部来自于B，那么就能求出对应的$\alpha$了</li>
+</ul>
+</li>
+<li><p>第二种限制形式：<strong>假设图片是灰度图，也就是说$R=G=B$</strong></p>
+<ul>
+<li>当然我们可以不用把条件限制的那么禁，如只用R=G即可</li>
+</ul>
+</li>
+<li><p>第三种限制形式：<strong>对于同一个前景目标，在不同的背景下拍摄</strong></p>
+<ul>
+<li><p>当然可以使两张图对应的$\alpha$相同</p>
+</li>
+<li><p>$$<br>I_1 = \alpha F + (1-\alpha)B_1\<br>I_2 = \alpha F + (1-\alpha)B_2<br>$$</p>
+<ul>
+<li>$已知I_1,I_2,B_1,B_2,求解\alpha ，F$</li>
+</ul>
+</li>
+<li><p>下面我们简化一下问题: <strong>我们简化一下就是已知背景图$B$</strong></p>
+</li>
+<li><p>现在已知将问题转化为优化问题</p>
+<ul>
+<li><p>$$<br>I_1 - I_2 = (1-\alpha)(B_1 - B_2)\<br>当(I_1-I_2) 与 (B_1-B_2)共线的时候才有确定的\alpha\<br>所以我们让等式尽可能成立，问题转化成\<br>\min_{\alpha} ||(I_1-I_2)-(1-\alpha)(B_1-B_2) ||\<br>然后就转化成了残差最小问题—-&gt;最小二乘法即可<br>$$</p>
+</li>
+<li><p>两种方式：我们可以对整张图片的RGB来做最小二乘，也可以只针对一个小方框来做</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Bayes-Matting"><a href="#Bayes-Matting" class="headerlink" title="Bayes Matting"></a>Bayes Matting</h2><h3 id="前要知识"><a href="#前要知识" class="headerlink" title="前要知识"></a>前要知识</h3><h4 id="tri-map和scribbles"><a href="#tri-map和scribbles" class="headerlink" title="tri-map和scribbles"></a>tri-map和scribbles</h4><ul>
+<li><p>tri-map:三区标注图(标注前景，背景，未知领域)</p>
+<p><img src="https://pic3.zhimg.com/80/v2-59d0d75176e58fb7cdb395d2805d786a_720w.png" alt="img"></p>
+<ul>
+<li>上图黑白灰分别对应：背景，标注前景，未知领域</li>
+</ul>
+</li>
+<li><p>scribbles:手动粗略地画出前景与背景</p>
+</li>
+<li><p><img src="https://img-blog.csdn.net/20161126220018509" alt="scripple"></p>
+</li>
+<li><p>上图白色涂前景，黑色涂背景</p>
+</li>
+<li><p>所以我们只用对上面两种方式的不确定部分建模即可</p>
+<p><del>### 主要内容</del>  </p>
+</li>
+<li><p>我们有$F,B,I(已知),\alpha$，依据最大后验概率和贝叶斯定理，有<br>$$<br>\max_{F,B,\alpha}P(F,B,\alpha|I)=\<br>\max_{F,B,\alpha}\frac{P(I|F,B,\alpha)P(F)P(B)P(\alpha) }{P(I)}=\<br>\max_{F,B,\alpha}L(I|F,B,\alpha)+L(F)+L(B)+L(\alpha)<br>$$</p>
+<ul>
+<li>L表示取对数</li>
+</ul>
+</li>
+<li><p>1、求解$L(I|F,B,\alpha)$</p>
+<ul>
+<li>假设图像是满足高斯分布的，那有</li>
+</ul>
+<p>$$<br>L(I|F,B,\alpha)=-||I-\alpha F-(1-\alpha)B||^2/ {\sigma_I}^2\<br>{\overline I }= \alpha F-(1-\alpha)B\<br>\sigma_I 为I的标准差<br>$$</p>
+</li>
+<li><p>2、求解$L(F)$</p>
+<ul>
+<li>这一项相当于计算当前点属于前景的概率，所以$L(B)$的求解类似</li>
+</ul>
+</li>
+</ul>
+<h2 id="Closed-form-matting"><a href="#Closed-form-matting" class="headerlink" title="Closed_form_matting"></a>Closed_form_matting</h2><ul>
+<li><p>matting问题都是要假设的，该方法最重要的假设如下</p>
+<ul>
+<li><p>$$<br>在一个小方框w内\I_i\approx\alpha_i F+(1-\alpha_i)B\qquad(i\in w)\<br>\Rightarrow \alpha_i \approx aI_i+b\qquad (a=\frac{1}{F-B},b=\frac{-B}{F-B})<br>$$</p>
+<ul>
+<li>以上$\approx$是假设a和b为常数(或说F和B)引入的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="转化成可优化问题"><a href="#转化成可优化问题" class="headerlink" title="转化成可优化问题"></a>转化成可优化问题</h3><ul>
+<li><p>既然已经有上述的等式了，那么下一步显然的就是求loss了<br>$$<br>J(\alpha,a,b)=\sum_{j\in I}(\sum_{i \in w_j}(\alpha_i-a_jI_i-b_j)^2+\varepsilon a_j^2)<br>$$</p>
+<ul>
+<li>后面的$\varepsilon$是为了正则化的</li>
+</ul>
+</li>
+<li><p>如果不加思考的话，那么很多人可能就会针对这条式子来优化了，但是该算法的巧妙之处就在于，作者思考怎么消去$常数a,b$，变成只有$\alpha$的优化问题，最后求得$\alpha$的解析解</p>
+</li>
+<li><p>我们假设第二条式子是某个向量的模的平方，通过观察然后构造</p>
+<ul>
+<li>假设当前窗口是3×3的，用背景颜色$(F_k,B_k)求得(a_k,b_k)$</li>
+</ul>
+<p>$$<br>G_k={\left[\begin{matrix}<br>I_1&amp;1\<br>I_2&amp;1\<br>.&amp;.\<br>.&amp;.\<br>.&amp;.\<br>I_9&amp;9\<br>\sqrt{\varepsilon}&amp;0<br>\end{matrix}\right]},<br>\alpha_k={\left[\begin{matrix}<br>\alpha_1\<br>\alpha_2\<br>.\<br>.\<br>.\<br>\alpha_9\<br>0<br>\end{matrix}\right]}\<br>\Rightarrow G_k\left[\begin{matrix}a_k\b_k\end{matrix}\right]-a_k=\left[\begin{matrix}I_1a_k+b_k-\alpha_1\I_2a_k+b_k-\alpha_2 \…\I_9a_k+b_k-\alpha_9\\sqrt{\varepsilon}a_k\end{matrix}\right]\<br>所以，最后有\Rightarrow J(\alpha,a,b)=\sum_{k\in I}(G_k\left[\begin{matrix}a_k\b_k\end{matrix}\right]-\alpha_k)^T(G_k\left[\begin{matrix}a_k\b_k\end{matrix}\right]-\alpha_k)=\\sum_{k\in I}|(G_k\left[\begin{matrix}a_k\b_k\end{matrix}\right]-\alpha_k)|^2\<br>$$</p>
+</li>
+</ul>
+<ul>
+<li><p>那么现在的问题就转化成:</p>
+<ul>
+<li>1、先对给定的$\alpha$求$a,b$的最小值</li>
+<li>2、然后再求对应loss最小的$\alpha$</li>
+</ul>
+</li>
+<li><p>先针对第一步：我们对$a_k,b_k$求导<br>$$<br>设\beta=\left[\begin{matrix}a_k\b_k\end{matrix}\right],\alpha=\alpha_k\<br>J_k=(G_k\beta-\alpha)^T(G_k\beta-\alpha)\<br>求导\<br>\frac{\partial J_k}{\partial \beta}=2G_k^TG_k\beta-2G_k^T\alpha=0\<br>\beta^{<em>}=\left[\begin{matrix}a_k^{</em>}\b_k^{<em>}\end{matrix}\right]=(G_k^TG_k)^{-1}G_k^T\alpha\qquad (\beta^{</em>}表示最优的\beta，其他同理)<br>$$</p>
+</li>
+<li><p>再针对第二步：<br>$$<br>将\beta^{*}代入\<br>J(\alpha,a,b)=\sum_{k \in I}|(G_k\left[\begin{matrix}a_k\b_k\end{matrix}\right]-\alpha_k)|^2\<br>提取因子\alpha，并设\overline G_k=I-G_k(G_k^TG_k)^{-1}G_k^T\<br>\Rightarrow J(\alpha,a,b)=\sum_{k \in I}\alpha_k(G_k^TG_k)\alpha_k=\sum_{k \in I}\alpha_kL\alpha_k\qquad(L=G_k^TG_k)<br>$$</p>
+<ul>
+<li><p>我们可以发现上面的$G_k$和正则化的拉普拉斯矩阵的形式是一样的，然后人们把L称为matting Laplace Matrix，在后续的抠图算法中，L是个很重要的矩阵</p>
+</li>
+<li><p>$$<br>L_{i,j}=\delta_{i,j}-\frac{1}{|w_k|}(1+\frac{1}{\frac{\varepsilon}{|w_k|}+\sigma_k^2}(I_i-\mu_k)(I_j-\mu_k))\<br>\delta 是克罗内克函数（当i=j时为1，其余为0）\\mu和\sigma分别是均值和方差，|w_k|是窗口内像素的个数<br>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="加上用户交互的限制-以scribbles为例"><a href="#加上用户交互的限制-以scribbles为例" class="headerlink" title="加上用户交互的限制(以scribbles为例)"></a>加上用户交互的限制(以scribbles为例)</h3><ul>
+<li><p>scribbles上，我们的限制可以构造成，如果涂了色那么就有对应的贡献</p>
+</li>
+<li><p>然后就变成了有约束的极值问题了–&gt;拉格朗日乘子法</p>
+<ul>
+<li><p>$$<br>\alpha=argmin\text{ } Loss=argmin\text{ } (\alpha^TL\alpha+\lambda(\alpha^T-b_s^T)D_s(\alpha-b_s))\<br>D_s是对角矩阵，对角上有值的元素对应scribbles上涂色的点，\设涂色为1，未涂为0\<br>b_s是与\alpha维度相同的列向量，涂色点上对应\alpha_i的值，其余为0\<br>继续求导\<br>\frac{\partial Loss}{\partial \alpha}=2L\alpha+2\lambda D_s(\alpha-b_s)\<br>所以\alpha^{*}=\lambda(L+\lambda D_s)^{-1}D_sb_s=\lambda(L+\lambda D_s)^{-1}b_s<br>$$</p>
+</li>
+<li><p>由于计算量大，所以$\lambda$不训练，而是提前设定好一个值(事实证明，$\lambda$的值在一定范围内影响不了多少)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="对彩色图：color-line-model-两色线模型"><a href="#对彩色图：color-line-model-两色线模型" class="headerlink" title="对彩色图：color line model(两色线模型)"></a>对彩色图：color line model(两色线模型)</h3><ul>
+<li><p>上文的方法显然是基于灰度图的，所以需要每个通道都算一次，而且效果不一定好(因为要满足一个小方框内的三元向量(R,G,B)保持线性，这个约束太强)</p>
+</li>
+<li><p>所以我们加一个假设条件，假设：一个小方框内，背景和前景的值都是近似位于一条直线上的<br>$$<br>\begin{cases}<br>F_i=\beta_i^FF_1+(1-\beta_i^F)F_2\<br>B_i=\beta_i^BB_1+(1-\beta_i^B)B_2\<br>\end{cases}<br>$$</p>
+<ul>
+<li>$F_1,F_2,B_1,B_2$分别对应着前景和背景的颜色向量(表示的一个线段的两个端点)，$\beta$表示基于这两个端点的插值斜率</li>
+</ul>
+</li>
+<li><p>则最后能推到</p>
+<ul>
+<li><p>$$<br>\alpha_i \approx\sum_{c \in \text{(R,G,B)}}a^cI_i^c+b\<br>\Rightarrow\alpha_i=a^TI_i+b\qquad(a=\left[\begin{matrix}a^R\a^G\a^B\end{matrix}\right])<br>$$</p>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<h4 id="推导证明"><a href="#推导证明" class="headerlink" title="推导证明"></a>推导证明</h4><ul>
+<li>虽然上面的结论看起来很有道理，可能不用说你都知道，但是我们还是给出一番证明</li>
+</ul>
+<p>$$<br>将F_i.B_i的式子代入I_i=\alpha_iF_i+(1-\alpha_i)B_i\<br>I_i=\alpha_i(\beta_i^FF_1+(1-\beta_i^F)F_2)+(1-\alpha_i)(\beta_i^BB_1+(1-\beta_i^B)B_2)\<br>我们把式子转化成类似\text{Blue Screen Matting}中的式子\<br>I_1 - I_2 = (1-\alpha)(B_1 - B_2)\<br>所以有\Rightarrow I_i-B_2=H\cdot \left[\begin{matrix}\alpha_i\\alpha^i\beta_i^F\(1-\alpha_i)\beta_i^B\end{matrix}\right]\(H=[F_2-B_2,F_1-F_2,B_1-B_2])<br>$$</p>
+<ul>
+<li><p>然后我们就把问题转化成了一个线性方程组<br>$$<br>设\qquad x_1=\alpha_i,x_2=\alpha^i\beta_i^F,x_3=(1-\alpha_i)\beta_i^B\<br>所以H\cdot \left[\begin{matrix}x_1\x_2\x_3\end{matrix}\right]=I_i-B_2<br>$$</p>
+<ul>
+<li><p>那么我们求出线性方程组后的第一行的元素就是答案，所以把$H^{-1}$乘过去</p>
+<ul>
+<li><p>$$<br>\left[\begin{matrix}x_1\x_2\x_3\end{matrix}\right]=H^{-1}\cdot (I_i-B_2)<br>$$</p>
+</li>
+<li><p>所以，$x_1$的值只和$H^{-1}$的第一行元素有关，我们提取出来就能得到形为$x_1=\alpha_i=a^TI_i+b$的式子</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="得到新的Matting-Laplace-Matrix"><a href="#得到新的Matting-Laplace-Matrix" class="headerlink" title="得到新的Matting Laplace Matrix"></a>得到新的Matting Laplace Matrix</h4><ul>
+<li><p>将上述公式代入此模型重新推导后得到</p>
+<ul>
+<li>$$<br>L_{i,j}=\sum_{(i,j)\in w_k}[\delta_{i,j}\frac{1}{|w_k|}(1+(I_i-\mu_k)^T(\sum_k + \frac{\epsilon}{|w_k|}I_3)^{-1}(I_i-\mu_k))]<br>$$</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/" rel="next" title="CNN发展史">
+                  <i class="fa fa-chevron-left"></i> CNN发展史
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/04/03/Selective%20Search(%E9%80%89%E6%8B%A9%E6%80%A7%E6%90%9C%E7%B4%A2)%E7%AE%97%E6%B3%95/" rel="prev" title="Selective Search(选择性搜索)算法">
+                  Selective Search(选择性搜索)算法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#抠图"><span class="nav-number">1.</span> <span class="nav-text">抠图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Blue-Screen-Matting"><span class="nav-number">1.1.</span> <span class="nav-text">Blue Screen Matting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义matting问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义matting问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件放松，问题转化"><span class="nav-number">1.1.2.</span> <span class="nav-text">条件放松，问题转化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bayes-Matting"><span class="nav-number">1.2.</span> <span class="nav-text">Bayes Matting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前要知识"><span class="nav-number">1.2.1.</span> <span class="nav-text">前要知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tri-map和scribbles"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">tri-map和scribbles</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Closed-form-matting"><span class="nav-number">1.3.</span> <span class="nav-text">Closed_form_matting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#转化成可优化问题"><span class="nav-number">1.3.1.</span> <span class="nav-text">转化成可优化问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加上用户交互的限制-以scribbles为例"><span class="nav-number">1.3.2.</span> <span class="nav-text">加上用户交互的限制(以scribbles为例)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对彩色图：color-line-model-两色线模型"><span class="nav-number">1.3.3.</span> <span class="nav-text">对彩色图：color line model(两色线模型)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#推导证明"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">推导证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#得到新的Matting-Laplace-Matrix"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">得到新的Matting Laplace Matrix</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

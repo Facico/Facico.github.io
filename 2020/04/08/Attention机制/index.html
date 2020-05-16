@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Attention机制回顾RNN结构 讲attention之前先回顾一下RNN的各种结构 N to N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention机制">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;08&#x2F;Attention%E6%9C%BA%E5%88%B6&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="Attention机制回顾RNN结构 讲attention之前先回顾一下RNN的各种结构 N to N">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a920accc86f.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a920b1cca91.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a920b536066.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a920bc1964b.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a9216b9d836.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a9219fabbbf.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a921a254ff8.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a921a57ac28.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20181104103204799.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0phc29uX19MaWFuZw==,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a921aa43aa2.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:updated_time" content="2020-05-16T13:17:40.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201709&#x2F;59a920accc86f.jpg?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+
+<link rel="canonical" href="http://yoursite.com/2020/04/08/Attention%E6%9C%BA%E5%88%B6/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Attention机制 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/08/Attention%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Attention机制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-04-08 17:44:51" itemprop="dateCreated datePublished" datetime="2020-04-08T17:44:51+08:00">2020-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-16 21:17:40" itemprop="dateModified" datetime="2020-05-16T21:17:40+08:00">2020-05-16</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Attention机制"><a href="#Attention机制" class="headerlink" title="Attention机制"></a>Attention机制</h1><h2 id="回顾RNN结构"><a href="#回顾RNN结构" class="headerlink" title="回顾RNN结构"></a>回顾RNN结构</h2><ul>
+<li>讲attention之前先回顾一下RNN的各种结构</li>
+</ul><h3 id="N-to-N"><a href="#N-to-N" class="headerlink" title="N to N"></a>N to N</h3><a id="more"></a>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a920accc86f.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<ul>
+<li>如：语音处理，时间序列处理</li>
+</ul>
+<h3 id="N-to-1"><a href="#N-to-1" class="headerlink" title="N to 1"></a>N to 1</h3><p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a920b1cca91.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<ul>
+<li>如：情感分析，输入一段视频判断类型</li>
+</ul>
+<h3 id="1-to-N"><a href="#1-to-N" class="headerlink" title="1 to N"></a>1 to N</h3><p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a920b536066.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<p>或</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a920bc1964b.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<ul>
+<li>如：从图像生成文字，从类别生成语音或音乐</li>
+</ul>
+<h3 id="N-to-M"><a href="#N-to-M" class="headerlink" title="N to M"></a>N to M</h3><ul>
+<li>这种就够又叫<code>encoder-decoder</code>模型，或<code>Seq2Seq</code>模型</li>
+</ul>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a9216b9d836.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<p>或</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a9219fabbbf.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<ul>
+<li>如：机器翻译，文本摘要，阅读理解，语音识别……</li>
+</ul>
+<h2 id="回归正题Attention"><a href="#回归正题Attention" class="headerlink" title="回归正题Attention"></a>回归正题Attention</h2><ul>
+<li><p>在<code>encoder-decoder</code>结构中，显然当要处理的信息长度很长的时候，一个c存储不了那么多信息，导致处理精度下降</p>
+</li>
+<li><p>所以我们打算计算很多个c</p>
+<ul>
+<li><p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a921a254ff8.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+</li>
+<li><p>每一个c会去选取和当前所要输出的y最合适的上下文信息。</p>
+<ul>
+<li><p>具体的，我们用$a_{ij}$来衡量encoder中第j阶段的$h_j$(hidden state)，和当前decoder中第i阶段的相关性</p>
+</li>
+<li><p>以机器翻译为例</p>
+<p><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a921a57ac28.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></p>
+<ul>
+<li>上图标有红色的地方就是和decoder当前阶段最相关的地方，对应的值较大；其他的地方对应的值较小。这里就是attention的精髓所在了——每个decoder的状态对于每个encoder的状态分配注意力（当然，$\sum_{j=1}^{T_x}a_{ij}=1$）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>  $$
+  h_t=RNN_{enc}(x_t,h_{t-1})\\
+  h&apos;_t=RNN_{dec}{(c_t,h&apos;_{t-1})}\\
+  c_i=\sum_{j=1}^{T_x} a_{ij}h_j\qquad (T_x是x总长)
+  $$
+
+- </code></pre><ul>
+<li><p>接下来就是求$a_{ij}$</p>
+<ul>
+<li>$$<br>b_{ij}=score(h’<em>{i-1},h_j)\qquad (我们的h’是从0开始的)\<br>a</em>{ij}=\frac{e^{b_{ij}}}{\sum e^{b_{ik}}}<br>$$</li>
+</ul>
+</li>
+<li><p>那么我们的score是怎么计算的呢</p>
+<ul>
+<li><img src="https://img-blog.csdnimg.cn/20181104103204799.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0phc29uX19MaWFuZw==,size_16,color_FFFFFF,t_70" alt="img"></li>
+<li>最简单的方方法就是直接计算点乘，点积类似计算相似度。</li>
+<li><img src="https://static.leiphone.com/uploads/new/article/740_740/201709/59a921aa43aa2.jpg?imageMogr2/format/jpg/quality/90" alt="完全图解RNN、RNN变体、Seq2Seq、Attention机制"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>而，attention极值就是来解决这个问题的，定义如下</p>
+<ul>
+<li>给定一组向量集合<code>value</code>，以及一个向量集合<code>query</code>，attention机制就是根据<code>query</code>计算<code>value</code>的加权求和机制</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/04/04/R-CNN/" rel="next" title="R-CNN">
+                  <i class="fa fa-chevron-left"></i> R-CNN
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/04/26/%E9%9A%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E6%A8%A1%E5%9E%8B(HMM)/" rel="prev" title="隐马尔科夫模型(HMM)">
+                  隐马尔科夫模型(HMM) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Attention机制"><span class="nav-number">1.</span> <span class="nav-text">Attention机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾RNN结构"><span class="nav-number">1.1.</span> <span class="nav-text">回顾RNN结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#N-to-N"><span class="nav-number">1.1.1.</span> <span class="nav-text">N to N</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-to-1"><span class="nav-number">1.1.2.</span> <span class="nav-text">N to 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-to-N"><span class="nav-number">1.1.3.</span> <span class="nav-text">1 to N</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#N-to-M"><span class="nav-number">1.1.4.</span> <span class="nav-text">N to M</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回归正题Attention"><span class="nav-number">1.2.</span> <span class="nav-text">回归正题Attention</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>

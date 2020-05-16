@@ -62,7 +62,8 @@
 <meta property="og:image" content="https:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;thumb&#x2F;f&#x2F;fa&#x2F;Lagrange_multiplier.png&#x2F;300px-Lagrange_multiplier.png">
 <meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190308204423711.png?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RwZW5nd2FuZw==,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200222204858454.png">
-<meta property="og:updated_time" content="2020-02-24T00:55:55.226Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200306214554992.png">
+<meta property="og:updated_time" content="2020-03-25T07:33:33.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;home&#x2F;facico&#x2F;.config&#x2F;Typora&#x2F;typora-user-images&#x2F;image-20200220202349908.png">
 
@@ -226,7 +227,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-24 08:55:55" itemprop="dateModified" datetime="2020-02-24T08:55:55+08:00">2020-02-24</time>
+                <time title="Modified: 2020-03-25 15:33:33" itemprop="dateModified" datetime="2020-03-25T15:33:33+08:00">2020-03-25</time>
               </span>
 
           
@@ -351,13 +352,16 @@
 <li>f(x,y)有n个变量，g(x,y)=c是限制条件画出来的曲线，图上越小的圈的值越小</li>
 <li>$f(x,y)=d$是n个变量的所有集合组成使得f的值为d画出的曲线</li>
 <li>易证在切线处有驻点</li>
-<li>==切线处，梯度方向相同，用向量的形式就是在且向上平行==</li>
+<li>==切线处，梯度方向相同，用向量的形式就是在且向上平行==<ul>
+<li>拉格朗日乘子法的必要条件是$\nabla f=\lambda\nabla g$，就是两个梯度平行</li>
+</ul>
+</li>
 </ul>
 <h4 id="引入变量表示梯度向量"><a href="#引入变量表示梯度向量" class="headerlink" title="引入变量表示梯度向量"></a>引入变量表示梯度向量</h4><ul>
 <li>引入变量$\lambda$</li>
 </ul>
 <p>$$<br>\nabla f(x,y)=-\lambda\nabla(g(x,y)-c)\<br>即\nabla [f(x,y)+\lambda(g(x,y)-c)]=0<br>$$<br>所以，一旦求出$\lambda$的值，将其套入下列公式，容易求出在无约束条件下的极值和对应的极值点<br>$$<br>F(x,y,\lambda)=f(x,y)+\lambda(g(x,y)-c)<br>$$<br>$F(x,y,\lambda)达到极值的时候与f(x,y)相等，因为达到极值时，g(x,y)-c总\为0(在切点处)，这也是为什么要减c的原因$</p>
-<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>$$<br>设f(x,y)，和g(x,y)=c\<br>两个函数在A处的全微分为\<br>df=\frac{\vartheta f}{\vartheta x}dx+\frac{\vartheta f}{\vartheta y}dy=0\<br>dg=\frac{\vartheta g}{\vartheta x}dx+\frac{\vartheta g}{\vartheta y}dy=0\<br>由于dx,dy是任取的无穷小量，所以线性方程组的系数成比例\<br>\frac{\frac{\vartheta f}{\vartheta x}}{\frac{\vartheta g}{\vartheta x}}=\frac{\frac{\vartheta f}{\vartheta y}}{\frac{\vartheta g}{\vartheta y}}=-\lambda\<br>即\<br>\frac{\vartheta f}{\vartheta x}+\lambda\frac{\vartheta g}{\vartheta x}=0\<br>\frac{\vartheta f}{\vartheta y}+\lambda\frac{\vartheta g}{\vartheta y}=0\<br>将上两式分别乘dx,dy再相加并积分，就得到新函数\<br>L(x,y,\lambda)=f(x,y)+\lambda g(x,y)<br>$$</p>
+<h4 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h4><p>$$<br>设f(x,y)，和g(x,y)=c\<br>两个函数在A处的全微分为\<br>df=\frac{\vartheta f}{\vartheta x}dx+\frac{\vartheta f}{\vartheta y}dy=0\<br>dg=\frac{\vartheta g}{\vartheta x}dx+\frac{\vartheta g}{\vartheta y}dy=0\<br>由于前提就是要平行，所以有\<br>\frac{\frac{\vartheta f}{\vartheta x}}{\frac{\vartheta g}{\vartheta x}}=\frac{\frac{\vartheta f}{\vartheta y}}{\frac{\vartheta g}{\vartheta y}}=-\lambda\<br>即\<br>\frac{\vartheta f}{\vartheta x}+\lambda\frac{\vartheta g}{\vartheta x}=0\<br>\frac{\vartheta f}{\vartheta y}+\lambda\frac{\vartheta g}{\vartheta y}=0\<br>将上两式分别乘dx,dy再相加并积分，就得到新函数\<br>L(x,y,\lambda)=f(x,y)+\lambda g(x,y)\<br>其实就是一个变量用对于隐函数存在定理再带入即可<br>$$</p>
 <h4 id="对于不等式约束时"><a href="#对于不等式约束时" class="headerlink" title="对于不等式约束时"></a>对于不等式约束时</h4><p><img src="https://img-blog.csdnimg.cn/20190308204423711.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RwZW5nd2FuZw==,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
 <ul>
 <li><p>==暂时把-c和g(x,y)划分到一起==</p>
@@ -367,11 +371,17 @@
 </ul>
 <h5 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h5><ul>
 <li><p>现在g(x,y)有边界解和内部解</p>
+<ul>
+<li>如果解本来就在g的内部，那么g的调价就没什么用了，我们的$\lambda=0$即可</li>
+<li>如果解不在外部，那么我们就要在边界上找点了，那么就和等式条件一样了有$g(x)=0$</li>
+<li>所以不管是什么上面的点都有$\lambda g(x)=0$，称为<code>互补松弛性</code></li>
+</ul>
 </li>
 <li><p>$\nabla f=-\lambda \nabla g$</p>
 <ul>
-<li>这个负号是有意义的：梯度f应该指向f最陡峭的地方，即指向g的内部，但是梯度g却是指向g的外部的。因此有$\lambda≥0$,成为<code>对偶可行性</code>。<code>按照上面的图就是，g(x)标的是≤，所以方向应该向里面指，但是梯度是从小的地方向大的地方指的，所以对于≤来说，切点的梯度方向是相反的</code>。==特殊的，如果要求的是max f(x)，g(x)≥0，则λ≤0==</li>
-<li>因此，不管是内部解还是边界解$\lambda  g=0$恒成立，称为<code>互补松弛性</code></li>
+<li>我们知道等式条件是要梯度平行的，但是这里我们不仅需要平行还需要相反，所以有$\lambda&gt;0$。就是说梯度f应该指向f最陡峭的地方，即指向g的内部，但是梯度g却是指向g的外部的。因此有$\lambda≥0$。</li>
+<li>原因：==$\nabla g$始终指向约束控制的可行区域==，所以如果解在区域外的话那需要调整梯度的方向才不会造成影响，调整的方法就是$-\lambda$</li>
+<li><code>对偶可行性</code>。<code>按照上面的图就是，g(x)标的是≤，所以方向应该向里面指，但是梯度是从小的地方向大的地方指的，所以对于≤来说，切点的梯度方向是相反的</code>。==特殊的，如果要求的是max f(x)，g(x)≥0，则λ≤0==</li>
 </ul>
 </li>
 <li><p>所以上面的那个形式要对应的KKT条件为<br>$$<br>g(x)≤0\<br>\lambda ≥0\<br>\lambda g(x)=0\<br>\nabla f+\lambda \nabla g = 0<br>$$<br>所对应的广义拉格朗日函数还是<br>$$<br>L(x,\lambda)=f(x)+\lambda g(x)<br>$$</p>
@@ -379,10 +389,12 @@
 </ul>
 <h3 id="引入拉格朗日乘子"><a href="#引入拉格朗日乘子" class="headerlink" title="引入拉格朗日乘子"></a>引入拉格朗日乘子</h3><p>$$<br>L(w,b,a)=\frac{1}{2}||w||^2+\sum_{i=1}^Na_i(1-y_i(wx_i+b))<br>$$</p>
 <ul>
-<li><p>问题会变成</p>
+<li>问题会变成</li>
+</ul>
 <p>$$<br>\min <em>{w,b}\max _{a&gt;=0}L(w,b,a)=\frac{1}{2}||w||^2+\sum</em>{i=1}^Na_i(1-y_i(wx_i+b))<br>$$</p>
 <ul>
-<li>为什么会有max(a)呢</li>
+<li><p>为什么会有max(a)呢</p>
+<ul>
 <li>max的存在代替了原来的约束条件<ul>
 <li>假设，各个参数范围是符合要求的话，那么会正常的返回值，但是假如有不符合条件的，那么会通过对a的调整取到+∞</li>
 <li>所以这个max的作用就是来判断对错的</li>
@@ -404,13 +416,13 @@
 <li><p>得到$a^*$</p>
 </li>
 <li><p>根据$a^<em>$算$w^</em>,b^*$</p>
+</li>
+</ul>
+<p>$$<br>w^<em>=\sum a_i^*y_ix_i\<br>    b^</em>=y-\sum a_i^*y_i(x_i\cdot x_j)<br>$$</p>
 <ul>
-<li><p>$$<br>w^<em>=\sum a_i^*y_ix_i\<br>b^</em>=y-\sum a_i^*y_i(x_i\cdot x_j)<br>$$</p>
-</li>
 <li><p>$w^<em>,b^</em>$只依赖于数据中对应的$a_i^<em>&gt;0$的样本点，而其他样本点对这两个值没有影响。我们将数据集中对应的$a_i^</em>&gt;0$的点称为<code>支持向量</code></p>
-</li>
-<li><p>这个用坐标下降算法来优化</p>
-</li>
+<ul>
+<li>这个用坐标下降算法来优化</li>
 </ul>
 </li>
 <li><p>搞了半天最后的答案可能只和两个点有关系QAQ，不过毕竟这个还是只能解决线性可分的问题的，解决的都是硬间隔</p>
@@ -431,9 +443,20 @@
 </li>
 </ul>
 <p>原问题就变成<br>$$<br>\min_{w,b,\xi}\frac{1}{2}||w||^2+C\sum \xi_i\<br>y_i(w\cdot x_i+b)\geq1-\xi_i\<br>\xi_i\geq0<br>$$<br>然后用类似硬间隔的解决方法就行了</p>
-<h2 id="软间隔的另一种解释：合页损失函数-hinge-loss"><a href="#软间隔的另一种解释：合页损失函数-hinge-loss" class="headerlink" title="软间隔的另一种解释：合页损失函数(hinge-loss)"></a>软间隔的另一种解释：合页损失函数(hinge-loss)</h2><ul>
-<li><p>另一种解释，最小化下面的函数<br>$$<br>min \sum [1-y_i(w\cdot x_i+b)]_++\lambda||w||^2<br>$$</p>
 <ul>
+<li>通过拉格朗日乘子法</li>
+</ul>
+<p>$$<br>=\min_{w,b,\xi}\frac{1}{2}||w||^2+C\sum \xi_i+\sum_{i=1}^ma_i(1-\xi_i-y_i(w^Tx_i+b))\sum_{i=1}^m \mu_i\xi_i<br>$$</p>
+<ul>
+<li>偏导</li>
+</ul>
+<p>$$<br>w=\sum a_iy_ix_i\<br>\sum a_iy_i=0\<br>C=a_i+\mu_i<br>$$</p>
+<ul>
+<li>问题对偶为</li>
+</ul>
+<p>$$<br>\max_a \sum a_i\frac{1}{2}\sum\sum a_ia_jy_iy_jx^T_ix_j\<br>\sum a_iy_i=0\<br>0\leq a_i\leq C<br>$$</p>
+<h2 id="软间隔的另一种解释：合页损失函数-hinge-loss"><a href="#软间隔的另一种解释：合页损失函数-hinge-loss" class="headerlink" title="软间隔的另一种解释：合页损失函数(hinge-loss)"></a>软间隔的另一种解释：合页损失函数(hinge-loss)</h2><ul>
+<li>另一种解释，最小化下面的函数<br>$$<br>min \sum [1-y_i(w\cdot x_i+b)]_++\lambda||w||^2<br>$$<ul>
 <li>下标“+”是取正值函数即max(x,0)，前面那一项是经验损失</li>
 <li>优化这个问题和优化软间隔问题等价(经验损失那一项就等价于软间隔$\xi_i&gt;=0$)</li>
 <li>这个东西直接SGD就行了</li>
@@ -461,15 +484,13 @@
 </li>
 </ul>
 <h3 id="核技巧在SVM中的应用"><a href="#核技巧在SVM中的应用" class="headerlink" title="核技巧在SVM中的应用"></a>核技巧在SVM中的应用</h3><ul>
-<li><p>我们在对偶问题中涉及输入实例之间的内积，我们可以把内积用核函数代替</p>
+<li>我们在对偶问题中涉及输入实例之间的内积，我们可以把内积用核函数代替</li>
+</ul>
+<p>$$<br>W(a)=\frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i<br>$$</p>
 <ul>
-<li><p>$$<br>W(a)=\frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i<br>$$</p>
-</li>
-<li><p>同样其他的有内积的地方也能用核函数来替换</p>
-</li>
+<li>同样其他的有内积的地方也能用核函数来替换</li>
 </ul>
-</li>
-</ul>
+<p>$$<br>f(x)=\sum a_iy_iK(x_i,x)+b\<br>a_i&gt;0—-&gt;b=y_i-w^Tx_i<br>$$</p>
 <h3 id="正定核"><a href="#正定核" class="headerlink" title="正定核"></a>正定核</h3><ul>
 <li><p>已知映射函数$\phi$，可以通过内积来求核函数，但是我们能不构造$\phi$而直接判断一个给定的函数是不是核函数吗？</p>
 </li>
@@ -491,10 +512,8 @@
 </li>
 </ul>
 <h2 id="SMO-序列最小优化方法"><a href="#SMO-序列最小优化方法" class="headerlink" title="SMO(序列最小优化方法)"></a>SMO(序列最小优化方法)</h2><ul>
-<li><p>SMO算法要解决如下的凸二次规划的对偶问题<br>$$<br>\min_a \frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i\<br>\sum a_iy_i=0\<br>0\leq a_i\leq C<br>$$</p>
-</li>
-<li><p>SMO算法是一个启发式算法</p>
-<ul>
+<li>SMO算法要解决如下的凸二次规划的对偶问题<br>$$<br>\min_a \frac{1}{2}\sum\sum a_ia_jy_iy_jK(x_i,x_j)-\sum a_i\<br>\sum a_iy_i=0\<br>0\leq a_i\leq C<br>$$</li>
+<li>SMO算法是一个启发式算法<ul>
 <li>思路：<ul>
 <li>如果所有变量都满足此优化问题的KKT条件，那么答案就找到了</li>
 <li>否则，选择两个变量，固定其他变量，针对两个变量构建一个二次规划问题，这二次规划关于这两个变量的解应该更接近与原始问题的解，因而会使原始二次规划问题的函数目标值更小<ul>
@@ -510,10 +529,76 @@
 </ul>
 </li>
 </ul>
-<h3 id="两个变量的二次规划的求解方法"><a href="#两个变量的二次规划的求解方法" class="headerlink" title="两个变量的二次规划的求解方法"></a>两个变量的二次规划的求解方法</h3><p>我们选择变量a1,a2，其他变量固定<br>$$<br>\min_{a_1,a_2};;;W(a_1,a_2)=\frac{1}{2}K_{11}z_1^2+\frac{1}<br>{2}K_{22}a_2^2+y_1y_2K_{12}a_1a_2-\(a_1+a_2)+y_1a_1\sum_{i=3}^Ny_ia_iK_{i1}+y_2a_2\sum_{i=3}^Ny_ia_iK_{i2}\<br>a_1y_1+a_2y_2=-\sum_{i=3}^Ny_ia_i=\zeta\<br>0\leq a_i \leq C<br>$$</p>
+<h3 id="两个变量的二次规划的求解方法"><a href="#两个变量的二次规划的求解方法" class="headerlink" title="两个变量的二次规划的求解方法"></a>两个变量的二次规划的求解方法</h3><p>我们选择变量a1,a2，其他变量固定<br>$$<br>\min_{a_1,a_2};;;W(a_1,a_2)=\frac{1}{2}K_{11}a_1^2+\frac{1}<br>{2}K_{22}a_2^2+y_1y_2K_{12}a_1a_2-\(a_1+a_2)+y_1a_1\sum_{i=3}^Ny_ia_iK_{i1}+y_2a_2\sum_{i=3}^Ny_ia_iK_{i2}\<br>a_1y_1+a_2y_2=-\sum_{i=3}^Ny_ia_i=\zeta\<br>0\leq a_i \leq C<br>$$</p>
 <ul>
 <li>$\zeta$是常数，显然上面列举的是不含a1,a2的常数项</li>
 </ul>
+<p>然后，只是两个变量的优化问题我们就可以在二维的平面上来操作了</p>
+<p><img src="/home/facico/.config/Typora/typora-user-images/image-20200306214554992.png" alt="image-20200306214554992"></p>
+<ul>
+<li><p>因为y是1或-1，所以，两个a在平行于对角线的斜线上</p>
+</li>
+<li><p>根据上面的条件有</p>
+<ul>
+<li><p>L,H为a范围的上下边界</p>
+</li>
+<li><p>$$<br>L=max(0,a_2^{old}-a_1^{old}),H=min(C,C+a_2^{old}a_1^{old})\<br>L=max(0,a_2^{old}+a_1^{old}-C),H=min(C,a_2^{old}+a_1^{old})<br>$$</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>我们首先求沿着约束方向未经剪辑即未经过不等式约束时$a_2$的最优解$a^{new,unc}$，然后再求出$a_2^{new}$</p>
+<p>设<br>$$<br>g(x)=\sum_{i=1}^Na_iy_iK(x_i,x)+b\<br>E_i=g(x_i)-y_i=(\sum a_jy_jK(x_j,x_i)+b)-y_i<br>$$</p>
+<ul>
+<li>g(x)就是当前学习出的值，Ei就是误差值</li>
+</ul>
+<p>然后有<br>$$<br>a_2^{new,unc}=a_2^{old}+\frac{y_2(E_1-E_2)}{\eta}\<br>\eta=K_{11}+K_{22}-2K_{12}=||\phi(x_1)-\phi(x_2)||\<br>a_2^{new}=<br>\begin{cases}<br>H &amp; a_2^{new,unc}&gt;H\<br>a_2^{new,unc} &amp; L\le a_2^{new,unc}\le H\<br>L &amp; a_2^{new,unc}&lt;L<br>\end{cases}<br>$$</p>
+<h4 id="证明-1"><a href="#证明-1" class="headerlink" title="证明"></a>证明</h4><p>$$<br>v_i=\sum_{j=3}^N a_jy_jK(x_i,x_j)=g(x_i)-\sum_{j=1}^2a_jy_jK(x_i,x_j)-b\<br>所以W(a_1,a_2)=\frac{1}{2}K_{11}a_1^2+\frac{1}{2}K_{22}a_2^2+y_1,y_2,K_{12}a_1a_2-(a_1+a_2)+y_1v_1a_1+y_2v_2a_2<br>$$</p>
+<p>由于$a_1y_1=\xi-a_2y_2,y_i^2=1$<br>$$<br>所以a_1(\xi-y_2a_2)y_1<br>$$<br>代入<br>$$<br>W(a_2)=\frac{1}{2}(\xi-a_2y_2)^2+\frac{1}{2}K_{22}a_2^2+y_2K_{12}(\xi-a_2y_2)a_2-(\xi-a_2y_2)y_1\<br>-a_2+v_1(\xi-a_2y_2)+y_2x_2a_2<br>$$<br>求导<br>$$<br>\frac{\vartheta W}{\vartheta a_2}=K_{11}a_2+K_{22}a_2-2K_{12}a_2-K_{11}\xi y_2+K_{12}\xi y_2+y_1y_2-1-v_1y_2+y_2v_2<br>$$<br>令其为零<br>$$<br>(K_{11}+K_{22}-2K_{12})a_2=…=y_2(y_2-y_1+\xi K_{11}-\xi K_{12}+(g(x_1)-\sum_{j=1}^2y_ja_jK_{1j}-b))\-(g(x_2)-\sum_{j=1}^2y_ja_jK_{2j}-b)<br>$$<br>因为$\xi=a_1^{old}y_1+a_2^{old}y_2$<br>$$<br>(K_{11}+K_{22}-2K_{12})a_2^{new,unc}=…=(K_{11}+K_{22}-2K_{12})a_2^{old}+y_2(E_1-E_2)<br>$$<br>将$\eta=K_{11}+K_{22}-K_{12}$<br>$$<br>a_2^{new,unc}=a_2^{old}+\frac{y_2(E_1-E_2)}{\eta}<br>$$</p>
+<p>再由约束得到$a_2^{new}$，在得到$a_1^{new}$</p>
+<h3 id="变量的选择方法"><a href="#变量的选择方法" class="headerlink" title="变量的选择方法"></a>变量的选择方法</h3><ul>
+<li>如果只按照上面的方法的话，在寻找变量a会用掉很多的时间，所以我们考虑选择的优化</li>
+</ul>
+<h4 id="第一个变量的选择"><a href="#第一个变量的选择" class="headerlink" title="第一个变量的选择"></a>第一个变量的选择</h4><ul>
+<li><p>SMO称选择第一个变量的过程为外层循环</p>
+<ul>
+<li><p>外层循环在训练中选取违反KKT条件最严重的样本点，并将其作为第一个变量</p>
+</li>
+<li><p>$$<br>\begin{cases}<br>a_i=0 \iff y_Ig(x_i)\geq1\<br>0&lt;a_i&lt;C\iff y_ig(x_i)=1\<br>a_i=C\iff y_ig(x_i)\leq1<br>\end{cases}\<br>其中g(x_i)如上<br>$$</p>
+</li>
+<li><p>该校验是在误差$\varepsilon$范围中进行的</p>
+<ul>
+<li>在校验的过程中，外层循环首先遍历所有满足条件$0&lt;a_i&lt;C$的样本点，即在间隔边界的支持向量点，校验他们是否满足KKT条件，如果这些样本点都满足KKT条件，那么遍历整个训练集，校验他们是否满足KKT条件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="第二个变量"><a href="#第二个变量" class="headerlink" title="第二个变量"></a>第二个变量</h4><ul>
+<li>SMO称选择第二个变量的过程为内层循环<ul>
+<li>假设已经找到了变量$a _ 1$，我们希望$a_2$选择的是能是$a_2$变化足够大的</li>
+<li>所以$a_2^{new}$是依赖于$|E_1-E_2|$<ul>
+<li>为了加快计算，我们最简单的选择方法是使得$|E_1-E_2|$最大</li>
+<li>因为$a_1$确定，$E_1$也确定，那么直接把所有的$E_i$存在一个列表(有序列表)中节省时间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>在特殊的情况下，如果内层循环通过以上方法不能使目标函数有足够的下降，那么用以下启发式规则继续选择$a_2$<ul>
+<li>遍历间隔边界上的支持向量点，一次将其对应的变量作为$a_2$试用，直到目标函数有足够的下降</li>
+<li>若找不到合适的$a_2$，那么遍历整个数据集</li>
+<li>若上两个都不行，则放弃这个$a_1$，用其他的$a_1$</li>
+</ul>
+</li>
+</ul>
+<h3 id="计算阈值b和差值-E-i"><a href="#计算阈值b和差值-E-i" class="headerlink" title="计算阈值b和差值$E_i$"></a>计算阈值b和差值$E_i$</h3><p>$$<br>b_1^{new}=y_1-\sum_{i=3}^Na_iy_iK_{i1}-a_1^{new}y_1K_{11}-a_2^{new}y_2K_{21}\<br>E_1 = \sum_{i=3}^{N}a_iy_iK_{i1}+a_1^{old}y_1K_{11}+a_2^{old}y_2K_{21}+b^{old}-y_1<br>$$</p>
+<p>将之前的式子整理<br>$$<br>b_1^{new}=-E_1-y_1K_{11}(a_1^{new}-a_1^{old})-y_2K_{21}(a_2^{new}-a_2^{old})+b^{old}\<br>b_2^{new}=-E_2-y_1K_{12}(a_1^{new}-a_1^{old})-y_2K_{21}(a_2^{new}-a_2^{old})+b^{old}<br>$$</p>
+<ul>
+<li>如果$a_1^{new},a_2^{new}$同时满足(0,C)的条件，那么$b^{new}=b_1^{new}=b_2^{new}$</li>
+<li>如果两个值就在0和C上，那么两个b之间的数都是符合KKT条件的阈值，这是就取中点</li>
+</ul>
+<p>$$<br>E_i^{new}=\sum_Sy_ja_jK(x_i,x_j)+b^{new}-y_i<br>$$</p>
+<p>S是所有支持向量$x_j$的集合（不过打的时候直接用整个数据集）</p>
 
     </div>
 
@@ -535,6 +620,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2020/02/24/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E5%9B%BE/" rel="prev" title="手动实现计算图">
+                  手动实现计算图 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -573,7 +661,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机-SVM"><span class="nav-number">1.</span> <span class="nav-text">支持向量机(SVM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性可分支持向量机"><span class="nav-number">1.2.</span> <span class="nav-text">线性可分支持向量机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬间隔"><span class="nav-number">1.3.</span> <span class="nav-text">硬间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数间隔"><span class="nav-number">1.3.1.</span> <span class="nav-text">函数间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#规范化"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">规范化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大间隔分离超平面"><span class="nav-number">1.4.</span> <span class="nav-text">最大间隔分离超平面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">1.5.</span> <span class="nav-text">对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日乘子法"><span class="nav-number">1.5.1.</span> <span class="nav-text">拉格朗日乘子法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#形式"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#驻点一定在切点处"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">驻点一定在切点处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引入变量表示梯度向量"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">引入变量表示梯度向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#证明"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于不等式约束时"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">对于不等式约束时</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#KKT条件"><span class="nav-number">1.5.1.5.1.</span> <span class="nav-text">KKT条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入拉格朗日乘子"><span class="nav-number">1.5.2.</span> <span class="nav-text">引入拉格朗日乘子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求解"><span class="nav-number">1.5.3.</span> <span class="nav-text">求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔"><span class="nav-number">1.6.</span> <span class="nav-text">软间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔的另一种解释：合页损失函数-hinge-loss"><span class="nav-number">1.7.</span> <span class="nav-text">软间隔的另一种解释：合页损失函数(hinge-loss)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核技巧"><span class="nav-number">1.8.</span> <span class="nav-text">核技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">1.8.1.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核技巧在SVM中的应用"><span class="nav-number">1.8.2.</span> <span class="nav-text">核技巧在SVM中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正定核"><span class="nav-number">1.8.3.</span> <span class="nav-text">正定核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的核函数"><span class="nav-number">1.8.4.</span> <span class="nav-text">常用的核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式核函数"><span class="nav-number">1.8.4.1.</span> <span class="nav-text">多项式核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高斯核函数"><span class="nav-number">1.8.4.2.</span> <span class="nav-text">高斯核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串核函数"><span class="nav-number">1.8.4.3.</span> <span class="nav-text">字符串核函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO-序列最小优化方法"><span class="nav-number">1.9.</span> <span class="nav-text">SMO(序列最小优化方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两个变量的二次规划的求解方法"><span class="nav-number">1.9.1.</span> <span class="nav-text">两个变量的二次规划的求解方法</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#支持向量机-SVM"><span class="nav-number">1.</span> <span class="nav-text">支持向量机(SVM)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性可分支持向量机"><span class="nav-number">1.2.</span> <span class="nav-text">线性可分支持向量机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#硬间隔"><span class="nav-number">1.3.</span> <span class="nav-text">硬间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数间隔"><span class="nav-number">1.3.1.</span> <span class="nav-text">函数间隔</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#规范化"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">规范化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几何间隔"><span class="nav-number">1.3.2.</span> <span class="nav-text">几何间隔</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大间隔分离超平面"><span class="nav-number">1.4.</span> <span class="nav-text">最大间隔分离超平面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对偶问题"><span class="nav-number">1.5.</span> <span class="nav-text">对偶问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日乘子法"><span class="nav-number">1.5.1.</span> <span class="nav-text">拉格朗日乘子法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#形式"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#驻点一定在切点处"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">驻点一定在切点处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引入变量表示梯度向量"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">引入变量表示梯度向量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#证明"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">证明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于不等式约束时"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">对于不等式约束时</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#KKT条件"><span class="nav-number">1.5.1.5.1.</span> <span class="nav-text">KKT条件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入拉格朗日乘子"><span class="nav-number">1.5.2.</span> <span class="nav-text">引入拉格朗日乘子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求解"><span class="nav-number">1.5.3.</span> <span class="nav-text">求解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔"><span class="nav-number">1.6.</span> <span class="nav-text">软间隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软间隔的另一种解释：合页损失函数-hinge-loss"><span class="nav-number">1.7.</span> <span class="nav-text">软间隔的另一种解释：合页损失函数(hinge-loss)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核技巧"><span class="nav-number">1.8.</span> <span class="nav-text">核技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#核函数"><span class="nav-number">1.8.1.</span> <span class="nav-text">核函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#核技巧在SVM中的应用"><span class="nav-number">1.8.2.</span> <span class="nav-text">核技巧在SVM中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正定核"><span class="nav-number">1.8.3.</span> <span class="nav-text">正定核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用的核函数"><span class="nav-number">1.8.4.</span> <span class="nav-text">常用的核函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多项式核函数"><span class="nav-number">1.8.4.1.</span> <span class="nav-text">多项式核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#高斯核函数"><span class="nav-number">1.8.4.2.</span> <span class="nav-text">高斯核函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串核函数"><span class="nav-number">1.8.4.3.</span> <span class="nav-text">字符串核函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SMO-序列最小优化方法"><span class="nav-number">1.9.</span> <span class="nav-text">SMO(序列最小优化方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两个变量的二次规划的求解方法"><span class="nav-number">1.9.1.</span> <span class="nav-text">两个变量的二次规划的求解方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#证明-1"><span class="nav-number">1.9.1.1.</span> <span class="nav-text">证明</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量的选择方法"><span class="nav-number">1.9.2.</span> <span class="nav-text">变量的选择方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一个变量的选择"><span class="nav-number">1.9.2.1.</span> <span class="nav-text">第一个变量的选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二个变量"><span class="nav-number">1.9.2.2.</span> <span class="nav-text">第二个变量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算阈值b和差值-E-i"><span class="nav-number">1.9.3.</span> <span class="nav-text">计算阈值b和差值$E_i$</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -588,7 +676,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">41</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

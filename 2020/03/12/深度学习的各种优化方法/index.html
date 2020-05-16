@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="深度学习的各种优化方法 优化方法就是一种能够帮助我们最小化或最大化目标函数(损失函数)的一类方法 一个好的优化方法往往能更加高效。更加精确的训练模型的内参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习的各种优化方法">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;12&#x2F;%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="深度学习的各种优化方法 优化方法就是一种能够帮助我们最小化或最大化目标函数(损失函数)的一类方法 一个好的优化方法往往能更加高效。更加精确的训练模型的内参">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180804165100402?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoaW5hdGVsZWNvbTA4&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+<meta property="og:updated_time" content="2020-05-15T12:57:11.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20180804165100402?watermark&#x2F;2&#x2F;text&#x2F;aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoaW5hdGVsZWNvbTA4&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>深度学习的各种优化方法 | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习的各种优化方法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-03-12 21:06:18" itemprop="dateCreated datePublished" datetime="2020-03-12T21:06:18+08:00">2020-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-15 20:57:11" itemprop="dateModified" datetime="2020-05-15T20:57:11+08:00">2020-05-15</time>
+              </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="深度学习的各种优化方法"><a href="#深度学习的各种优化方法" class="headerlink" title="深度学习的各种优化方法"></a>深度学习的各种优化方法</h1><ul>
+<li>优化方法就是一种能够帮助我们最小化或最大化目标函数(损失函数)的一类方法</li>
+<li>一个好的优化方法往往能更加高效。更加精确的训练模型的内参</li>
+</ul><a id="more"></a>
+<h2 id="优化算法的种类"><a href="#优化算法的种类" class="headerlink" title="优化算法的种类"></a>优化算法的种类</h2><ul>
+<li>1、一阶优化方法：常用</li>
+<li>2、二阶优化方法：计算量大，不常用</li>
+</ul>
+<h2 id="各种梯度下降法"><a href="#各种梯度下降法" class="headerlink" title="各种梯度下降法"></a>各种梯度下降法</h2><h3 id="1、Gradient-Descent"><a href="#1、Gradient-Descent" class="headerlink" title="1、Gradient Descent"></a>1、Gradient Descent</h3><p>梯度下降法是很多其他方法的基础<br>$$<br>\theta=\theta-\eta\Delta J(\theta)<br>$$</p>
+<ul>
+<li>$J(\theta)$是整个数据集上进行计算得到的</li>
+<li>由于算的是整个数据集上的均值，所以更新的非常慢</li>
+</ul>
+<h3 id="2、随机梯度下降-SGD"><a href="#2、随机梯度下降-SGD" class="headerlink" title="2、随机梯度下降(SGD)"></a>2、随机梯度下降(SGD)</h3><p>$$<br>\theta=\theta-\eta\Delta J(\theta;x_i;y_i)<br>$$</p>
+<ul>
+<li>随机梯度下降每次值更新一对样本</li>
+<li>因此模型更新的非常平凡，参数就会变成高方差，损失函数的波动也会有很大强度的波动—-&gt;这样或许有时候能波动到更好的局部极值点，但是模型的收敛很不稳定</li>
+</ul>
+<h3 id="3、Mini-Batch-Gradient-Descent"><a href="#3、Mini-Batch-Gradient-Descent" class="headerlink" title="3、Mini Batch Gradient Descent"></a>3、Mini Batch Gradient Descent</h3><ul>
+<li>采用了上面两个方法的折中办法，计算loss的时候基于一个batch</li>
+</ul>
+<p>$$<br>\theta = \theta - \eta * \frac{1}{B}\sum_{i=1}^BJ(\theta;x_i;y_i)<br>$$</p>
+<ul>
+<li>显然效果较好于上两者，使用广泛</li>
+<li>不过难以选择一个合适的学习率</li>
+</ul>
+<h3 id="4、动量法Momentum"><a href="#4、动量法Momentum" class="headerlink" title="4、动量法Momentum"></a>4、动量法Momentum</h3><ul>
+<li><p>使用momentum可以减少mini-batch在更新中的震荡</p>
+</li>
+<li><p>momentum考虑了过去梯度方向以平滑更新，我们将先前收敛的方向储存在变量v中，形式上是先前梯度的指数加权平均</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20180804165100402?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NoaW5hdGVsZWNvbTA4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<ul>
+<li>红点表示使用动量，蓝点表示未使用动量。我们让梯度调整v的方向</li>
+</ul>
+<h4 id="动量momentum公式"><a href="#动量momentum公式" class="headerlink" title="动量momentum公式"></a>动量momentum公式</h4><p>$$<br>\begin{cases}<br>v_t=\gamma v_{t-1}+\eta \nabla_{\theta} J(\theta)\<br>\theta=\theta-v_t<br>\end{cases}<br>$$</p>
+<ul>
+<li>类似的有一个惯性加速度</li>
+</ul>
+<h3 id="NAG-Nesterrov-accelerated-gradient"><a href="#NAG-Nesterrov-accelerated-gradient" class="headerlink" title="NAG(Nesterrov accelerated gradient)"></a>NAG(Nesterrov accelerated gradient)</h3><ul>
+<li>我们并不满足于只有加速度，我们想不仅有加速度，而且这个加速度能在梯度上倾的时候放慢速度</li>
+</ul>
+<p>$$<br>v_t=\gamma v_{t-1}+\eta \nabla_{\theta}J(\theta-\gamma v_{t-1})\<br>\theta = \theta -v_t<br>$$</p>
+<ul>
+<li>有对加速度求导的意味，防止速度变大或变小过快</li>
+</ul>
+<h3 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h3><ul>
+<li>思路：让学习率自适应与参数<ul>
+<li>对低频参数大幅更新，对高频参数小幅更新</li>
+<li>所以，非常适合于处理稀疏数据</li>
+</ul>
+</li>
+</ul>
+<p>$g_{t,i}$表示损失函数中参数$\theta_i$在时刻t的梯度<br>$$<br>g_{t,i}=\nabla_{\theta}J(\theta_i)\<br>SGD:\theta_{t+1,i}=\theta_{t,i}-\eta \cdot g_{t,i}\<br>Adagrad:\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{G_{t,i,i}+\epsilon}}\cdot g_{t,i}<br>$$</p>
+<ul>
+<li><p>$G_t \in \R^{d*d}$是一个对角矩阵，其中每个对角元素(i,i)是参数$\theta_i$到时刻t为止所有时刻梯度的<code>平方之和</code>，$\epsilon$是平滑项(避免分母为0)【有趣的是，不用平方根操作，算法性能会变弱很多“雾”】</p>
+</li>
+<li><p>由于$G_t$的对角包含着所有参数过去时刻的平方之和，我们可以通过在$G_t$和$g_t$执行element-wise来向量化我们的操作</p>
+</li>
+</ul>
+<p>$$<br>\theta_{t+1}=\theta_{t}-\frac{\eta}{\sqrt{G_t+\epsilon}}\circ g_t<br>$$</p>
+<ul>
+<li>$g_t$左边的哪个就相当于参数自己的学习率</li>
+<li>假如之前的梯度很小，那么学习率会变大，之前梯度很大反之</li>
+<li><code>缺点</code>：在模型训练的中后期，分母的梯度累加会变大，从而梯度接近0，提前结束</li>
+</ul>
+<h3 id="Adadelta"><a href="#Adadelta" class="headerlink" title="Adadelta"></a>Adadelta</h3><ul>
+<li><p>缓解adagrad的学习率单调递减的问题</p>
+<ul>
+<li><p>adadelta不是对过去所有的梯度累加，而是只加上一个对应的w区间的梯度</p>
+</li>
+<li><p>累加梯度的时候使用decaying average<br>$$<br>E[g^2]<em>t=\lambda E[g^2]</em>{t-1}+(1-\lambda)g_t^2<br>$$</p>
+<ul>
+<li>decaying average能缓解累加变大问题，类似Q learning中的方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h3><ul>
+<li>Adam是根据上述方法而提出的：对于每个参数，不仅仅有自己的学习率，还有自己的momentum，在训练时，每个参数不仅有独立性，还更加稳定</li>
+</ul>
+<p>$$<br>v(t)=\rho_1v(t-1)+(1-\rho_1)\Delta J(\theta)\<br>g_t=\rho_2 g_{t-1}+(1-\rho_2)\Delta J(\theta)^2\<br>\hat v(t)=\frac{v(t)}{1-\rho_1}\<br>\hat g_t=\frac{g_t}{1-\rho_2}\<br>\theta_t = \theta_{t-1}-\frac{\eta}{\sqrt{\hat g_t+\epsilon}}\cdot \hat v(t)<br>$$</p>
+<ul>
+<li>系数的数据，带a的优化方法表现更好，非常复杂的神经网络，带a的方法能更快收敛</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/03/10/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E5%AD%A6%E4%B9%A0/" rel="next" title="强化学习学习">
+                  <i class="fa fa-chevron-left"></i> 强化学习学习
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/14/%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8/" rel="prev" title="自编码器">
+                  自编码器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习的各种优化方法"><span class="nav-number">1.</span> <span class="nav-text">深度学习的各种优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优化算法的种类"><span class="nav-number">1.1.</span> <span class="nav-text">优化算法的种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各种梯度下降法"><span class="nav-number">1.2.</span> <span class="nav-text">各种梯度下降法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、Gradient-Descent"><span class="nav-number">1.2.1.</span> <span class="nav-text">1、Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、随机梯度下降-SGD"><span class="nav-number">1.2.2.</span> <span class="nav-text">2、随机梯度下降(SGD)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、Mini-Batch-Gradient-Descent"><span class="nav-number">1.2.3.</span> <span class="nav-text">3、Mini Batch Gradient Descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、动量法Momentum"><span class="nav-number">1.2.4.</span> <span class="nav-text">4、动量法Momentum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#动量momentum公式"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">动量momentum公式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAG-Nesterrov-accelerated-gradient"><span class="nav-number">1.2.5.</span> <span class="nav-text">NAG(Nesterrov accelerated gradient)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adagrad"><span class="nav-number">1.2.6.</span> <span class="nav-text">Adagrad</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adadelta"><span class="nav-number">1.2.7.</span> <span class="nav-text">Adadelta</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adam"><span class="nav-number">1.2.8.</span> <span class="nav-text">Adam</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>
