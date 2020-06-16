@@ -187,6 +187,347 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/" class="post-title-link" itemprop="url">对抗自编码器(AAE).md</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-16 11:53:52 / Modified: 12:23:41" itemprop="dateCreated datePublished" datetime="2020-06-16T11:53:52+08:00">2020-06-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="对抗自编码器-AAE"><a href="#对抗自编码器-AAE" class="headerlink" title="对抗自编码器(AAE)"></a>对抗自编码器(AAE)</h1><ul>
+<li><p>自编码器转换成生成模型</p>
+</li>
+<li><p>通过两个目标训练：传统的重构误差函数和对抗训练函数—&gt;将AE隐藏层向量表示的聚合后验分布与任意先验分布匹配。训练准则和VAE很像</p>
+<ul>
+<li>1、编码器学到将数据分布转换成该先验分布</li>
+<li>2、解码器学到一个模型，可以将强加的先验映射到数据分布上</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/31/Professor%20forcing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/31/Professor%20forcing/" class="post-title-link" itemprop="url">Professor forcing</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-05-31 23:29:29" itemprop="dateCreated datePublished" datetime="2020-05-31T23:29:29+08:00">2020-05-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-06-01 23:53:54" itemprop="dateModified" datetime="2020-06-01T23:53:54+08:00">2020-06-01</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Professor-forcing"><a href="#Professor-forcing" class="headerlink" title="Professor forcing"></a>Professor forcing</h1><h2 id="引入前的想法"><a href="#引入前的想法" class="headerlink" title="引入前的想法"></a>引入前的想法</h2><h3 id="teacher-forcing的不足"><a href="#teacher-forcing的不足" class="headerlink" title="teacher forcing的不足"></a>teacher forcing的不足</h3><ul>
+<li><p>teacher forcing的方法通过将被观测的序列值作为训练过程中的输入和使用该网络自己的提前一步预测(one-step-ahead-predictions)l来进行多步采样</p>
+<ul>
+<li><p>比如时间序列的条件分布模型:</p>
+<ul>
+<li><p>$$<br>P(y_1,y_2,…,y_T)=P(y_1)\prod_{t=1}^T P(y_t|y_1,…,y_{t-1})<br>$$</p>
+</li>
+<li><p>这种形式一般的机器学习的训练策略就是最大似然，而在RNN中，这种策略可以类似为teacher forcing，由于使用真值样本，将其反馈到模型中，以便对后一时刻输出进行预测。这种反馈迫使(force)RNN接近真实的序列</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/31/Professor%20forcing/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/18/%E7%9F%A5%E8%AF%86%E6%B5%93%E7%BC%A9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/18/%E7%9F%A5%E8%AF%86%E6%B5%93%E7%BC%A9/" class="post-title-link" itemprop="url">知识浓缩</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-05-18 17:17:15 / Modified: 18:36:54" itemprop="dateCreated datePublished" datetime="2020-05-18T17:17:15+08:00">2020-05-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="知识浓缩"><a href="#知识浓缩" class="headerlink" title="知识浓缩"></a>知识浓缩</h1><h2 id="机器学习"><a href="#机器学习" class="headerlink" title="机器学习"></a>机器学习</h2><ul>
+<li><p>SVM</p>
+<ul>
+<li>间隔最大化(函数间隔和几何间隔的转化，加条间隔线)</li>
+<li>将不等式约束用拉格朗日乘子法，然后对偶问题–&gt;极大极小值问题</li>
+<li>软间隔：在原来间隔最大化的问题上加松弛变量—-&gt;问题可能线性不可分<ul>
+<li>1、用老方法</li>
+<li>2、另一种表示：合页损失函数</li>
+</ul>
+</li>
+<li>核函数投影</li>
+<li>SMO：1、求解两个变量二次规划的解析方法，2、选择变量的启发式方法<ul>
+<li>1<ul>
+<li>选一个可以一个不可以</li>
+<li>转化成在一个二维平面上优化两个变量的问题</li>
+</ul>
+</li>
+<li>2<ul>
+<li>第一个外层循环，违反最严重</li>
+<li>第二个内层循环，最能改变上者的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>xgboost</p>
+<ul>
+<li>GDBT形式+L1,L2 norm</li>
+<li>new function二阶导逼近</li>
+<li>三种分裂方式<ul>
+<li>精确贪心，近似算法(百分比)，带权重的分位数略图(带二阶导权重的百分比)</li>
+</ul>
+</li>
+<li>稀疏情况(自适应分割：缺失值左右试一试)</li>
+<li>随机森林的行(自助法)列采样(选择一定量的feature)</li>
+</ul>
+</li>
+<li><p>lightgbm</p>
+<ul>
+<li>箱型图算法，并做差加速</li>
+<li>leaf-wise</li>
+<li>GOSS(单边梯度采样)<ul>
+<li>像排出小梯度，然后下采样，对于小梯度乘上伸缩系数</li>
+</ul>
+</li>
+<li>EFB捆绑，对于很多特征帮他们绑起来，NP–&gt;贪心(解决绑什么(按度排序，设阈值)和怎么绑(用bin的左index))</li>
+<li>各种工程优化<ul>
+<li>并行</li>
+<li>cache命中率</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>线性回归</p>
+<ul>
+<li>最小二乘</li>
+<li>岭回归<ul>
+<li>带L2正则(平方)，让回归系数可求</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>聚类</p>
+<ul>
+<li>kmeans</li>
+<li>高斯混合<ul>
+<li>多维高斯</li>
+<li>EM(这个属于哪一类是隐函数)+极大似然</li>
+</ul>
+</li>
+<li>最小生成树</li>
+<li>密度聚类DBSCAN<ul>
+<li>以每个数据点做圆，并统计里面的个数，超过阈值的就是核心点</li>
+<li>核心点对圈里的点密度可达，两个核心点都对它密度可达就密度向连成聚类簇</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数据评估</p>
+<ul>
+<li>正确率和召回率</li>
+<li>混淆矩阵</li>
+<li>F1(正确率和查准率的调和平均，可带加权)</li>
+<li>ROC和AUC，真正例和假正例召回率的线和面积</li>
+</ul>
+</li>
+<li><p>异常值</p>
+<ul>
+<li>发现<ul>
+<li>各种</li>
+</ul>
+</li>
+<li>处理<ul>
+<li>各种</li>
+<li>置信区域外去掉</li>
+<li>回归</li>
+<li>分箱平滑填噪声(宽度，深度分)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>逻辑回归</p>
+<ul>
+<li>二分类模型+对数极大似然+梯度下降</li>
+</ul>
+</li>
+<li><p>数据划分</p>
+<ul>
+<li>留出</li>
+<li>k折</li>
+<li>自助</li>
+<li>留一</li>
+</ul>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/05/18/%E7%9F%A5%E8%AF%86%E6%B5%93%E7%BC%A9/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/14/LightGBM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -292,7 +633,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:57:55" itemprop="dateModified" datetime="2020-05-15T20:57:55+08:00">2020-05-15</time>
+                <time title="Modified: 2020-05-18 17:24:56" itemprop="dateModified" datetime="2020-05-18T17:24:56+08:00">2020-05-18</time>
               </span>
 
           
@@ -441,7 +782,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-16 21:17:40" itemprop="dateModified" datetime="2020-05-16T21:17:40+08:00">2020-05-16</time>
+                <time title="Modified: 2020-05-18 21:34:15" itemprop="dateModified" datetime="2020-05-18T21:34:15+08:00">2020-05-18</time>
               </span>
 
           
@@ -515,7 +856,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:58:09" itemprop="dateModified" datetime="2020-05-15T20:58:09+08:00">2020-05-15</time>
+                <time title="Modified: 2020-06-10 00:26:16" itemprop="dateModified" datetime="2020-06-10T00:26:16+08:00">2020-06-10</time>
               </span>
 
           
@@ -708,229 +1049,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/psu.jpg">
-      <meta itemprop="name" content="Facico">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Facico的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/" class="post-title-link" itemprop="url">CNN发展史</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-16 21:54:43" itemprop="dateCreated datePublished" datetime="2020-03-16T21:54:43+08:00">2020-03-16</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:58:59" itemprop="dateModified" datetime="2020-05-15T20:58:59+08:00">2020-05-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="CNN发展史"><a href="#CNN发展史" class="headerlink" title="CNN发展史"></a>CNN发展史</h1><p><img src="https://img-blog.csdnimg.cn/20190427162252848.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzE5MzI5Nzg1,size_16,color_FFFFFF,t_70" alt="深度神经网络相关汇总，更新至2019.4.25"></p><h2 id="早期铺垫"><a href="#早期铺垫" class="headerlink" title="早期铺垫"></a>早期铺垫</h2><h3 id="神经网络起源"><a href="#神经网络起源" class="headerlink" title="神经网络起源"></a>神经网络起源</h3><ul>
-<li>Hubel和Wiesel对猫大脑中的视觉系统的研究。</li>
-</ul><h3 id="各种结构的铺垫"><a href="#各种结构的铺垫" class="headerlink" title="各种结构的铺垫"></a>各种结构的铺垫</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/16/CNN%E5%8F%91%E5%B1%95%E5%8F%B2/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/psu.jpg">
-      <meta itemprop="name" content="Facico">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Facico的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/14/%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8/" class="post-title-link" itemprop="url">自编码器</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-14 12:15:03" itemprop="dateCreated datePublished" datetime="2020-03-14T12:15:03+08:00">2020-03-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:56:43" itemprop="dateModified" datetime="2020-05-15T20:56:43+08:00">2020-05-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="自编码器"><a href="#自编码器" class="headerlink" title="自编码器"></a>自编码器</h1><ul>
-<li>自编码器能够通过无监督学习，学到输入数据的高效表示，这一高效表示被称为<code>编码</code></li>
-</ul><h2 id="何为高效的数据表示"><a href="#何为高效的数据表示" class="headerlink" title="何为高效的数据表示"></a>何为高效的数据表示</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/14/%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/psu.jpg">
-      <meta itemprop="name" content="Facico">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Facico的博客">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">深度学习的各种优化方法</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-03-12 21:06:18" itemprop="dateCreated datePublished" datetime="2020-03-12T21:06:18+08:00">2020-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:57:11" itemprop="dateModified" datetime="2020-05-15T20:57:11+08:00">2020-05-15</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="深度学习的各种优化方法"><a href="#深度学习的各种优化方法" class="headerlink" title="深度学习的各种优化方法"></a>深度学习的各种优化方法</h1><ul>
-<li>优化方法就是一种能够帮助我们最小化或最大化目标函数(损失函数)的一类方法</li>
-<li>一个好的优化方法往往能更加高效。更加精确的训练模型的内参</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/03/12/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%90%84%E7%A7%8D%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -980,7 +1098,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

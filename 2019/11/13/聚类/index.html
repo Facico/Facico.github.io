@@ -57,7 +57,7 @@
 <meta property="og:site_name" content="Facico的博客">
 <meta property="og:description" content="聚类定义把数据集分成若干个互不相交的簇(一坨数据集)，使簇间相似度尽量的小，簇内相似度尽量的大性能度量">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-05-13T02:02:48.129Z">
+<meta property="og:updated_time" content="2020-06-16T04:23:38.450Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/13/%E8%81%9A%E7%B1%BB/">
@@ -220,7 +220,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-13 10:02:48" itemprop="dateModified" datetime="2020-05-13T10:02:48+08:00">2020-05-13</time>
+                <time title="Modified: 2020-06-16 12:23:38" itemprop="dateModified" datetime="2020-06-16T12:23:38+08:00">2020-06-16</time>
               </span>
 
           
@@ -365,16 +365,13 @@
 </ul>
 <p>实际上，我们的EM算法是通过迭代逐步近似极大化的$L(\theta)$，所以每次迭代的时候我们希望$L(\theta)&gt;L(\theta^i)$</p>
 <p>我们考虑对他做差<br>$$<br>L(\theta)-L(\theta^i)=log(\sum_ZP(Y|Z,\theta^i)\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)})-logP(Y|\theta^i)<br>$$</p>
-<p>$$<br>=log(\sum_ZP(Y|Z,\theta^i)\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
-<p>根据Jensen不等式$log(\sum ai<em>bi)&gt;=\sum ai</em>log(bi)，其中ai&gt;=0且\sum ai =1$</p>
+<p>$$<br>=log(\sum_ZP(Y|Z,\theta^i)\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$<br>根据Jensen不等式$log(\sum ai<em>bi)&gt;=\sum ai</em>log(bi)，其中ai&gt;=0且\sum ai =1$</p>
 <p>因为$\sum_Z P(Y|Z,\theta^i)=1$</p>
 <p>所以<br>$$<br>=\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
-<p>$$<br>设B(\theta,\theta^i)近似于L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$</p>
-<p>我们并不用求确切的差值，只用满足$L(\theta)≥B(\theta,\theta^i)$，找到这个下界即可</p>
+<p>$$<br>设B(\theta,\theta^i)近似于L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)})<br>$$<br>我们并不用求确切的差值，只用满足$L(\theta)≥B(\theta,\theta^i)$，找到这个下界即可</p>
 <p>有上式可知$L(\theta^i)=B(\theta^i,\theta^i)$</p>
 <p>因此，任何能使B函数增大的$\theta$都能使$L(\theta)$增大，所以我们要求<br>$$<br>\theta^{i+1}=argmax_{\theta}B(\theta,\theta^i)<br>$$</p>
-<p>$$<br>= argmax_{\theta}(L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)}))<br>$$</p>
-<p>由于$\theta^i$是常量，我们可以省去一部分常量<br>$$<br>= argmax_{\theta}(\sum_ZP(Y|Z,\theta^i)log(P(Y|Z,\theta)P(Z|\theta))<br>$$</p>
+<p>$$<br>= argmax_{\theta}(L(\theta^i)+\sum_ZP(Y|Z,\theta^i)log(\frac{P(Y|Z,\theta)P(Z|\theta)}{P(Y|Z,\theta^i)P(Y|\theta^i)}))<br>$$<br>由于$\theta^i$是常量，我们可以省去一部分常量<br>$$<br>= argmax_{\theta}(\sum_ZP(Y|Z,\theta^i)log(P(Y|Z,\theta)P(Z|\theta))<br>$$</p>
 <p>$$<br>= argmax_{\theta}(\sum_ZP(Y|Z,\theta^i)log(P(Y,Z|\theta))<br>$$</p>
 <p>$$<br>= argmax_{\theta}Q(\theta,\theta^i)<br>$$</p>
 <ul>
@@ -395,25 +392,19 @@
 <p>$$<br>=\prod_{k=1}^K\alpha_k^{n_k}\prod_{i=1}^n[\frac{1}{\sqrt{2\pi}\delta_k}e^{-\frac{(x_i-\mu_k)^2}{2\delta_k^2}}]<br>$$</p>
 <p>所以完全数的对数似然函数为<br>$$<br>log(X,g|\theta)=\sum_{k=1}^Kn_klog\alpha_k+\sum_{i=1}^ng_{ik}[log(\frac{1}{\sqrt{2\pi}})-log\delta_k-\frac{(x_i-\mu_k)^2}{2\delta_k^2}]<br>$$</p>
 <p>$$<br>n_k=\sum_{i=1}^ng_{ik}，\sum_{k=1}^Kn_k=N(这里就是每个样本只有一个地方是1)<br>$$</p>
-<h5 id="二、EM算法的E步：确实Q函数"><a href="#二、EM算法的E步：确实Q函数" class="headerlink" title="二、EM算法的E步：确实Q函数"></a>二、EM算法的E步：确实Q函数</h5><p>$$<br>Q(\theta,\theta^i)=E(logP(X,G|\theta)|X,\theta^i)<br>$$</p>
-<p>把期望函数带入和隐函数相关的变量中<br>$$<br>log(X,g|\theta)=\sum_{k=1}^K(\sum_{i=1}^n(Eg_{ik})log\alpha_k+\sum_{i=1}^n(Eg_{ik})[log(\frac{1}{\sqrt{2\pi}})-log\delta_k-\frac{(x_i-\mu_k)^2}{2\delta_k^2}])<br>$$<br>由于现在g的值还没有确定，所以我们要确定了g的值才能确定g函数</p>
+<h5 id="二、EM算法的E步：确实Q函数"><a href="#二、EM算法的E步：确实Q函数" class="headerlink" title="二、EM算法的E步：确实Q函数"></a>二、EM算法的E步：确实Q函数</h5><p>$$<br>Q(\theta,\theta^i)=E(logP(X,G|\theta)|X,\theta^i)<br>$$<br>把期望函数带入和隐函数相关的变量中<br>$$<br>log(X,g|\theta)=\sum_{k=1}^K(\sum_{i=1}^n(Eg_{ik})log\alpha_k+\sum_{i=1}^n(Eg_{ik})[log(\frac{1}{\sqrt{2\pi}})-log\delta_k-\frac{(x_i-\mu_k)^2}{2\delta_k^2}])<br>$$<br>由于现在g的值还没有确定，所以我们要确定了g的值才能确定g函数</p>
 <ul>
-<li>由上式g的函数被转化成g的期望</li>
+<li>由上式g的函数被转化成g的期望<br>$$<br>\hat g_{ik}=E(g_{ik}|X,\theta)=P(g_{ik}=1|X,\theta)<br>$$</li>
 </ul>
-<p>$$<br>\hat g_{ik}=E(g_{ik}|X,\theta)=P(g_{ik}=1|X,\theta)<br>$$</p>
-<p>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)}<br>$$</p>
-<p>上下同时乘$P(g_{ik}=1|\theta)$，转化乘联合概率$P(X,g|\theta)$（完全数据的概率）<br>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)P(g_{ik}=1|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)P(g_{ik}=1|\theta)}<br>$$</p>
-<p>$$<br>=\frac{\alpha_k\phi(x_i|\theta_k)}{\sum_{k=1}^K\alpha_k\phi(x_i|\theta_k)}<br>$$</p>
-<p>我们通过对g的期望计算g，然后确定出Q函数</p>
+<p>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)}<br>$$<br>上下同时乘$P(g_{ik}=1|\theta)$，转化乘联合概率$P(X,g|\theta)$（完全数据的概率）<br>$$<br>=\frac{P(g_{ik}=1,x_i|\theta)P(g_{ik}=1|\theta)}{\sum_{k=1}^KP(g_{ik},x_i|\theta)P(g_{ik}=1|\theta)}<br>$$</p>
+<p>$$<br>=\frac{\alpha_k\phi(x_i|\theta_k)}{\sum_{k=1}^K\alpha_k\phi(x_i|\theta_k)}<br>$$<br>我们通过对g的期望计算g，然后确定出Q函数</p>
 <ul>
 <li>EM算法在确定Q函数的时候大致如此，用隐函数的最大期望来得到</li>
 </ul>
 <h5 id="三、EM算法的M步：极大化Q函数"><a href="#三、EM算法的M步：极大化Q函数" class="headerlink" title="三、EM算法的M步：极大化Q函数"></a>三、EM算法的M步：极大化Q函数</h5><p>我们在确定出Q函数的时候，就能求极值了，如果不能直接求极值,可以用梯度下降或牛顿迭代来求</p>
 <p>对于每个变量偏导使其等于0</p>
 <p>高斯分布一维的情况<br>$$<br>\mu_knew=\frac{\sum_{i=1}^n\hat g_{ik}x_i}{\sum_{i=1}^n\hat g_{ik}}<br>$$</p>
-<p>$$<br>\delta^2_knew=\frac{\sum_{i=1}^n\hat g_{jk}(x_i-\mu_k new)^2}{\sum_{i=1}^n\hat g_{ik}}<br>$$</p>
-<p>$\alpha$是用拉格朗日乘数法推出来的</p>
-<p>$$<br>\alpha_k new=\frac{n_k}{n}=\frac{\sum_{i=1}^ng_{ik}}{n}<br>$$</p>
+<p>$$<br>\delta^2_knew=\frac{\sum_{i=1}^n\hat g_{jk}(x_i-\mu_k new)^2}{\sum_{i=1}^n\hat g_{ik}}<br>$$<br>$\alpha$是用拉格朗日乘数法推出来的<br>$$<br>\alpha_k new=\frac{n_k}{n}=\frac{\sum_{i=1}^ng_{ik}}{n}<br>$$</p>
 <h5 id="重复以上步骤直到收敛"><a href="#重复以上步骤直到收敛" class="headerlink" title="重复以上步骤直到收敛"></a>重复以上步骤直到收敛</h5><p>收敛条件，由于Q的值与$\alpha$有关系，当$\alpha$的变化小于阈值时，则收敛</p>
 <h2 id="PCA降维"><a href="#PCA降维" class="headerlink" title="PCA降维"></a>PCA降维</h2><h4 id="要分散"><a href="#要分散" class="headerlink" title="要分散"></a>要分散</h4><ul>
 <li>对于一组二维的数据点，我们要投影到一维的话，那么最后的方式就是找到一条直线，使得这些点在直线上的投影尽量的分散。</li>
@@ -513,7 +504,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -50,17 +50,19 @@
   };
 </script>
 
-  <meta name="description" content="简单图像处理平滑滤波大多数的滤波都有一定的去噪作用 均值滤波 就是在小方框内取均值   方框滤波： 就是在均值滤波之后做归一化   高斯滤波： 就是直接用高斯分布公式来处理，可以处理掉异常值   中值滤波 类似均值滤波，就是用中值代替，可能类似的也有众数滤波">
+  <meta name="description" content="Professor forcing引入前的想法teacher forcing的不足 teacher forcing的方法通过将被观测的序列值作为训练过程中的输入和使用该网络自己的提前一步预测(one-step-ahead-predictions)l来进行多步采样  比如时间序列的条件分布模型:  $$P(y_1,y_2,…,y_T)=P(y_1)\prod_{t=1}^T P(y_t|y_1,…,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单图像处理">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;28&#x2F;%E7%AE%80%E5%8D%95%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86&#x2F;index.html">
+<meta property="og:title" content="Professor forcing">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;05&#x2F;31&#x2F;Professor%20forcing&#x2F;index.html">
 <meta property="og:site_name" content="Facico的博客">
-<meta property="og:description" content="简单图像处理平滑滤波大多数的滤波都有一定的去噪作用 均值滤波 就是在小方框内取均值   方框滤波： 就是在均值滤波之后做归一化   高斯滤波： 就是直接用高斯分布公式来处理，可以处理掉异常值   中值滤波 类似均值滤波，就是用中值代替，可能类似的也有众数滤波">
+<meta property="og:description" content="Professor forcing引入前的想法teacher forcing的不足 teacher forcing的方法通过将被观测的序列值作为训练过程中的输入和使用该网络自己的提前一步预测(one-step-ahead-predictions)l来进行多步采样  比如时间序列的条件分布模型:  $$P(y_1,y_2,…,y_T)=P(y_1)\prod_{t=1}^T P(y_t|y_1,…,">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-05-15T12:57:41.585Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190222144502776.?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Mzg1NTM1,size_16,color_FFFFFF,t_70">
+<meta property="og:updated_time" content="2020-06-01T15:53:54.515Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img-blog.csdnimg.cn&#x2F;20190222144502776.?x-oss-process=image&#x2F;watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Mzg1NTM1,size_16,color_FFFFFF,t_70">
 
-<link rel="canonical" href="http://yoursite.com/2020/02/28/%E7%AE%80%E5%8D%95%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+<link rel="canonical" href="http://yoursite.com/2020/05/31/Professor%20forcing/">
 
 
 <script id="page-configurations">
@@ -74,7 +76,7 @@
   };
 </script>
 
-  <title>简单图像处理 | Facico的博客</title>
+  <title>Professor forcing | Facico的博客</title>
   
 
 
@@ -190,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/28/%E7%AE%80%E5%8D%95%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/05/31/Professor%20forcing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/psu.jpg">
@@ -203,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          简单图像处理
+          Professor forcing
         </h1>
 
         <div class="post-meta">
@@ -213,14 +215,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-02-28 17:55:43" itemprop="dateCreated datePublished" datetime="2020-02-28T17:55:43+08:00">2020-02-28</time>
+              <time title="Created: 2020-05-31 23:29:29" itemprop="dateCreated datePublished" datetime="2020-05-31T23:29:29+08:00">2020-05-31</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-05-15 20:57:41" itemprop="dateModified" datetime="2020-05-15T20:57:41+08:00">2020-05-15</time>
+                <time title="Modified: 2020-06-01 23:53:54" itemprop="dateModified" datetime="2020-06-01T23:53:54+08:00">2020-06-01</time>
               </span>
 
           
@@ -241,71 +243,77 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="简单图像处理"><a href="#简单图像处理" class="headerlink" title="简单图像处理"></a>简单图像处理</h1><h2 id="平滑"><a href="#平滑" class="headerlink" title="平滑"></a>平滑</h2><h3 id="滤波"><a href="#滤波" class="headerlink" title="滤波"></a>滤波</h3><p>大多数的滤波都有一定的去噪作用</p><ul>
-<li>均值滤波<ul>
-<li>就是在小方框内取均值</li>
+        <h1 id="Professor-forcing"><a href="#Professor-forcing" class="headerlink" title="Professor forcing"></a>Professor forcing</h1><h2 id="引入前的想法"><a href="#引入前的想法" class="headerlink" title="引入前的想法"></a>引入前的想法</h2><h3 id="teacher-forcing的不足"><a href="#teacher-forcing的不足" class="headerlink" title="teacher forcing的不足"></a>teacher forcing的不足</h3><ul>
+<li><p>teacher forcing的方法通过将被观测的序列值作为训练过程中的输入和使用该网络自己的提前一步预测(one-step-ahead-predictions)l来进行多步采样</p>
+<ul>
+<li><p>比如时间序列的条件分布模型:</p>
+<ul>
+<li><p>$$<br>P(y_1,y_2,…,y_T)=P(y_1)\prod_{t=1}^T P(y_t|y_1,…,y_{t-1})<br>$$</p>
+</li>
+<li><p>这种形式一般的机器学习的训练策略就是最大似然，而在RNN中，这种策略可以类似为teacher forcing，由于使用真值样本，将其反馈到模型中，以便对后一时刻输出进行预测。这种反馈迫使(force)RNN接近真实的序列</p>
+</li>
 </ul>
 </li>
-<li>方框滤波：<ul>
-<li>就是在均值滤波之后做归一化</li>
-</ul>
-</li>
-<li>高斯滤波：<ul>
-<li>就是直接用高斯分布公式来处理，可以处理掉异常值</li>
-</ul>
-</li>
-<li>中值滤波<ul>
-<li>类似均值滤波，就是用中值代替，可能类似的也有众数滤波</li>
 </ul>
 </li>
 </ul><a id="more"></a>
-
-<h2 id="形态学处理"><a href="#形态学处理" class="headerlink" title="形态学处理"></a>形态学处理</h2><p>==假设现在的二值图像是黑底白字的==</p>
-<h3 id="腐蚀操作"><a href="#腐蚀操作" class="headerlink" title="腐蚀操作"></a>腐蚀操作</h3><ul>
-<li>就是方框内取最大值，对于二值图像有黑到白的腐蚀的作用<ul>
-<li>可以去毛刺</li>
+<p>不过：teacher forcing有个问题就是，在测试的时候不能使用真值样本，而只能根据前面的采样，但是这样的条件环境优又会有所不同。比如在一段时间序列的预测中，一个地方出错，就容易产生大偏差</p>
+<h3 id="professor-forcing的想法"><a href="#professor-forcing的想法" class="headerlink" title="professor forcing的想法"></a>professor forcing的想法</h3><ul>
+<li>所以，Professor Forcing的目标就是：使free running（或说self feeding）和teacher forcing行为尽可能的接近。对于接近，抛开概率的KL，那么就是GAN了。<ul>
+<li>用GAN一点的话就是：我们在生成RNN与训练数据匹配的同时，我们还希望网络的行为(无论是输出中还是隐藏状态的动态中)能无法区分其输入是限制在teacher forcing的还是free running的</li>
 </ul>
 </li>
 </ul>
-<h3 id="膨胀操作"><a href="#膨胀操作" class="headerlink" title="膨胀操作"></a>膨胀操作</h3><ul>
-<li>就是方框内取最小值，对于二值图像有白到黑的膨胀的作用<ul>
-<li>可以填充图像内部的空洞</li>
+<h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p><strong>这里的professor forcing使用对抗域适应(adversarial domain adaptation)来促进训练网络的动态变化相同</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/20190222144502776.?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzI4Mzg1NTM1,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h3 id="判别器训练"><a href="#判别器训练" class="headerlink" title="判别器训练"></a>判别器训练</h3><p>对D(d)最大化下面这个<br>$$<br>C_d(\theta_d|\theta_g)=E_{(x,y)\sim data}[-\log D(B(x,y,\theta_g),\theta_d)+E_{y\sim P_{\theta_g(y|x)}}[-\log (1-D(B(x,y,\theta_g)),\theta_d)]<br>$$</p>
+<ul>
+<li>D就是判别属于哪种,是概率分类器</li>
+<li>B(x,y,$\theta_g$)是给定数据(x是训练数据，y是训练数据或是自生成的)输出序列，==<strong>注意</strong>==：这里的输出序列包含hidden state和output</li>
+</ul>
+<h3 id="生成器训练"><a href="#生成器训练" class="headerlink" title="生成器训练"></a>生成器训练</h3><p>最小化下列的东西</p>
+<p>生成器参数$\theta_g$按两种方式训练</p>
+<ul>
+<li><p>1、最大化数据概率(正常RNN的loss部分)</p>
+<ul>
+<li><p>RNN通常的teacher forcing训练标准:负对数似然</p>
+<ul>
+<li>$$<br>NNL(\theta_g)=E_{(x,y)\sim data}[-log_{\theta_g}(y|x)]<br>$$</li>
 </ul>
 </li>
 </ul>
-<h3 id="开运算与闭运算"><a href="#开运算与闭运算" class="headerlink" title="开运算与闭运算"></a>开运算与闭运算</h3><ul>
-<li>运用腐蚀与膨胀来作用</li>
+</li>
+<li><p>2、愚弄判别器(而第二种方式有两个变体，。。。其实就是把GAN的式子拆开了)</p>
+<ul>
+<li><p>1、训练目标只是试图改变free-running的行为，为了更好地匹配teacher forcing</p>
+<ul>
+<li>$$<br>C_f(\theta_g|\theta_d)=E_{x\sim data,y\sim P_{\theta_g}(y|x)}[-\log D(B(x,y,\theta_g),\theta_d)]<br>$$</li>
 </ul>
-<h4 id="开运算"><a href="#开运算" class="headerlink" title="开运算"></a>开运算</h4><ul>
-<li>先腐蚀后膨胀<ul>
-<li>先取最小值再取最大值</li>
-<li>在黑色里面的白色缩小了，达到了去除孤立点的作用，去毛刺等</li>
+</li>
+<li><p>2、可以让teacher forcing 与free running无法区分</p>
+<ul>
+<li>$$<br>C_t(\theta_g|\theta_d)=E_{(x,y)\sim data}[-\log (1-D(B(x,y,\theta_g),\theta_d))]<br>$$</li>
 </ul>
 </li>
 </ul>
-<h4 id="闭运算"><a href="#闭运算" class="headerlink" title="闭运算"></a>闭运算</h4><ul>
-<li>先膨胀再腐蚀<ul>
-<li>先取最大值再取最小值</li>
-<li>在黑色的里面的白色被扩张了，达到了将两个细微连接的图像平起来的作用(把刺扩大)</li>
+</li>
+</ul>
+<p>实现中可选$NLL+C_f$或$NLL+C_f+C_y$</p>
+<h3 id="为什么要匹配hidden-state-Ethan-Caballero"><a href="#为什么要匹配hidden-state-Ethan-Caballero" class="headerlink" title="为什么要匹配hidden state(Ethan Caballero)"></a>为什么要匹配hidden state(<a href="https://github.com/ethancaballero" target="_blank" rel="noopener">Ethan Caballero</a>)</h3><ul>
+<li>在采样的输出(argmax)上使用GAN明显难得多，因为这些是离散的，如hidden state和各自的softmax。<ul>
+<li>所以不得不使用seqGAN中的策略梯度来估计离散输出</li>
+<li>所以要融合hidden state和output（无论如何，hidden state已经包含了有关离散采样输出的信息(分布中最高的概率索引)）</li>
+</ul>
+</li>
+<li>professor forcing的独特之处就是：可以在，试图将两者推近的、两个序列生成模式的每个时间步上访问每个输出的连续概率分布。<ul>
+<li>相反，像seqGAN这样的模型中传统上将GAN应用到逼近真实样本和生成的样本时，在每个时间步只能访问下一个离散输出(而不是下一个输出的连续分布)，这会阻止直接进行区分（用于professor forcing），迫使人们使用策略梯度估计。如果有人用连续分布的词嵌入（从预训练的word2vec，GloVe等中）替换掉每个离散的采样令牌，则有可能在传统采样情况下使用直截了当的训练来训练seqGAN</li>
 </ul>
 </li>
 </ul>
-<p>​    </p>
-<h3 id="梯度运算"><a href="#梯度运算" class="headerlink" title="梯度运算"></a>梯度运算</h3><h4 id="膨胀-腐蚀运算"><a href="#膨胀-腐蚀运算" class="headerlink" title="膨胀-腐蚀运算"></a>膨胀-腐蚀运算</h4><ul>
-<li>这里的梯度=膨胀-腐蚀<ul>
-<li>很显然会得到边缘</li>
-</ul>
-</li>
-</ul>
-<h3 id="礼帽和黑帽"><a href="#礼帽和黑帽" class="headerlink" title="礼帽和黑帽"></a>礼帽和黑帽</h3><ul>
-<li>礼帽 = 原始输入 - 开运算结果<ul>
-<li>得到刺</li>
-</ul>
-</li>
-<li>黑帽 = 闭运算结果 - 原始输入<ul>
-<li>得到刺的边缘</li>
-</ul>
-</li>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><ul>
+<li>按照人为评估，该法在笔迹生成、音乐合成方面好</li>
+<li>比起teacher forcing能生成更长的序列，长期依赖性的字符建模中表现较好</li>
+<li>作者使用t-SNE展示使用professor forcing是的隐藏状态分布上变得更加相似</li>
 </ul>
 
     </div>
@@ -320,16 +328,16 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2020/02/24/%E6%89%8B%E5%8A%A8%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E5%9B%BE/" rel="next" title="手动实现计算图">
-                  <i class="fa fa-chevron-left"></i> 手动实现计算图
+                <a href="/2020/05/18/%E7%9F%A5%E8%AF%86%E6%B5%93%E7%BC%A9/" rel="next" title="知识浓缩">
+                  <i class="fa fa-chevron-left"></i> 知识浓缩
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2020/02/29/%E6%AE%8B%E5%B7%AE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0/" rel="prev" title="残差神经网络学习">
-                  残差神经网络学习 <i class="fa fa-chevron-right"></i>
+                <a href="/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/" rel="prev" title="对抗自编码器(AAE).md">
+                  对抗自编码器(AAE).md <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -369,7 +377,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单图像处理"><span class="nav-number">1.</span> <span class="nav-text">简单图像处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#平滑"><span class="nav-number">1.1.</span> <span class="nav-text">平滑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#滤波"><span class="nav-number">1.1.1.</span> <span class="nav-text">滤波</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#形态学处理"><span class="nav-number">1.2.</span> <span class="nav-text">形态学处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#腐蚀操作"><span class="nav-number">1.2.1.</span> <span class="nav-text">腐蚀操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#膨胀操作"><span class="nav-number">1.2.2.</span> <span class="nav-text">膨胀操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开运算与闭运算"><span class="nav-number">1.2.3.</span> <span class="nav-text">开运算与闭运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#开运算"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">开运算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#闭运算"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">闭运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度运算"><span class="nav-number">1.2.4.</span> <span class="nav-text">梯度运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#膨胀-腐蚀运算"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">膨胀-腐蚀运算</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#礼帽和黑帽"><span class="nav-number">1.2.5.</span> <span class="nav-text">礼帽和黑帽</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Professor-forcing"><span class="nav-number">1.</span> <span class="nav-text">Professor forcing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入前的想法"><span class="nav-number">1.1.</span> <span class="nav-text">引入前的想法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#teacher-forcing的不足"><span class="nav-number">1.1.1.</span> <span class="nav-text">teacher forcing的不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#professor-forcing的想法"><span class="nav-number">1.1.2.</span> <span class="nav-text">professor forcing的想法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型"><span class="nav-number">1.2.</span> <span class="nav-text">模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判别器训练"><span class="nav-number">1.2.1.</span> <span class="nav-text">判别器训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成器训练"><span class="nav-number">1.2.2.</span> <span class="nav-text">生成器训练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要匹配hidden-state-Ethan-Caballero"><span class="nav-number">1.2.3.</span> <span class="nav-text">为什么要匹配hidden state(Ethan Caballero)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实验"><span class="nav-number">1.3.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -506,56 +514,6 @@
   
 
   
-      
-<script type="text/x-mathjax-config">
-    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        extensions: ['[mhchem]/mhchem.js'],
-      equationNumbers: {
-        autoNumber: 'AMS'
-      }
-    }
-  });
-
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') {
-          next = next.nextSibling;
-        }
-        if (next && next.nodeName.toLowerCase() === 'br') {
-          next.parentNode.removeChild(next);
-        }
-      }
-    });
-  });
-
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
-      if (element.nodeName.toLowerCase() == 'li') {
-        element = element.parentNode;
-      }
-      element.classList.add('has-jax');
-    }
-  });
-</script>
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
-    MathJax.Hub.Typeset();
-  }, window.MathJax);
-</script>
-
-    
 
   
 

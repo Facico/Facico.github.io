@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="对抗自编码器(AAE) 自编码器转换成生成模型  通过两个目标训练：传统的重构误差函数和对抗训练函数—&amp;gt;将AE隐藏层向量表示的聚合后验分布与任意先验分布匹配。训练准则和VAE很像  1、编码器学到将数据分布转换成该先验分布 2、解码器学到一个模型，可以将强加的先验映射到数据分布上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对抗自编码器(AAE).md">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;16&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)&#x2F;index.html">
+<meta property="og:site_name" content="Facico的博客">
+<meta property="og:description" content="对抗自编码器(AAE) 自编码器转换成生成模型  通过两个目标训练：传统的重构误差函数和对抗训练函数—&amp;gt;将AE隐藏层向量表示的聚合后验分布与任意先验分布匹配。训练准则和VAE很像  1、编码器学到将数据分布转换成该先验分布 2、解码器学到一个模型，可以将强加的先验映射到数据分布上">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181227190200967-1197417573.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6274743-9d2fd31740455606.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1200">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181228135833595-915372434.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181228140142463-1222595479.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181228174351553-251512682.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181229090536435-922669299.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;16&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md&#x2F;sendpix0.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;16&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md&#x2F;sendpix1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;16&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)&#x2F;%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md&#x2F;sendpix2.jpg">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20171209180053496?watermark&#x2F;2&#x2F;text&#x2F;aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2hlYmFvMzMzMw==&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70&#x2F;gravity&#x2F;SouthEast">
+<meta property="og:image" content="https:&#x2F;&#x2F;img-blog.csdn.net&#x2F;20171209181407095?watermark&#x2F;2&#x2F;text&#x2F;aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2hlYmFvMzMzMw==&#x2F;font&#x2F;5a6L5L2T&#x2F;fontsize&#x2F;400&#x2F;fill&#x2F;I0JBQkFCMA==&#x2F;dissolve&#x2F;70&#x2F;gravity&#x2F;SouthEast">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.mp.itc.cn&#x2F;upload&#x2F;20170426&#x2F;31ced917b6554daf80d19d1ef8a97214_th.jpeg">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.mp.itc.cn&#x2F;upload&#x2F;20170426&#x2F;796483dc95fc4343a4fddfbbc95b0d5a.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;static.leiphone.com&#x2F;uploads&#x2F;new&#x2F;article&#x2F;740_740&#x2F;201707&#x2F;5966d4a1d1ca1.png?imageMogr2&#x2F;format&#x2F;jpg&#x2F;quality&#x2F;90">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.mp.itc.cn&#x2F;upload&#x2F;20170426&#x2F;cacf1f48f3e84f44939a847a665ce294_th.jpeg">
+<meta property="og:image" content="http:&#x2F;&#x2F;img.mp.itc.cn&#x2F;upload&#x2F;20170426&#x2F;d24f893e924e44aea51555ccb92369b3_th.jpeg">
+<meta property="og:updated_time" content="2020-06-16T04:23:41.610Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;img2018.cnblogs.com&#x2F;blog&#x2F;441382&#x2F;201812&#x2F;441382-20181227190200967-1197417573.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>对抗自编码器(AAE).md | Facico的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Facico的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-主页">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>主页</a>
+
+  </li>
+        <li class="menu-item menu-item-关于">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-标签">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-分类">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-归档">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/16/%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/psu.jpg">
+      <meta itemprop="name" content="Facico">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Facico的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对抗自编码器(AAE).md
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-06-16 11:53:52 / Modified: 12:23:41" itemprop="dateCreated datePublished" datetime="2020-06-16T11:53:52+08:00">2020-06-16</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="对抗自编码器-AAE"><a href="#对抗自编码器-AAE" class="headerlink" title="对抗自编码器(AAE)"></a>对抗自编码器(AAE)</h1><ul>
+<li><p>自编码器转换成生成模型</p>
+</li>
+<li><p>通过两个目标训练：传统的重构误差函数和对抗训练函数—&gt;将AE隐藏层向量表示的聚合后验分布与任意先验分布匹配。训练准则和VAE很像</p>
+<ul>
+<li>1、编码器学到将数据分布转换成该先验分布</li>
+<li>2、解码器学到一个模型，可以将强加的先验映射到数据分布上</li>
+</ul>
+</li>
+</ul><a id="more"></a>
+<h2 id="聚合后验分布"><a href="#聚合后验分布" class="headerlink" title="聚合后验分布"></a>聚合后验分布</h2><ul>
+<li>与VAE不同的是，AAE采用的是聚合后验分布</li>
+</ul>
+<p>$$<br>q(z)=\int_{x}q(z|x)p_d(x)dx\<br>(q(z|x)：编码分布;p(x|z):解码分布；p_d(x)数据分布;\<br>p(x)数据模型分布;q(z):z的聚合后验分布;p(z):想要在z上加的先验分布)<br>$$</p>
+<ul>
+<li><img src="https://img2018.cnblogs.com/blog/441382/201812/441382-20181227190200967-1197417573.png" alt="img"></li>
+<li><img src="https://upload-images.jianshu.io/upload_images/6274743-9d2fd31740455606.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1200" alt="img"><ul>
+<li>AAE是，通过将聚合后验$q(z)$和任意先验$p(z)$进行匹配来完成正则化，让对抗网络直到$q(z)$去匹配$p(z)$</li>
+<li>在“指导”的同时，AE也尝试着最小化重构误差</li>
+<li>对抗网络的生成器(同时也是AE的编码器)要确保聚合的后验分布可以愚弄对抗网络的判别器，让其误认为隐藏编码$q(z)$来自真实的先验分布$p(z)$</li>
+</ul>
+</li>
+<li>对抗网络好和AE通过SGD基于两个阶段联合训练：基于mini-batch执行重构阶段和生成阶段<ul>
+<li>1、重构阶段：AE更新编码器和解码器，并最小化重构误差</li>
+<li>2、正则阶段：对抗网络首先更新判别网络，以区分真实样本(先验生成的)和生成样本(通过AE计算的隐藏编码)；然后对抗网络再更新生成器(AE的编码器)</li>
+</ul>
+</li>
+</ul>
+<h2 id="对于-q-z-x-的分布"><a href="#对于-q-z-x-的分布" class="headerlink" title="对于$q(z|x)$的分布"></a>对于$q(z|x)$的分布</h2><h3 id="是个确定函数"><a href="#是个确定函数" class="headerlink" title="是个确定函数"></a>是个确定函数</h3><ul>
+<li>不多说</li>
+</ul>
+<h3 id="高斯后验"><a href="#高斯后验" class="headerlink" title="高斯后验"></a>高斯后验</h3><ul>
+<li>类似VAE的，用混合高斯加网络预测</li>
+</ul>
+<h3 id="通用近似后验Universal-approximator-posterior"><a href="#通用近似后验Universal-approximator-posterior" class="headerlink" title="通用近似后验Universal approximator posterior"></a>通用近似后验<strong>Universal approximator posterior</strong></h3><p>假设AAE的编码网络是函数$f(x,\eta)$，输入x和固定分布(如高斯)的随机噪声。</p>
+<p>通过在$\eta$的不同样本上评估$f(x,\eta)$，从而从任意的后验分布$q(z|x)$中进行采样</p>
+<ul>
+<li><p>假设$q(z|x,\eta)=\delta(z-f(x,\eta))$</p>
+</li>
+<li><p>那么后验$q(z|x)$和聚合后验$q(z)$定义如下</p>
+<ul>
+<li>$$<br>q(z|x)=\int_{\eta}q(z|x,\eta)p_{\eta}(\eta)d\eta \Rightarrow \q(z)=\int_{x}\int_{\eta}q(z|x,\eta)p_d(x)p_{\eta}(\eta)d\eta dx<br>$$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>此时，$q(z)$的随机性同时来自数据分布和编码器输入上的随机噪声$ \eta$<ul>
+<li>在上面是确定函数的情况下，因为$q(z|x)$是确定的，网络正让$q(z)$取匹配$p(z)$，只利用了数据分布的随机性。然而数据的经验性分布是被训练集固定的，映射是确定的，这可能生成一个不是很平滑的$q(z)$</li>
+<li>然而，高斯或通用近似的情况中，网络需要额外的随机性来源，来帮助在对抗正则阶段对$q(z)$进行平滑惩罚</li>
+</ul>
+</li>
+</ul>
+<p>说了这么多，作者在多次试验后发现，上面三种方法的结果大同小异。。。。。。</p>
+<ul>
+<li>所以后面只介绍$q(z|x)$的确定性策略</li>
+</ul>
+<h2 id="与VAE的关系"><a href="#与VAE的关系" class="headerlink" title="与VAE的关系"></a>与VAE的关系</h2><p>VAE：使用的是KL散度惩罚的方法在隐藏层编码向量上强加一个先验分布(如高斯分布)</p>
+<p>AAE：使用的是对抗训练方法去实现该目的，即让隐藏层编码向量的聚合后验能够匹配先验分布</p>
+<p>VAE：最小化关于-log的似然上边界</p>
+<p><img src="https://img2018.cnblogs.com/blog/441382/201812/441382-20181228135833595-915372434.png" alt="img"></p>
+<ul>
+<li><p>这里的变分边界有三个部分：第一个重构项，第二第三个相当于正则项，没有正则项就是简单的AE，有正则项的时候，VAE学到的隐藏层表征与$p(z)$是兼容的。</p>
+<ul>
+<li>损失函数的第二项鼓励后验分布</li>
+<li>第三项是最小化后验$p(z)$与先验$q(z)$的交叉熵</li>
+</ul>
+</li>
+<li><p>而AAE中：作者将后面的两项替换成了一个对抗学习的过程，从而鼓励$q(z)$能与$p(z)$整个分布匹配</p>
+</li>
+</ul>
+<p>对插入特定先验的能力做对比</p>
+<p><img src="https://img2018.cnblogs.com/blog/441382/201812/441382-20181228140142463-1222595479.png" alt="img"></p>
+<ul>
+<li>上图是在MNIST上训练的<ul>
+<li>A、B是AAE的，分别是单个2维高斯和10个混合的二维高斯</li>
+<li>C、D是VAE的，与上面类似</li>
+</ul>
+</li>
+<li>1、如A可以看到，AAE在学习流形(不同类别的转化)有明显的转变(分界线)，且没有空洞；所以VAE对于抓去数据流行的能力并没有AAE好</li>
+<li>2、VAE与AAE得到的分布类似，不过VAE表现出与10个组件高斯混合的强烈差别，即VAE更多强调匹配的分布模式，AAE则能成功抓取带有先验分布的聚合后</li>
+<li>3、一个重要的差别是：VAE中，为了通过MC采样对KL散度进行BP，需要得到准确的先验分布的函数形式；而在AAE中，只需要能从先验分布中进行采样就能让$q(z)$匹配$p(z)$</li>
+</ul>
+<h2 id="对抗正则中插入标签信息"><a href="#对抗正则中插入标签信息" class="headerlink" title="对抗正则中插入标签信息"></a>对抗正则中插入标签信息</h2><ul>
+<li>GAN模型的一个问题就是无法很好的利用数据标签信息，这里，AAE对此提供了一个很不错的解决办法</li>
+</ul>
+<p>这里的数据都是标记过的，可以将标签信息插入到对抗训练过程中，a来更好的塑造隐藏层的分布</p>
+<ul>
+<li>不过在该结构中，我们要使用部分或者所有的标签信息来更好的正则化Ae的潜在表征</li>
+</ul>
+<p><img src="https://img2018.cnblogs.com/blog/441382/201812/441382-20181228174351553-251512682.png" alt="img"></p>
+<ul>
+<li>上图是一个半监督的训练过程，这里增加了一个one-hot向量到判别网络的输入部分，以将标签与分布模式相结合，这个one-hot有一定的决策作用<ul>
+<li>one-hot向量除了带有每个标签的维度，还有一个额外维(<strong>无标签的样本类别，如生成器的样本</strong>)<ul>
+<li>如上面的mnist，one-hot有11个类别</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>当一个无标签样本出现在该模型中，额外的类别就会相应，以选择整个高斯混合分布的决策面<ul>
+<li>1、在对抗训练的正阶段(最大化识别)：通过one-hot将高斯混合模型生成的样本的标签传给判别器。这些正样本来自混合高斯模型，而不是来自某个具体的类别(第一个高斯产生的样本是1,第二个是2,…)</li>
+<li>2、在对抗训练的负阶段：通过one-hot将生成器生成的样本的标签给判别器。这些负样本来自生成器</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img2018.cnblogs.com/blog/441382/201812/441382-20181229090536435-922669299.png" alt="img"></p>
+<ul>
+<li>(d是沿着swiss roll 来生成的)<ul>
+<li>a：显示了使用先验训练的对抗性自编码的潜在表示，先验训练在10k个有标签mnist和40k个无标签mnist样本，在10个混合的高斯模型上训练。先验中第i个混合惩罚以半监督的方式和第i个类别有关。</li>
+<li>b：前三个混合成分的流形每个混合成分的类型,表征是很一致的，且与各自的类相独立(例如所有的左上区域对应于直立书写样式，右下区域对应于数字的倾斜书写样式)</li>
+<li>c(将数据扩展到任意分布而不用参数控制):如将数据映射到一个swiss roll(如条件高斯分布,其均值是均匀分布,长度相当于一个swiss roll 轴),这种方法可以</li>
+<li>d:是沿着swiss roll轴前进生成的图像</li>
+</ul>
+</li>
+</ul>
+<h3 id="监督"><a href="#监督" class="headerlink" title="监督"></a>监督</h3><ul>
+<li>所以监督的方法就是：网络结构为decoder提供一个由标签编码的one-hot，然后decoder利用one-hot识别标签，利用z(以高斯混合的形式)来重构数据。这里的one-hot是对应类别的维度<img src="%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md/sendpix0.jpg" alt="sendpix0"></li>
+</ul>
+<h3 id="半监督"><a href="#半监督" class="headerlink" title="半监督"></a>半监督</h3><ul>
+<li>半监督的方法就是：上面的方法的one-hot对应类别的维度+1</li>
+</ul>
+<p><img src="%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md/sendpix1.jpg" alt="sendpix1"></p>
+<ul>
+<li>我们我们假设数据是由隐藏的类别变量(分类分布生成)y和高斯分布生成的z共同生成的</li>
+<li>我们用encoder: $q(z,y|x)$预测离散和连续的隐变量，然后decoder利用类别标签作为一个热向量和隐变量来重建数据。然后有两个独立的对抗网络规范自编码器的隐藏表示<ul>
+<li>第一个对抗网络对标签施加分类分布，对抗性网络确保了潜在的类变量不携带任何样式信息，并且让y的聚合后验分布与类别分布相匹配</li>
+<li>第二个对抗网络对z施加高斯分布，以确保潜在变量为连续高斯分布变量</li>
+</ul>
+</li>
+</ul>
+<h3 id="无监督聚类"><a href="#无监督聚类" class="headerlink" title="无监督聚类"></a>无监督聚类</h3><ul>
+<li><p>流程与半监督类似，不过去掉了分类阶段</p>
+</li>
+<li><p>另一个不同的是，$q(y|x)$预测的是一个一维的one-hot，其维数是我们希望将数据聚类得到的类别数<img src="%E5%AF%B9%E6%8A%97%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8(AAE)-md/sendpix2.jpg" alt="sendpix2"></p>
+</li>
+<li><p>上图表示在mnist有16个簇的时候的情况，每行中第一个表示簇头，通过样式变量固定为0并通过标签变量设置为16中的一个数字来生成。其余的图像是随机变量</p>
+</li>
+</ul>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ul>
+<li>对于mnist，首先就是编码</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20171209180053496?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2hlYmFvMzMzMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="encoder"></p>
+<ul>
+<li>这是decoder，得到最后的输出就是隐藏变量z的维度(在VAE中有两中这样的东西分别是均值和方差，最后用来给z采样)，不过这里并没有假设z是高斯分布，而是聚合后验，就直接用网络拟合(…到后来越来越网络)</li>
+</ul>
+<p>然后就是</p>
+<p><img src="https://img-blog.csdn.net/20171209181407095?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc2hlYmFvMzMzMw==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="decoder"></p>
+<p>假如z还是假设是高斯采样的</p>
+<p><img src="http://img.mp.itc.cn/upload/20170426/31ced917b6554daf80d19d1ef8a97214_th.jpeg" alt="img"></p>
+<ul>
+<li>生成的z对对抗网络做负作用，采样的z做正作用</li>
+<li><img src="http://img.mp.itc.cn/upload/20170426/796483dc95fc4343a4fddfbbc95b0d5a.png" alt="img"></li>
+</ul>
+<p>这就是经典的GAN公式了<img src="https://static.leiphone.com/uploads/new/article/740_740/201707/5966d4a1d1ca1.png?imageMogr2/format/jpg/quality/90" alt="开发者自述：我是这样学习 GAN 的"></p>
+<ul>
+<li><p>监督</p>
+</li>
+<li><p><img src="http://img.mp.itc.cn/upload/20170426/cacf1f48f3e84f44939a847a665ce294_th.jpeg" alt="img"></p>
+</li>
+<li><p>这里把y和z拼起来即可</p>
+</li>
+</ul>
+<ul>
+<li><p>半监督</p>
+</li>
+<li><p><img src="http://img.mp.itc.cn/upload/20170426/d24f893e924e44aea51555ccb92369b3_th.jpeg" alt="img"></p>
+</li>
+<li><p>上面的y是一个softmax，然后cat(10)是一个one-hot，就是用GAN拟合one-hot</p>
+<ul>
+<li>对于无标签的，就在encoder出生成z和y，然后拟合分布</li>
+<li>对于有标签的，就调整生成y时的分布(即encoder的y_fake，就是只到生成y_fake这一步，然后用交叉熵loss)</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>无监督<ul>
+<li>就是没有上面的分类，然后one-hot的维数是聚类预估的簇数</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/05/31/Professor%20forcing/" rel="next" title="Professor forcing">
+                  <i class="fa fa-chevron-left"></i> Professor forcing
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#对抗自编码器-AAE"><span class="nav-number">1.</span> <span class="nav-text">对抗自编码器(AAE)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合后验分布"><span class="nav-number">1.1.</span> <span class="nav-text">聚合后验分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对于-q-z-x-的分布"><span class="nav-number">1.2.</span> <span class="nav-text">对于$q(z|x)$的分布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#是个确定函数"><span class="nav-number">1.2.1.</span> <span class="nav-text">是个确定函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高斯后验"><span class="nav-number">1.2.2.</span> <span class="nav-text">高斯后验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用近似后验Universal-approximator-posterior"><span class="nav-number">1.2.3.</span> <span class="nav-text">通用近似后验Universal approximator posterior</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与VAE的关系"><span class="nav-number">1.3.</span> <span class="nav-text">与VAE的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对抗正则中插入标签信息"><span class="nav-number">1.4.</span> <span class="nav-text">对抗正则中插入标签信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#监督"><span class="nav-number">1.4.1.</span> <span class="nav-text">监督</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#半监督"><span class="nav-number">1.4.2.</span> <span class="nav-text">半监督</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无监督聚类"><span class="nav-number">1.4.3.</span> <span class="nav-text">无监督聚类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">1.5.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Facico"
+    src="/images/psu.jpg">
+  <p class="site-author-name" itemprop="name">Facico</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Facico" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Facico" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+
+       
+      </div>
+      <div id="music163player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=34014160&auto=1&height=66"></iframe>
+      </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019.10.26 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Facico</span>
+</div>
+  <div class="theme-info">Theme – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.4.2
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,0' opacity='0.4' zIndex='-1' count='1000' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+
+  
+
+  
+
+</body>
+</html>
